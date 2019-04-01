@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "vue-cli-service build && node upload.js"
+    "deploy": "vue-cli-service build && node upload.js",
+    "fontmin": "node fontScripts/SH-Medium.js && node fontScripts/SH-Regular.js"
   },
   "dependencies": {
     "iview": "^3.3.3",
@@ -18,6 +19,7 @@
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
     "babel-plugin-import": "^1.11.0",
+    "fontmin": "^0.9.7-beta",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "qiniu": "^7.2.1",

@@ -41,6 +41,7 @@ header {
     display: flex;
     height: 100%;
     align-items: center;
+    cursor: pointer;
     img {
       width: 104px;
     }

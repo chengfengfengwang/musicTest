@@ -14,3 +14,15 @@ a {
   margin: 0 auto;
   max-width: 1200px;
 }
+@font-face {
+  font-family: 'SourceHanSansCN-Regular';
+  src: url('font//SourceHanSansCN-Normal.ttf') format('truetype');
+}
+.swiper-pagination-bullet {
+  opacity: 0.3;
+  background: #FFFFFF;
+}
+.swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  background-color: #FFFFFF !important;
+}

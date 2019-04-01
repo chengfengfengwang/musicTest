@@ -1,16 +1,20 @@
 <template>
-  <div id="backTop">
-    <Button @click="backToTop">asdasd</Button>
+  <div v-show="show" id="backTop" @click="backToTop">
+    <div class="back_wrapper">
+      <img src="./../assets/img/arrow.png" alt>
+    </div>
+    <span>返回顶部</span>
   </div>
 </template>
 <script>
-import "iview/dist/styles/iview.css";
-
-import { Button, BackTop } from "iview";
 export default {
-  components: {
-    BackTop,
-    Button
+  data(){
+    return{
+      show:false
+    }
+  },
+  mounted(){
+    this.isShowBackIcon()
   },
   methods: {
     backToTop() {
@@ -28,6 +32,17 @@ export default {
           cancelAnimationFrame(timer);
         }
       });
+    },
+    isShowBackIcon() {
+      var that = this;
+      window.addEventListener("scroll", function() {
+       var scrollTop = document.documentElement.scrollTop;
+       if(scrollTop>300){
+         that.show = true;
+       }else{
+         that.show = false;
+       }
+      });
     }
   }
 };
@@ -35,8 +50,28 @@ export default {
 <style lang="less" scoped>
 #backTop {
   position: fixed;
-  bottom: 200px;
-  right: 30px;
+  bottom: 118px;
+  right: 230px;
+  text-align: center;
+  .back_wrapper {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 8px;
+    background: #ffffff;
+    border-radius: 30px;
+    box-shadow: 0px 5px 15px 0px rgba(255, 170, 6, 0.22);
+    img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 15px;
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  }
+  font-family: PingFangSC-Regular;
+  font-size: 10px;
+  color: #333333;
 }
 </style>
 

@@ -24,6 +24,9 @@ npm run test
 ```
 npm run lint
 ```
+###线上地址
+http://s.immusician.com/web/test/about.html
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
