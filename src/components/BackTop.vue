@@ -26,7 +26,7 @@ export default {
           document.body.scrollTop || document.documentElement.scrollTop;
         if (oTop > 0) {
           document.body.scrollTop = document.documentElement.scrollTop =
-            oTop - 100;
+            oTop - 180;
           timer = requestAnimationFrame(fn);
         } else {
           cancelAnimationFrame(timer);
@@ -53,6 +53,7 @@ export default {
   bottom: 118px;
   right: 230px;
   text-align: center;
+  z-index: 88;
   .back_wrapper {
     position: relative;
     width: 60px;

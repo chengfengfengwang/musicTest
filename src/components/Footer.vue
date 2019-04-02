@@ -3,8 +3,8 @@
     <div class="wrapper footer_wrapper">
       <div class="footer_logo">
         <img class="logo_yyk" src="./../assets/img/logo_footer_yyk.png" alt>
-        <span class="line"></span>
-        <img class="logo_ai" src="./../assets/img/logo_AI.png" alt>
+        <span class="line" v-show="aiLogoShow"></span>
+        <img class="logo_ai" v-show="aiLogoShow" src="./../assets/img/logo_AI.png" alt>
       </div>
       <div class="footer_main">
         <div class="other_links">
@@ -59,8 +59,19 @@
     </div>
   </footer>
 </template>
+<script>
+export default {
+  props:{
+    aiLogoShow:{
+      default:true
+    }
+  }
+}
+</script>
+
 <style lang="less" scoped>
 footer {
+  position: relative;
   background: #fbf7f1;
   padding: 50px 0;
   .footer_wrapper {
@@ -69,8 +80,11 @@ footer {
   }
 
   .footer_logo {
-    margin-right: 145px;
-    position: relative;
+    position: absolute;
+    left: 145px;
+    top:50%;
+    transform: translateY(-50%);
+    //margin-right: 145px;
     display: flex;
     align-items: center;
     .line {
@@ -88,6 +102,7 @@ footer {
     }
   }
   .footer_main {
+    margin-left: 408px;
     .other_links {
       //display: inline-block;
       display: flex;
