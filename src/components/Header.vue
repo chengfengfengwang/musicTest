@@ -8,13 +8,13 @@
     </div>
     <ul class="nav_list">
       <li>
-        <a href="javascript:;">首页</a>
+        <a v-bind:class="{active:pathname.indexOf('index.html')!=-1}" href="index.html">首页</a>
       </li>
       <li>
-        <a href="javascript:;">课程</a>
+        <a v-bind:class="{active:pathname.indexOf('course.html')!=-1}" href="course.html">课程</a>
       </li>
       <li>
-        <a href="javascript:;">关于我们</a>
+        <a v-bind:class="{active:pathname.indexOf('about.html')!=-1}" href="about.html">关于我们</a>
       </li>
     </ul>
     <div class="contact">
@@ -25,7 +25,12 @@
 </template>
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data() {
+    return {
+      pathname: location.pathname
+    };
+  },
 };
 </script>
 <style lang="less" scoped>
