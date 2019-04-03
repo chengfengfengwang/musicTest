@@ -7,6 +7,8 @@ module.exports = {
         index:'src/modules/index/index.js',
         about:'src/modules/about/about.js',
         console: 'src/modules/console/console.js',
-        client: 'src/modules/client/client.js'
+        client: 'src/modules/client/client.js',
+        //移动端
+        index_mob:'src/modules/index_mob/index_mob.js',
     }
 }
