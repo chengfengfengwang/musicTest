@@ -9,8 +9,8 @@
     "fontmin": "node fontScripts/SH-Medium.js && node fontScripts/SH-Regular.js"
   },
   "dependencies": {
-    "iview": "^3.3.3",
     "swiper": "^4.5.0",
+    "vant": "^1.6.13",
     "vue": "^2.6.6",
     "vue-router": "^3.0.2",
     "vuex": "^3.0.1"

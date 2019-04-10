@@ -9,7 +9,7 @@
         class="nav_item"
         href="index_mob.html"
       >首页</a>
-      <a class="nav_item" href="javascripy:;">中国音乐学院课程</a>
+      <a class="nav_item" v-bind:class="{active:pathname.indexOf('course_mob')!=-1}" href="course_mob.html">中国音乐学院课程</a>
       <a
         v-bind:class="{active:pathname.indexOf('about_mob')!=-1}"
         class="nav_item"

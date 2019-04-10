@@ -81,21 +81,20 @@
         <div class="video_box" @click="handleClick('learning_video_ref','learningVideoShow')">
           <img src="../../assets/mob_assets/img/course_music_basis.png" alt class="cover">
           <img src="../../assets/img/play.png" alt class="play">
-          <div class="video_mask">
-          </div>
+          <div class="video_mask"></div>
           <video ref="learning_video_ref" v-show="learningVideoShow" controls="controls">
             <source src="../../assets/video/immusician-zhu.mp4" type="video/mp4">
           </video>
         </div>
       </div>
     </section>
-    <section class="common_wrapper">
+    <section class="remark">
       <CommonTitle>用户评论</CommonTitle>
       <div class="remark_container wrapper">
         <div id="remarkSwiper" class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item in remarkArr" :key="item">
-              <img :src="item" alt>
+            <div class="swiper-slide" v-for="(item,index) in remarkArr" :key="item">
+              <img @click="previewRemark(index)" :src="item" alt>
             </div>
           </div>
         </div>
@@ -139,7 +138,7 @@
         <img src="./../../assets/mob_assets/img/coopetations.png" alt>
       </div>
     </section>
-    <Footer></Footer>
+    <Footer :aiLogoShow="false"></Footer>
   </div>
 </template>
 <script>
@@ -147,6 +146,8 @@ import Header from "../../components/mob/Header";
 import Footer from "../../components/mob/Footer";
 import CommonTitle from "../../components/mob/CommonTitle";
 import Swiper from "swiper";
+import { ImagePreview } from "vant";
+
 import "swiper/dist/css/swiper.min.css";
 export default {
   data() {
@@ -154,14 +155,15 @@ export default {
       music_basis_video: false,
       djembe_video: false,
       ukulele_video: false,
-      learningVideoShow:false,
+      learningVideoShow: false,
       remarkArr: []
     };
   },
   components: {
     Header,
     CommonTitle,
-    Footer
+    Footer,
+    ImagePreview
   },
   created() {
     for (var i = 4; i < 10; i++) {
@@ -176,6 +178,13 @@ export default {
     this.initBannerSwiper();
   },
   methods: {
+    previewRemark(index) {
+      ImagePreview({
+        images: this.remarkArr,
+        startPosition: index
+      });
+      //ImagePreview(this.remarkArr);
+    },
     handleClick(ref, video) {
       this.$refs[ref].play();
       this[video] = true;
@@ -183,11 +192,11 @@ export default {
     initRemarkSwiper() {
       this.mySwiper = new Swiper("#remarkSwiper", {
         direction: "horizontal",
-        //initialSlide :1,
-        loop: true,
+        initialSlide: 1,
+        //loop: true,
         slidesPerView: 3,
         centeredSlides: true,
-        spaceBetween: 30
+        spaceBetween: 15
       });
     },
     initBannerSwiper() {
@@ -225,6 +234,8 @@ export default {
   display: flex;
   justify-content: space-between;
   text-align: center;
+  padding: 10px 0;
+  box-shadow: 0px 3px 5px 0px #f2f2f2;
   .item_box {
     width: 33.33%;
     position: relative;
@@ -246,7 +257,7 @@ export default {
     height: 60%;
     width: 1px;
     background-color: #d9d9d9;
-    transform: translateY(-50%);
+    transform: translateY(-50%) scaleX(.5);
   }
   .item_box:last-child:after {
     content: "";
@@ -339,8 +350,8 @@ export default {
         bottom: 0px;
         width: 100%;
         height: 100%;
-        background-color: #FF9A29 ;
-        opacity: .3;
+        background-color: #ff9a29;
+        opacity: 0.3;
       }
       video {
         position: absolute;
@@ -352,14 +363,14 @@ export default {
     }
   }
 }
+.remark{
+  background-color: #FBF7F1;
+  padding: 0 15px;
+  overflow: auto;
+}
 #remarkSwiper.swiper-container {
   width: 100%;
   margin: 0 auto;
-  //height: 335px;
-  //height: 370px;
-  //padding: 0 30px;
-  //display: flex;
-  //justify-content: space-between;
   .swiper-slide {
     text-align: center;
     font-size: 18px;
@@ -369,18 +380,15 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 300ms;
     img {
-      width: 100%;
+      width: 120%;
+      background-color: #FBF7F1;
     }
   }
-  //   .swiper-slide {
-  //     text-align: center;
-  //     img {
-  //         //width: 120%;
-  //       box-shadow: 0px 13px 20px 0px rgba(255, 194, 74, 0.28);
-  //       //box-shadow: 5px 0px 10px 10px #94ffc24a;
-  //     }
-  //   }
+  .swiper-slide:not(.swiper-slide-active) {
+    transform: scale(0.8);
+  }
 }
 .promise_section {
   margin-bottom: 40px;
@@ -413,7 +421,8 @@ export default {
 .coopetation {
   img {
     width: 100%;
-  }
+  };
+  margin-bottom: 40px
 }
 </style>
 

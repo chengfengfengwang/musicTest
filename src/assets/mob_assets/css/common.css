@@ -20,3 +20,6 @@ a {
   opacity: 1 !important;
   background-color: #FFAA06 !important;
 }
+.van-image-preview__overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}

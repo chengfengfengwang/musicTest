@@ -9,11 +9,11 @@
       </div>
     </div>
     <img @click="showVideoModal" class="learning_play_icon" src="./../../assets/img/learning_play.png" alt>
-    <VideoModalBox :video="video" ref="videoBox"></VideoModalBox>
+    <VideoModal :video="video" ref="videoBox"></VideoModal>
   </div>
 </template>
 <script>
-import VideoModalBox from './../../components/Index/VideoModalBox'
+import VideoModal from './../../components/Index/VideoModal'
 export default {
   props: {
     width: {
@@ -42,7 +42,7 @@ export default {
     }
   },
   components:{
-    VideoModalBox
+    VideoModal
   },
   data() {
     return {};

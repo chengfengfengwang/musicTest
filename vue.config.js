@@ -11,5 +11,6 @@ module.exports = {
         //移动端
         index_mob:'src/modules/index_mob/index_mob.js',
         about_mob:'src/modules/about_mob/about_mob.js',
+        course_mob:'src/modules/course_mob/course_mob.js'
     }
 }

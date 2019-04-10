@@ -3,7 +3,8 @@ module.exports = {
     '@vue/app'
   ],
   "plugins": [["import", {
-    "libraryName": "iview",
-    "libraryDirectory": "src/components"
+    "libraryName": "vant",
+      "libraryDirectory": "es",
+      "style": true
   }]]
 }

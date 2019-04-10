@@ -35,7 +35,8 @@
 <style lang="less" scoped>
 .about_mob{
     position:relative;
-    min-height:100vh;
+    //height: 100vh;
+    //min-height:100vh;
     .about_footer{
         box-sizing:border-box;
         position:absolute;
@@ -56,6 +57,7 @@
 }
 .main {
   margin: 21px 15px;
+  padding-bottom: 86px;
 }
 .section_title {
   position: relative;
