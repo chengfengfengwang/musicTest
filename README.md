@@ -25,7 +25,7 @@ npm run test
 npm run lint
 ```
 ###线上地址
-http://s.immusician.com/web/test/about.html
+http://s.immusician.com/web/h5/networkTest.html
 
 
 ### Customize configuration

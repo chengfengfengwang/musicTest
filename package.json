@@ -5,10 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "vue-cli-service build && node upload.js",
+    "deploy": "vue-cli-service build && node upload.js && node refresh.js",
     "fontmin": "node fontScripts/SH-Medium.js && node fontScripts/SH-Regular.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "fakervue": "^0.2.3",
     "swiper": "^4.5.0",
     "vant": "^1.6.13",
     "vue": "^2.6.6",

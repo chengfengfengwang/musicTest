@@ -5,8 +5,7 @@ var qiniu = require("qiniu");
 //var buckName = 'base-html';
 var buckName = 'immusician';
 //前缀名
-//var prefix = 'music-base-h5/';
-var prefix = 'web/test/';
+var prefix = 'web/h5/';
 
 main()
 
