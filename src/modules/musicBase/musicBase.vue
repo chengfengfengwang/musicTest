@@ -27,7 +27,6 @@
   </div>
 </template>
 <script>
-//import { isIphonex, isWebview } from "./../../assets/util.js";
 export default {
   data() {
     return {
@@ -36,21 +35,12 @@ export default {
     };
   },
   created() {
-    this.isIphonex = this.testIsIphonex();
+    this.isIphonex = this.$util.testIsIphonex();
   },
   mounted() {
-      this.initShareInstall()
+      this.initShareInstall();
   },
   methods: {
-    testIsIphonex() {
-      if (typeof window !== "undefined" && window) {
-        return (
-          /iphone/gi.test(window.navigator.userAgent) &&
-          window.screen.height >= 812
-        );
-      }
-      return false;
-    },
     closeDownload() {
       this.downloadShow = false;
       sessionStorage.setItem("closedDownloadShow", "true");
