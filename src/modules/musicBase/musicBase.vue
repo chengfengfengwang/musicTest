@@ -2,14 +2,48 @@
   <div class="music_base">
     <div class="wrapper">
       <img src="./../../assets/img/music_base_content.png" alt>
-      <div class="receive">
+      <div class="receive" id="downloadButton1">
         <img src="./../../assets/img/receive_btn.png" alt class="receive_btn">
       </div>
 
-      <div class="video_box first"></div>
-      <div class="video_box second"></div>
+      <div class="video_box first">
+        <img
+          v-show="playShow1"
+          @click="playVideo(1)"
+          src="./../../assets/img/play_icon.png"
+          alt
+          class="play"
+        >
+        <img v-show="playShow1" class="poster" src="./../../assets/img/video_cover2.png" alt="">
+        <video
+        controls
+          ref="myVideo1"
+          poster="./../../assets/img/video_cover2.png"
+          src="https://s.immusician.com/web/h5/video/music_base_1.mp4"
+        ></video>
+      </div>
+      <div class="video_box second">
+        <img
+          v-show="playShow2"
+          @click="playVideo(2)"
+          src="./../../assets/img/play_icon.png"
+          alt
+          class="play"
+        >
+        <img v-show="playShow2" class="poster" src="./../../assets/img/course_music_basis.png" alt="">
+        <video
+        controls
+          ref="myVideo2"
+          poster="./../../assets/img/course_music_basis.png"
+          src="https://s.immusician.com/web/h5/video/music_base_2.mp4"
+        ></video>
+      </div>
     </div>
-    <div class="download_wrapper" v-show="downloadShow" :style="{paddingBottom:isIphonex?'10px':'0px'}">
+    <div
+      class="download_wrapper"
+      v-show="downloadShow"
+      :style="{paddingBottom:isIphonex?'10px':'0px'}"
+    >
       <div class="download">
         <div class="icon_area">
           <img src="./../../assets/img/appicon.png" alt>
@@ -31,16 +65,27 @@ export default {
   data() {
     return {
       downloadShow: true,
-      isIphonex: false
+      isIphonex: false,
+      playShow1: true,
+      playShow2: true
     };
   },
   created() {
     this.isIphonex = this.$util.testIsIphonex();
   },
   mounted() {
-      this.initShareInstall();
+    this.initShareInstall();
   },
   methods: {
+    playVideo(index) {
+      if (index == 1) {
+        this.$refs.myVideo1.play();
+        this.playShow1 = false;
+      } else if (index == 2) {
+        this.$refs.myVideo2.play();
+        this.playShow2 = false;
+      }
+    },
     closeDownload() {
       this.downloadShow = false;
       sessionStorage.setItem("closedDownloadShow", "true");
@@ -67,9 +112,12 @@ export default {
             var m = this,
               button = document.getElementById("downloadButton");
             button.style.visibility = "visible";
-
+             var button1 = document.getElementById("downloadButton1");
             //用户点击某个按钮时(假定按钮id为downloadButton)，安装app
             button.onclick = function() {
+              m.install();
+            };
+            button1.onclick = function() {
               m.install();
             };
           }
@@ -81,16 +129,19 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+*{
+  box-sizing: border-box;
+}
 img {
   width: 100%;
 }
-.music_base{
-background-color: #ffe9ac;
-overflow: hidden;
+.music_base {
+  background-color: #ffe9ac;
+  overflow: hidden;
 }
 .wrapper {
   position: relative;
-  
+
   font-size: 0;
   margin-bottom: 52px;
   .receive {
@@ -103,11 +154,37 @@ overflow: hidden;
     }
   }
   .video_box {
+    position: relative;
     width: 74%;
     height: 10%;
-    border: 2px solid rgba(0, 0, 0, 1);
+     border: 2px solid rgba(0, 0, 0, 1);
     border-radius: 14px;
     position: absolute;
+    //background-color: #333;
+    .play {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 52px;
+      margin-top: -26px;
+      margin-left: -26px;
+      z-index: 9;
+    }
+    .poster{
+      position: absolute;
+      left: 0;
+      top:0;
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      z-index: 8;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+    }
   }
   .video_box.first {
     top: 40.7%;
@@ -130,7 +207,7 @@ overflow: hidden;
   background-color: #fff;
 }
 .download {
-    position: relative;
+  position: relative;
   box-sizing: border-box;
   font-size: 12px;
   background-color: #fff;
