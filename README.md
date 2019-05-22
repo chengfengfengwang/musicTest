@@ -27,6 +27,7 @@ npm run lint
 ###线上地址
 http://s.immusician.com/web/h5/networkTest.html
 
+http://s.immusician.com/web/h5/musicBase.html
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -14,12 +14,12 @@
           alt
           class="play"
         >
-        <img v-show="playShow1" class="poster" src="./../../assets/img/video_cover2.png" alt="">
+        <img v-show="playShow1" class="poster" src="./../../assets/img/course_music_basis.png" alt>
         <video
-        controls
+          controls
           ref="myVideo1"
-          poster="./../../assets/img/video_cover2.png"
-          src="https://s.immusician.com/web/h5/video/music_base_1.mp4"
+          poster="./../../assets/img/course_music_basis.png"
+          src="https://s.immusician.com/web/h5/video/index_music_base.mp4"
         ></video>
       </div>
       <div class="video_box second">
@@ -30,15 +30,33 @@
           alt
           class="play"
         >
-        <img v-show="playShow2" class="poster" src="./../../assets/img/course_music_basis.png" alt="">
+        <img v-show="playShow2" class="poster" src="./../../assets/img/video_cover2.png" alt>
         <video
-        controls
+          controls
           ref="myVideo2"
+          poster="./../../assets/img/video_cover2.png"
+          src="https://s.immusician.com/web/h5/video/music_base_1.mp4"
+        ></video>
+      </div>
+    </div>
+    <!-- <div class="add_area">
+      <div class="video_box third">
+        <img
+          v-show="playShow3"
+          @click="playVideo(3)"
+          src="./../../assets/img/play_icon.png"
+          alt
+          class="play"
+        >
+        <img v-show="playShow3" class="poster" src="./../../assets/img/course_music_basis.png" alt>
+        <video
+          controls
+          ref="myVideo3"
           poster="./../../assets/img/course_music_basis.png"
           src="https://s.immusician.com/web/h5/video/music_base_2.mp4"
         ></video>
       </div>
-    </div>
+    </div> -->
     <div
       class="download_wrapper"
       v-show="downloadShow"
@@ -67,7 +85,8 @@ export default {
       downloadShow: true,
       isIphonex: false,
       playShow1: true,
-      playShow2: true
+      playShow2: true,
+      playShow3: true
     };
   },
   created() {
@@ -84,6 +103,9 @@ export default {
       } else if (index == 2) {
         this.$refs.myVideo2.play();
         this.playShow2 = false;
+      } else if (index == 3) {
+        this.$refs.myVideo3.play();
+        this.playShow3 = false;
       }
     },
     closeDownload() {
@@ -112,7 +134,7 @@ export default {
             var m = this,
               button = document.getElementById("downloadButton");
             button.style.visibility = "visible";
-             var button1 = document.getElementById("downloadButton1");
+            var button1 = document.getElementById("downloadButton1");
             //用户点击某个按钮时(假定按钮id为downloadButton)，安装app
             button.onclick = function() {
               m.install();
@@ -129,7 +151,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-*{
+* {
   box-sizing: border-box;
 }
 img {
@@ -141,7 +163,7 @@ img {
 }
 .wrapper {
   position: relative;
-
+  //padding-bottom: 300px;
   font-size: 0;
   margin-bottom: 52px;
   .receive {
@@ -153,49 +175,61 @@ img {
       width: 100%;
     }
   }
-  .video_box {
-    position: relative;
-    width: 74%;
-    height: 10%;
-     border: 2px solid rgba(0, 0, 0, 1);
-    border-radius: 14px;
+}
+.add_area{
+  position: relative;
+  overflow: auto;
+  height: 100px;
+}
+.video_box {
+  position: relative;
+  width: 74%;
+  height: 10%;
+  border: 2px solid rgba(0, 0, 0, 1);
+  border-radius: 14px;
+  position: absolute;
+  //background-color: #333;
+  .play {
     position: absolute;
-    //background-color: #333;
-    .play {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 52px;
-      margin-top: -26px;
-      margin-left: -26px;
-      z-index: 9;
-    }
-    .poster{
-      position: absolute;
-      left: 0;
-      top:0;
-      width: 100%;
-      height: 100%;
-      border-radius: 14px;
-      z-index: 8;
-    }
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 14px;
-    }
-  }
-  .video_box.first {
-    top: 40.7%;
     left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    width: 52px;
+    margin-top: -26px;
+    margin-left: -26px;
+    z-index: 9;
   }
-  .video_box.second {
-    bottom: 2.7%;
-    left: 50%;
-    transform: translateX(-50%);
+  .poster {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    z-index: 8;
   }
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+  }
+}
+.video_box.first {
+  top: 40.7%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.video_box.second {
+  bottom: 2.7%;
+  //top: 87.1%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.video_box.third {
+  height: 10%;
+  bottom: 5.7%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .download_wrapper {
   position: fixed;
