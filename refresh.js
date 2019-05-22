@@ -10,7 +10,8 @@ var cdnManager = new qiniu.cdn.CdnManager(mac);
 var urlsToRefresh = [
     'http://s.immusician.com/web/h5/networkTest.html',
     'http://s.immusician.com/web/h5/addTeacher.html',
-    'http://s.immusician.com/web/h5/searchKey.html'
+    'http://s.immusician.com/web/h5/searchKey.html',
+    'http://s.immusician.com/web/h5/musicBase.html'
 ];
 //刷新链接，单次请求链接不可以超过100个，如果超过，请分批发送请求
 cdnManager.refreshUrls(urlsToRefresh, function (err, respBody, respInfo) {
