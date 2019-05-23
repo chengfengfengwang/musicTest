@@ -13,6 +13,7 @@ module.exports = {
         addTeacher:'src/modules/addTeacher/addTeacher.js',
         searchKey:'src/modules/searchKey/searchKey.js',
         musicBase:'src/modules/musicBase/musicBase.js',
+        aiCourseList:'src/modules/aiCourseList/aiCourseList.js',
         test:'src/modules/test/test.js',
     }
 }
