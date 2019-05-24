@@ -30,5 +30,7 @@ http://s.immusician.com/web/h5/networkTest.html
 http://s.immusician.com/web/h5/musicBase.html
 
 http://s.immusician.com/web/h5/aiCourseList.html
+
+http://s.immusician.com/web/h5/vipConfig.html
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -3,10 +3,14 @@
     <!-- <div class="top_menu">
       <div class="top_menu_item active">{{obj.course_type}}</div>
       <div class="top_menu_item">尤克里里中级</div>
-    </div> -->
-    <Loading v-show="loadingShow" />
+    </div>-->
+    <Loading v-show="loadingShow"/>
     <div class="page_title">
-      <div class="title"><img class="left" src="../../assets/img/ai/title_d.png" alt=""><span class="title_content">{{obj.title}}</span><img class="right" src="../../assets/img/ai/title_d.png" alt=""></div>
+      <div class="title">
+        <img class="left" src="../../assets/img/ai/title_d.png" alt>
+        <span class="title_content">{{obj.title}}</span>
+        <img class="right" src="../../assets/img/ai/title_d.png" alt>
+      </div>
       <div class="sub_title">{{obj.sub_title}}</div>
     </div>
     <div class="section" v-for="(item,index) in obj.section_list" :key="index">
@@ -58,12 +62,12 @@
       <!-- <div class="round"></div> -->
       <!-- <div>
           <img src="" alt="">
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
 <script>
-import Loading from './../../components/Loading'
+import Loading from "./../../components/Loading";
 var obj = {
   course_type: "尤克里里初级",
   title: "尤克里里初级必修课",
@@ -212,34 +216,42 @@ export default {
   data() {
     return {
       obj: {},
-      loadingShow:true,
-      course_ids:''
+      loadingShow: true,
+      course_ids: ""
     };
   },
-  components:{
+  components: {
     Loading
   },
-  mounted(){
-    console.log(this.$util.getQueryVariable('course_ids'));
-    this.course_ids = this.$util.getQueryVariable('course_ids');
-    this.get()
+  mounted() {
+    console.log(location.href);
+    console.log(this.$util.getQueryVariable("course_ids"));
+    this.course_ids = this.$util.getQueryVariable("course_ids");
+    this.get();
   },
-  methods:{
-    get(){
+  methods: {
+    get() {
       this.loadingShow = true;
       //var url = 'http://192.168.1.171:22222/v3/course/catalog?course_ids=[168,120,119]'
-      var url = `http://iguitar.immusician.com:2525/v3/course/catalog?course_ids=${this.course_ids}`;
+      var url = `http://iguitar.immusician.com:2525/v3/course/catalog?course_ids=${
+        this.course_ids
+      }`;
       //var url = `http://192.168.1.171:22222/v3/course/catalog?course_ids=${this.course_ids}`
-      this.axios.get(url).then(res=>{
-        var res = res.data;
-        this.loadingShow = false;
-        if(res.data && res.data.length>0){
-          this.obj = res.data[0]
-        }else{
-          alert('无相关数据')
-        }
-      })
-
+      console.log(url);
+      this.axios
+        .get(url)
+        .then(res => {
+          var res = res.data;
+          this.loadingShow = false;
+          if (res.data && res.data.length > 0) {
+            this.obj = res.data[0];
+          } else {
+            alert("无相关数据");
+          }
+        })
+        .catch(() => {
+          alert("请求出错");
+        });
     }
   }
 };
@@ -290,14 +302,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    .title_content{
-        margin: 0 8px;
+    .title_content {
+      margin: 0 8px;
     }
-    img{
-        width: 30px;
+    img {
+      width: 30px;
     }
-    img.right{
-        transform: rotate(180deg)
+    img.right {
+      transform: rotate(180deg);
     }
   }
   .sub_title {
@@ -402,7 +414,7 @@ export default {
         font-size: 13px;
         font-family: PingFangSC-Regular;
         font-weight: 400;
-        color: rgba(255,255,255,.7);
+        color: rgba(255, 255, 255, 0.7);
         .item_content {
           margin-bottom: 7px;
         }
@@ -416,28 +428,27 @@ export default {
       padding-right: 5px;
     }
     .content_item:nth-child(even) {
-        padding-left: 5px;
+      padding-left: 5px;
       width: 46%;
     }
   }
-//   .round{
-     
-//       position: absolute;
-//       width: 200px;
-//       height: 200px;
-//       z-index: 999;
-//       border-radius: 50%;
-//       background-color: yellow;
-//       top: 50%;
-//       transform: translateY(-50%);
-//       left: -11px;
-//   }
+  //   .round{
+
+  //       position: absolute;
+  //       width: 200px;
+  //       height: 200px;
+  //       z-index: 999;
+  //       border-radius: 50%;
+  //       background-color: yellow;
+  //       top: 50%;
+  //       transform: translateY(-50%);
+  //       left: -11px;
+  //   }
 }
 // @media screen and (min-width: 900px) {
 //     .page_title,.section {
 //         width: 800px;
 //     }
 // }
-
 </style>
 

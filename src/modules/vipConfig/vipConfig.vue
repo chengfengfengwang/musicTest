@@ -46,13 +46,51 @@ export default {
   },
   methods: {
     //y7z4cqx
-    search(code) {
+    search() {
+      this.axios
+        .get(`http://192.168.1.87:22222/v3/users/vip/feedback/?tel=${this.key}`)
+        .then(res => {
+          this.$loading.hide();
+          var res = res.data;
+          console.log("---");
+          console.log(res);
+          if (res.data.state !== undefined) {
+            if (res.data.state === 0) {
+              console.log("no");
+            } else if (res.data.state === 1) {
+              console.log(res.data.msg);
+            }
+          }else{
+            console.log("yes");
+          }
+          if (res.error) {
+            this.resultShow = false;
+            this.errMsg = res.message;
+          } else {
+            this.resultShow = true;
+            var res = res.data;
+            this.result.created_at = res.created_at;
+            this.result.tel = res.user.tel;
+            this.result.course_name = res.sup_courses.course_name;
+            this.result.course_id = res.sup_courses.course_id;
+            console.log(this.result);
+          }
+        });
+    },
+    update(code) {
       this.$loading.show("查询中...");
+      if (this.status == "create") {
+        //取消
+        var state = 0;
+      } else {
+        //创建
+        var state = 1;
+      }
       this.axios
         .get(
-          `http://iguitar.immusician.com:2525/v3/active_code/search/?code=${
+          `http://192.168.1.87:22222/v3/users/vip/update_vip/?tel=${
             this.key
-          }`
+          }&state=${state}`
         )
         .then(res => {
           this.$loading.hide();
@@ -75,10 +113,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-h4{
-    padding: 15px 0;
-    font-size: 16px;
-    text-align: center;
+h4 {
+  padding: 15px 0;
+  font-size: 16px;
+  text-align: center;
 }
 .search_wrapper {
   text-align: center;

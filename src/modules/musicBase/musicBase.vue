@@ -20,7 +20,7 @@
           preload="auto"
           ref="myVideo1"
           poster="./../../assets/img/course_music_basis.png"
-          src="https://s.immusician.com/web/h5/video/index_music_base_1.mp4"
+          src="https://s.immusician.com/web/h5/video/index_music_base_2.mp4?v=1"
         ></video>
       </div>
       <div class="video_box second">
@@ -37,7 +37,7 @@
           preload="auto"
           ref="myVideo2"
           poster="./../../assets/img/video_cover2.png" 
-          src="https://s.immusician.com/web/h5/video/music_base_2_1.mp4"
+          src="https://s.immusician.com/web/h5/video/music_base_2_2.mp4?v=1"
         ></video>
       </div>
     </div>
