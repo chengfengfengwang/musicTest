@@ -1,29 +1,37 @@
 <template>
   <div class="search_key">
-    <h4>VIP状态查询</h4>
-    <div class="search_wrapper">
-      <input v-on:keyup.enter="search" v-model="key" type="text" style="margin-right:10px">
-      <div class="btn" @click="search">查询</div>
-    </div>
-    <div class="result" v-show="resultShow">
-      <div class="row">
-        <div class="label">创建时间</div>
-        <div>{{result.created_at}}</div>
+    <div class="section">
+      <h4>VIP状态查询</h4>
+      <div class="search_wrapper" style="margin-top:10px">
+        <input v-on:keyup.enter="search" v-model="key" type="text" style="margin-right:10px">
+        <div class="btn" @click="search">查询</div>
       </div>
-      <div class="row">
-        <div class="label">用户电话</div>
-        <div>{{result.tel}}</div>
-      </div>
-      <div class="row">
-        <div class="label">激活课程名称</div>
-        <div>{{result.course_name}}</div>
-      </div>
-      <div class="row">
-        <div class="label">激活课程id</div>
-        <div>{{result.course_id}}</div>
+      <div class="my_result" v-show="resultShow">
+        <span>查询结果：</span>
+        {{resultMessage}}
       </div>
     </div>
-    <div class="no-data" v-show="!resultShow">{{errMsg}}</div>
+    <div class="section">
+      <h4>注册VIP</h4>
+      <div class="search_wrapper" style="margin-top:10px">
+        <input
+          v-on:keyup.enter="register"
+          v-model="registerKey"
+          type="text"
+          style="margin-right:10px"
+        >
+        <div class="btn" @click="register">注册</div>
+      </div>
+    </div>
+    <div class="section">
+      <h4>取消VIP</h4>
+      <div class="search_wrapper" style="margin-top:10px">
+        <input v-on:keyup.enter="cancel" v-model="cancelKey" type="text" style="margin-right:10px">
+        <div class="btn" @click="cancel">取消</div>
+      </div>
+    </div>
+
+    <!-- <div class="no-data" v-show="!resultShow">{{errMsg}}</div> -->
   </div>
 </template>
 <script>
@@ -31,13 +39,10 @@ export default {
   data() {
     return {
       key: "",
+      registerKey: "",
+      cancelKey: "",
       errMsg: "",
-      result: {
-        created_at: "",
-        tel: "",
-        course_name: "",
-        course_id: ""
-      },
+      resultMessage: "",
       resultShow: false
     };
   },
@@ -46,34 +51,46 @@ export default {
   },
   methods: {
     //y7z4cqx
-    search() {
+    cancel() {
       this.axios
-        .get(`http://192.168.1.87:22222/v3/users/vip/feedback/?tel=${this.key}`)
+        .get(
+          `http://iguitar.immusician.com:2525/v3/users/vip/update_vip/?tel=${
+            this.cancelKey
+          }&state=0`
+        )
         .then(res => {
           this.$loading.hide();
-          var res = res.data;
-          console.log("---");
-          console.log(res);
-          if (res.data.state !== undefined) {
-            if (res.data.state === 0) {
-              console.log("no");
-            } else if (res.data.state === 1) {
-              console.log(res.data.msg);
-            }
-          }else{
-            console.log("yes");
+          var res = res.data.data;
+          if (!res.error) {
+            alert(res.msg);
           }
-          if (res.error) {
-            this.resultShow = false;
-            this.errMsg = res.message;
-          } else {
-            this.resultShow = true;
-            var res = res.data;
-            this.result.created_at = res.created_at;
-            this.result.tel = res.user.tel;
-            this.result.course_name = res.sup_courses.course_name;
-            this.result.course_id = res.sup_courses.course_id;
-            console.log(this.result);
+        });
+    },
+    register() {
+      this.axios
+        .get(
+          `http://iguitar.immusician.com:2525/v3/users/vip/update_vip/?tel=${
+            this.registerKey
+          }`
+        )
+        .then(res => {
+          this.$loading.hide();
+          var res = res.data.data;
+          if (!res.error) {
+            alert(res.msg);
+          }
+        });
+    },
+    search() {
+      this.axios
+        .get(`http://iguitar.immusician.com:2525/v3/users/vip/feedback/?tel=${this.key}`)
+        .then(res => {
+          this.$loading.hide();
+          var res = res.data.data;
+          this.resultShow = true;
+          this.resultMessage = "";
+          for (var key in res) {
+            this.resultMessage += `${key}：${res[key]} `;
           }
         });
     },
@@ -88,7 +105,7 @@ export default {
       }
       this.axios
         .get(
-          `http://192.168.1.87:22222/v3/users/vip/update_vip/?tel=${
+          `http://iguitar.immusician.com:2525/v3/users/vip/update_vip/?tel=${
             this.key
           }&state=${state}`
         )
@@ -101,11 +118,7 @@ export default {
           } else {
             this.resultShow = true;
             var res = res.data;
-            this.result.created_at = res.created_at;
-            this.result.tel = res.user.tel;
-            this.result.course_name = res.sup_courses.course_name;
-            this.result.course_id = res.sup_courses.course_id;
-            console.log(this.result);
+            console.log(this.my_result);
           }
         });
     }
@@ -113,8 +126,13 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.section{
+  border-bottom :1px solid #f2f2f2;
+  padding: 10px 20px 20px 20px;
+  margin:10px 
+}
 h4 {
-  padding: 15px 0;
+  //padding: 15px 0;
   font-size: 16px;
   text-align: center;
 }
@@ -124,18 +142,20 @@ h4 {
 .search_key {
   padding: 10px;
 }
-.result {
+.my_result {
   margin-top: 20px;
-  .row {
-    font-size: 16px;
-    display: flex;
-    justify-content: space-between;
-  }
+  text-align: center;
 }
 @media screen and (min-width: 700px) {
-  .result {
+  .my_result {
     width: 700px;
     margin: 20px auto;
+  }
+  .section {
+    width: 700px;
+    margin: 20px auto;
+    padding: 30px;
+    border:1px dashed #a78181
   }
 }
 </style>
