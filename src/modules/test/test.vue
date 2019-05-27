@@ -1,15 +1,16 @@
 <template>
-    <div>
-        <div>hello</div>
-        <input type="text">
-        <Button>aa</Button>
-    </div>
+  <div>
+    <div>hello test</div>
+  </div>
 </template>
 <script>
 export default {
-    mounted(){
-        console.log(this.$util)
-    }
-}
+  mounted() {
+    console.log(process.env);
+    this.$dialog.alert({
+      message: "弹窗内容"
+    });
+  }
+};
 </script>
 
