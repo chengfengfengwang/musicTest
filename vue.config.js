@@ -31,5 +31,6 @@ module.exports = {
         aiCourseList: 'src/modules/aiCourseList/aiCourseList.js',
         vipConfig: 'src/modules/vipConfig/vipConfig.js',
         test: 'src/modules/test/test.js',
+        test1: 'src/modules/test1/test1.js',
     }
 }

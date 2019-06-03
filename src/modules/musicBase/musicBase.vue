@@ -36,7 +36,7 @@
           controls
           preload="auto"
           ref="myVideo2"
-          poster="./../../assets/img/video_cover2.png" 
+          poster="./../../assets/img/video_cover2.png"
           src="https://s.immusician.com/web/h5/video/music_base_2_2.mp4?v=1"
         ></video>
       </div>
@@ -58,7 +58,7 @@
           src="https://s.immusician.com/web/h5/video/music_base_2.mp4"
         ></video>
       </div>
-    </div> -->
+    </div>-->
     <div
       class="download_wrapper"
       v-show="downloadShow"
@@ -171,22 +171,22 @@ img {
   .receive {
     position: absolute;
     left: 18%;
-    top: 24.2%;
+    top: 19.2%;
     width: 128px;
     img {
       width: 100%;
     }
   }
 }
-.add_area{
+.add_area {
   position: relative;
   overflow: auto;
   height: 100px;
 }
 .video_box {
   position: relative;
-  width: 74%;
-  height: 10%;
+  width: 70%;
+  height: 8%;
   border: 2px solid rgba(0, 0, 0, 1);
   border-radius: 14px;
   position: absolute;
@@ -208,6 +208,7 @@ img {
     height: 100%;
     border-radius: 14px;
     z-index: 8;
+    object-fit: cover;
   }
   video {
     width: 100%;
@@ -217,12 +218,12 @@ img {
   }
 }
 .video_box.first {
-  top: 40.7%;
+  top: 32.3%;
   left: 50%;
   transform: translateX(-50%);
 }
 .video_box.second {
-  bottom: 2.7%;
+  bottom: 22.7%;
   //top: 87.1%;
   left: 50%;
   transform: translateX(-50%);
