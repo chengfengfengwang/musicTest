@@ -15,7 +15,7 @@ export default {
       speed: 65,
       clickTime: "",
       interval: "",
-      index: 0,
+      index: -1,
       error: 300,
       spaceBeat: 4
     };
@@ -30,10 +30,15 @@ export default {
     //     // Animation complete.
     //   }
     // );
-    this.interval = 60000 / this.speed;
-    //this.bindClick();
+    
+    this.getInterval();
   },
   methods: {
+    getInterval(){
+      let base = Math.round(60000 / this.speed);
+      let baseRemainder = base % 10;
+      this.interval = Math.round(base / 10) * 10
+    },
     isAccord(num, interval, error) {
       const remainder = num % interval;
       const midPoint = interval / 2;
@@ -63,20 +68,18 @@ export default {
         const errorPoint = this.error / 2;
         if (remainder > midPoint) {
           if (Math.abs(remainder - this.interval) > errorPoint) {
-            console.log("false");
+            this.handleClick('wrong')
           } else {
-            console.log("right");
-            this.beats[this.index].style.background = 'blue'
+            this.handleClick('right')
           }
         } else {
           if (remainder > errorPoint) {
-            console.log("false");
+            this.handleClick('wrong')
           } else {
-            console.log("right");
-            this.beats[this.index].style.background = 'blue'
+            this.handleClick('right')
           }
         }
-        console.log(this.time,this.index);
+        //console.log(this.time, this.index);
       });
     },
     upBeats() {
@@ -95,6 +98,9 @@ export default {
         this.time += 10;
         //当前处于第几拍的范围内，从0开始
         this.index = Math.floor(this.time / this.interval);
+        // if((this.time % this.interval)===0){
+        //   this.index = Math.floor(this.time/this.interval)
+        // }
       }, 10);
     },
     start() {
@@ -105,10 +111,24 @@ export default {
         this.countTime();
         this.bindClick();
       }, this.spaceBeat * this.interval);
-      
+
       setTimeout(() => {
         this.upBeats();
-      }, (this.spaceBeat-2) * this.interval);
+      }, (this.spaceBeat - 2) * this.interval);
+    },
+    handleClick(status) {
+      //this.index+=1;
+      const curBeats = this.beats[this.index];
+      if(curBeats.classList.contains("right") || curBeats.classList.contains("wrong")){
+        return
+      }
+      if (status === "right") {
+        console.log("right");
+        curBeats.classList.add("right");
+      } else if (status === "wrong") {
+        console.log("false");
+        curBeats.classList.add("wrong");
+      }
     }
   }
 };
@@ -119,24 +139,21 @@ body {
   position: relative;
 }
 .beat {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: red;
   position: absolute;
   bottom: -30px;
 }
-.beat1 {
-  left: 50px;
-}
-.beat2 {
-  left: 250px;
-}
-.beat3 {
-  left: 130px;
-}
 .beat_up {
   animation: up 5s linear forwards;
+}
+.beat.right {
+  background-color: blueviolet;
+}
+.beat.wrong {
+  background-color: gray;
 }
 @keyframes up {
   0% {
