@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>hello test</div>
-    <audio ref="music" controls src="https://s.immusician.com/web/year-report/test2.mp3"></audio>
-    <button @click="start">开始</button>
+    <audio id="myAudio" ref="music" controls src="https://s.immusician.com/web/year-report/test2.mp3"></audio>
+    <div @click="start" class="btn">开始</div>
     <div class="beat" v-for="n in 20"></div>
   </div>
 </template>
@@ -17,7 +17,8 @@ export default {
       interval: "",
       index: -1,
       error: 300,
-      spaceBeat: 4
+      spaceBeat: 4,
+      audio:''
     };
   },
   mounted() {
@@ -30,38 +31,26 @@ export default {
     //     // Animation complete.
     //   }
     // );
-    
+    this.audio = this.$refs.music;
+    this.$refs.music.addEventListener('play',()=>{
+      
+      console.log(this.audio.currentTime)
+    })
     this.getInterval();
+    console.log(this.interval)
   },
   methods: {
     getInterval(){
-      let base = Math.round(60000 / this.speed);
-      let baseRemainder = base % 10;
-      this.interval = Math.round(base / 10) * 10
-    },
-    isAccord(num, interval, error) {
-      const remainder = num % interval;
-      const midPoint = interval / 2;
-      const errorPoint = error / 2;
-      if (remainder > midPoint) {
-        if (Math.abs(remainder - interval) > errorPoint) {
-          console.log("false");
-        } else {
-          console.log("right");
-        }
-      } else {
-        if (remainder > errorPoint) {
-          console.log("false");
-        } else {
-          console.log("right");
-        }
-      }
+      // let base = Math.round(60000 / this.speed);
+      // let baseRemainder = base % 10;
+      // this.interval = Math.round(base / 10) * 10
+      this.interval = 60000 / this.speed;
     },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
     bindClick() {
-      document.body.addEventListener("click", e => {
+      document.body.addEventListener("touchstart", e => {
         this.clickTime = this.time;
         const remainder = this.clickTime % this.interval;
         const midPoint = this.interval / 2;
@@ -79,7 +68,7 @@ export default {
             this.handleClick('right')
           }
         }
-        //console.log(this.time, this.index);
+        console.log(this.time, this.index);
       });
     },
     upBeats() {
@@ -95,17 +84,17 @@ export default {
     countTime() {
       this.time = 0;
       setInterval(() => {
+        //console.log(this.audio.currentTime)
         this.time += 10;
         //当前处于第几拍的范围内，从0开始
-        this.index = Math.floor(this.time / this.interval);
+        //this.index = Math.round(this.time / this.interval);
+        //this.index = Math.floor(this.time / this.interval);
         // if((this.time % this.interval)===0){
         //   this.index = Math.floor(this.time/this.interval)
         // }
       }, 10);
     },
     start() {
-      // this.countTime();
-      // this.bindClick();
       this.$refs.music.play();
       setTimeout(() => {
         this.countTime();
@@ -118,6 +107,7 @@ export default {
     },
     handleClick(status) {
       //this.index+=1;
+      this.index = Math.round(this.time / this.interval)
       const curBeats = this.beats[this.index];
       if(curBeats.classList.contains("right") || curBeats.classList.contains("wrong")){
         return
@@ -147,7 +137,7 @@ body {
   bottom: -30px;
 }
 .beat_up {
-  animation: up 5s linear forwards;
+  animation: up 6s linear forwards;
 }
 .beat.right {
   background-color: blueviolet;

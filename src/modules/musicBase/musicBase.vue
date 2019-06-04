@@ -116,7 +116,8 @@ export default {
     },
     initShareInstall() {
       var data = ShareInstall.parseUrlParams(); //shareinstall.js中提供的工具函数，解析url中的所有查询参数
-      data.channel = "index_mob";
+      data.channel = data.channel ? data.channel : "bdtg";
+      console.log(data)
       new ShareInstall(
         {
           appKey: "2KBKKFAK2E26FF",
