@@ -4,6 +4,7 @@
     <audio id="myAudio" ref="music" controls src="https://s.immusician.com/web/year-report/test2.mp3"></audio>
     <div @click="start" class="btn">开始</div>
     <div class="beat" v-for="n in 20"></div>
+    <audio ref="clickVoice" controls src="http://www.w3school.com.cn/i/horse.ogg"></audio>
   </div>
 </template>
 <script>
@@ -13,7 +14,6 @@ export default {
       time: "",
       beats: [],
       speed: 65,
-      clickTime: "",
       interval: "",
       index: -1,
       error: 300,
@@ -22,22 +22,10 @@ export default {
     };
   },
   mounted() {
-    // $(".beat").animate(
-    //   {
-    //     bottom: "350",
-    //   },
-    //   10000,
-    //   function() {
-    //     // Animation complete.
-    //   }
-    // );
     this.audio = this.$refs.music;
-    this.$refs.music.addEventListener('play',()=>{
-      
-      console.log(this.audio.currentTime)
-    })
+    this.clickVoice = this.$refs.clickVoice;
     this.getInterval();
-    console.log(this.interval)
+    //console.log(this.interval)
   },
   methods: {
     getInterval(){
@@ -46,13 +34,24 @@ export default {
       // this.interval = Math.round(base / 10) * 10
       this.interval = 60000 / this.speed;
     },
+    start() {
+      this.$refs.music.play();
+      setTimeout(() => {
+        this.bindClick();
+      }, this.spaceBeat * this.interval);
+
+      setTimeout(() => {
+        this.upBeats();
+      }, (this.spaceBeat - 2) * this.interval);
+    },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
     bindClick() {
       document.body.addEventListener("touchstart", e => {
-        this.clickTime = this.time;
-        const remainder = this.clickTime % this.interval;
+        //this.clickVoice.play();
+        const clickTime = this.audio.currentTime * 1000;
+        const remainder = clickTime % this.interval;
         const midPoint = this.interval / 2;
         const errorPoint = this.error / 2;
         if (remainder > midPoint) {
@@ -68,46 +67,11 @@ export default {
             this.handleClick('right')
           }
         }
-        console.log(this.time, this.index);
+        console.log(this.audio.currentTime * 1000, this.index);
       });
-    },
-    upBeats() {
-      var beats = document.querySelectorAll(".beat");
-      this.beats = beats;
-      beats.forEach((e, i) => {
-        e.style.left = Math.random() * 300 + "px";
-        setTimeout(() => {
-          e.classList.add("beat_up");
-        }, this.interval * i);
-      });
-    },
-    countTime() {
-      this.time = 0;
-      setInterval(() => {
-        //console.log(this.audio.currentTime)
-        this.time += 10;
-        //当前处于第几拍的范围内，从0开始
-        //this.index = Math.round(this.time / this.interval);
-        //this.index = Math.floor(this.time / this.interval);
-        // if((this.time % this.interval)===0){
-        //   this.index = Math.floor(this.time/this.interval)
-        // }
-      }, 10);
-    },
-    start() {
-      this.$refs.music.play();
-      setTimeout(() => {
-        this.countTime();
-        this.bindClick();
-      }, this.spaceBeat * this.interval);
-
-      setTimeout(() => {
-        this.upBeats();
-      }, (this.spaceBeat - 2) * this.interval);
     },
     handleClick(status) {
-      //this.index+=1;
-      this.index = Math.round(this.time / this.interval)
+      this.index = Math.round(this.audio.currentTime * 1000 / this.interval) - this.spaceBeat;
       const curBeats = this.beats[this.index];
       if(curBeats.classList.contains("right") || curBeats.classList.contains("wrong")){
         return
@@ -119,6 +83,16 @@ export default {
         console.log("false");
         curBeats.classList.add("wrong");
       }
+    },
+    upBeats() {
+      var beats = document.querySelectorAll(".beat");
+      this.beats = beats;
+      beats.forEach((e, i) => {
+        e.style.left = Math.random() * 300 + "px";
+        setTimeout(() => {
+          e.classList.add("beat_up");
+        }, this.interval * i);
+      });
     }
   }
 };
@@ -137,7 +111,7 @@ body {
   bottom: -30px;
 }
 .beat_up {
-  animation: up 6s linear forwards;
+  animation: up 7s linear forwards;
 }
 .beat.right {
   background-color: blueviolet;
