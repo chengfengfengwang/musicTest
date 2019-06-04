@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>hello test</div>
-    <audio controls src="http://image.yinji.immusician.com/cover/game_material155704803581981.mp3"></audio>
+    <audio ref="music" controls src="https://s.immusician.com/web/year-report/test2.mp3"></audio>
     <button @click="start">开始</button>
     <div class="beat" v-for="n in 20"></div>
   </div>
@@ -12,11 +12,12 @@ export default {
     return {
       time: "",
       beats: [],
-      speed: 60,
+      speed: 65,
       clickTime: "",
       interval: "",
       index: 0,
-      error:200
+      error: 300,
+      spaceBeat: 4
     };
   },
   mounted() {
@@ -30,9 +31,27 @@ export default {
     //   }
     // );
     this.interval = 60000 / this.speed;
-    this.bindClick();
+    //this.bindClick();
   },
   methods: {
+    isAccord(num, interval, error) {
+      const remainder = num % interval;
+      const midPoint = interval / 2;
+      const errorPoint = error / 2;
+      if (remainder > midPoint) {
+        if (Math.abs(remainder - interval) > errorPoint) {
+          console.log("false");
+        } else {
+          console.log("right");
+        }
+      } else {
+        if (remainder > errorPoint) {
+          console.log("false");
+        } else {
+          console.log("right");
+        }
+      }
+    },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
@@ -41,21 +60,23 @@ export default {
         this.clickTime = this.time;
         const remainder = this.clickTime % this.interval;
         const midPoint = this.interval / 2;
-        const errorPoint = this.error / 2; 
-        if((remainder>midPoint)){
-          if(Math.abs(remainder - this.interval) > errorPoint){
-            console.log('false')
-          }else{
-            console.log('right')
+        const errorPoint = this.error / 2;
+        if (remainder > midPoint) {
+          if (Math.abs(remainder - this.interval) > errorPoint) {
+            console.log("false");
+          } else {
+            console.log("right");
+            this.beats[this.index].style.background = 'blue'
           }
-        }else{
-          if(remainder > errorPoint){
-            console.log('false')
-          }else{
-            console.log('right')
+        } else {
+          if (remainder > errorPoint) {
+            console.log("false");
+          } else {
+            console.log("right");
+            this.beats[this.index].style.background = 'blue'
           }
         }
-        console.log(this.index, this.time);
+        console.log(this.time,this.index);
       });
     },
     upBeats() {
@@ -65,7 +86,7 @@ export default {
         e.style.left = Math.random() * 300 + "px";
         setTimeout(() => {
           e.classList.add("beat_up");
-        }, 1000 * i);
+        }, this.interval * i);
       });
     },
     countTime() {
@@ -77,18 +98,17 @@ export default {
       }, 10);
     },
     start() {
-      this.countTime();
-      this.upBeats();
-    },
-    appendT() {
-      var span = document.createElement("span");
-      span.innerHTML = "正";
-      document.body.appendChild(span);
-    },
-    appendF() {
-      var span = document.createElement("span");
-      span.innerHTML = "负";
-      document.body.appendChild(span);
+      // this.countTime();
+      // this.bindClick();
+      this.$refs.music.play();
+      setTimeout(() => {
+        this.countTime();
+        this.bindClick();
+      }, this.spaceBeat * this.interval);
+      
+      setTimeout(() => {
+        this.upBeats();
+      }, (this.spaceBeat-2) * this.interval);
     }
   }
 };
