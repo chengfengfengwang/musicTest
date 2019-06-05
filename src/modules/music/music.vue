@@ -168,6 +168,7 @@ img {
 .music_wrapper{
   background-color: #fff;
   overflow: hidden;
+  margin-bottom: 50px
 }
 .wrapper {
   position: relative;
