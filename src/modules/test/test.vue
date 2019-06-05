@@ -3,7 +3,7 @@
     <div>hello test</div>
     <audio id="myAudio" ref="music" controls src="https://s.immusician.com/web/year-report/test2.mp3"></audio>
     <div @click="start" class="btn">开始</div>
-    <div class="beat" v-for="n in 20"></div>
+    <div class="beat" v-for="n in 17"></div>
     <audio ref="clickVoice" controls src="http://www.w3school.com.cn/i/horse.ogg"></audio>
   </div>
 </template>
