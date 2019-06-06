@@ -32,7 +32,9 @@ module.exports = {
         vipConfig: 'src/modules/vipConfig/vipConfig.js',
         //网易100音基推广h5
         music: 'src/modules/music/music.js',
+        //惠娟-pc音基课程推广
+        musicCourse: 'src/modules/musicCourse/musicCourse.js',
         test: 'src/modules/test/test.js',
-        test1: 'src/modules/test1/test1.js',
+        test1: 'src/modules/test1/test1.js',   
     }
 }

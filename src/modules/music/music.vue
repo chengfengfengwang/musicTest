@@ -73,9 +73,9 @@
           <div class="sub_title">上音乐壳，让孩子爱上音乐</div>
         </div>
         <div class="down_load_btn" id="downloadButton">点击下载</div>
-        <div class="close_icon" @click="closeDownload">
+        <!-- <div class="close_icon" @click="closeDownload">
           <img src="./../../assets/img/close.png" alt>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
