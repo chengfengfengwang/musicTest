@@ -116,7 +116,7 @@ export default {
     },
     initShareInstall() {
       var data = ShareInstall.parseUrlParams(); //shareinstall.js中提供的工具函数，解析url中的所有查询参数
-      //data.channel = data.channel ? data.channel : "bdtg";
+      data.channel = data.channel ? data.channel : "cp_tiyan";
       console.log(data)
       new ShareInstall(
         {

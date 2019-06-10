@@ -30,7 +30,7 @@ module.exports = {
         musicBase: 'src/modules/musicBase/musicBase.js',
         aiCourseList: 'src/modules/aiCourseList/aiCourseList.js',
         vipConfig: 'src/modules/vipConfig/vipConfig.js',
-        //网易100音基推广h5
+        //网易100音基推广h5/体验课推广
         music: 'src/modules/music/music.js',
         //惠娟-pc音基课程推广
         musicCourse: 'src/modules/musicCourse/musicCourse.js',
