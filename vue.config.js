@@ -34,6 +34,8 @@ module.exports = {
         music: 'src/modules/music/music.js',
         //惠娟-pc音基课程推广
         musicCourse: 'src/modules/musicCourse/musicCourse.js',
+        //德芙添加老师微信
+        addMusicTeacher: 'src/modules/addMusicTeacher/addMusicTeacher.js',
         test: 'src/modules/test/test.js',
         test1: 'src/modules/test1/test1.js',   
     }
