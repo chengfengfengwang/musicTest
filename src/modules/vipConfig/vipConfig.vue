@@ -7,7 +7,7 @@
         <div class="btn" @click="search">查询</div>
       </div>
       <div class="my_result" v-show="resultShow">
-        <span>查询结果：</span>
+        <span>结果：</span>
         {{resultMessage}}
       </div>
     </div>
@@ -20,6 +20,13 @@
           type="text"
           style="margin-right:10px"
         >
+        <select id="regSelect">
+          <option value="0">吉他</option>
+          <option value="1">尤克里里</option>
+          <option value="2">卡淋巴</option>
+          <option value="3">非洲鼓</option>
+          <option value="4">钢琴</option>
+        </select>
         <div class="btn" @click="register">注册</div>
       </div>
     </div>
@@ -27,6 +34,13 @@
       <h4>取消VIP</h4>
       <div class="search_wrapper" style="margin-top:10px">
         <input v-on:keyup.enter="cancel" v-model="cancelKey" type="text" style="margin-right:10px">
+        <select id="canSelect">
+          <option value="0">吉他</option>
+          <option value="1">尤克里里</option>
+          <option value="2">卡淋巴</option>
+          <option value="3">非洲鼓</option>
+          <option value="4">钢琴</option>
+        </select>
         <div class="btn" @click="cancel">取消</div>
       </div>
     </div>
@@ -43,7 +57,9 @@ export default {
       cancelKey: "",
       errMsg: "",
       resultMessage: "",
-      resultShow: false
+      resultShow: false,
+      baseUrl: "http://iguitar.immusician.com:2525",
+      //baseUrl: "http://192.168.1.68:22222"
     };
   },
   mounted() {
@@ -54,9 +70,9 @@ export default {
     cancel() {
       this.axios
         .get(
-          `http://iguitar.immusician.com:2525/v3/users/vip/update_vip/?tel=${
+          `${this.baseUrl}/v3/users/vip/update_vip/?tel=${
             this.cancelKey
-          }&state=0`
+          }&state=0&instrument=${document.querySelector("#canSelect").value}`
         )
         .then(res => {
           this.$loading.hide();
@@ -69,9 +85,9 @@ export default {
     register() {
       this.axios
         .get(
-          `http://iguitar.immusician.com:2525/v3/users/vip/update_vip/?tel=${
+          `${this.baseUrl}/v3/users/vip/update_vip/?tel=${
             this.registerKey
-          }`
+          }&instrument=${document.querySelector("#canSelect").value}`
         )
         .then(res => {
           this.$loading.hide();
@@ -83,12 +99,39 @@ export default {
     },
     search() {
       this.axios
-        .get(`http://iguitar.immusician.com:2525/v3/users/vip/feedback/?tel=${this.key}`)
+        .get(`${this.baseUrl}/v3/users/vip/feedback/?tel=${this.key}`)
         .then(res => {
           this.$loading.hide();
           var res = res.data.data;
           this.resultShow = true;
           this.resultMessage = "";
+          if (res instanceof Array) {
+            res.forEach(e => {
+              console.log(e);
+              let instrument;
+              switch (e.instrument) {
+                case 0:
+                  instrument = "吉他";
+                  break;
+                  case 1:
+                  instrument = "尤克里里";
+                  break;
+                  case 2:
+                  instrument = "卡林吧";
+                  break;
+                  case 3:
+                  instrument = "非洲鼓";
+                  break;
+                  case 4:
+                  instrument = "钢琴";
+                  break;
+              }
+              this.resultMessage += `${instrument}，等级${
+                e.level
+              }； `;
+            });
+            return;
+          }
           for (var key in res) {
             this.resultMessage += `${key}：${res[key]} `;
           }
@@ -105,7 +148,7 @@ export default {
       }
       this.axios
         .get(
-          `http://iguitar.immusician.com:2525/v3/users/vip/update_vip/?tel=${
+          `${this.baseUrl}/v3/users/vip/update_vip/?tel=${
             this.key
           }&state=${state}`
         )
@@ -126,10 +169,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.section{
-  border-bottom :1px solid #f2f2f2;
+.section {
+  border-bottom: 1px solid #f2f2f2;
   padding: 10px 20px 20px 20px;
-  margin:10px 
+  margin: 10px;
 }
 h4 {
   //padding: 15px 0;
@@ -155,8 +198,13 @@ h4 {
     width: 700px;
     margin: 20px auto;
     padding: 30px;
-    border:1px dashed #a78181
+    border: 1px dashed #a78181;
   }
+}
+select {
+  width: 70px;
+  height: 30px;
+  margin-right: 3px;
 }
 </style>
 
