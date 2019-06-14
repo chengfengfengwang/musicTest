@@ -36,6 +36,8 @@ module.exports = {
         musicCourse: 'src/modules/musicCourse/musicCourse.js',
         //德芙添加老师微信
         addMusicTeacher: 'src/modules/addMusicTeacher/addMusicTeacher.js',
+        //购买尤克里里
+        buy: 'src/modules/buy/buy.js',
         test: 'src/modules/test/test.js',
         test1: 'src/modules/test1/test1.js',   
     }
