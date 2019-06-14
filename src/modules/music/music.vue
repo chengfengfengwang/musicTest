@@ -75,7 +75,7 @@
         <div class="down_load_btn" id="downloadButton">点击下载</div>
         <!-- <div class="close_icon" @click="closeDownload">
           <img src="./../../assets/img/close.png" alt>
-        </div> -->
+        </div>-->
       </div>
     </div>
   </div>
@@ -88,16 +88,75 @@ export default {
       isIphonex: false,
       playShow1: true,
       playShow2: true,
-      playShow3: true
+      playShow3: true,
+      signPromise: ""
     };
   },
   created() {
     this.isIphonex = this.$util.testIsIphonex();
+    this.getSignInfo().then(param => {
+          // console.log('---zzz--')
+          //   console.log(param)
+          //   console.log('---zzz--')
+      this.shareReady(param);
+    });
   },
   mounted() {
     this.initShareInstall();
+    console.log(location.href)
   },
   methods: {
+    shareReady(param) {
+      wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: param.appId, // 必填，公众号的唯一标识
+        timestamp: param.timestamp, // 必填，生成签名的时间戳
+        nonceStr: param.nonceStr, // 必填，生成签名的随机串
+        signature: param.signature, // 必填，签名
+        jsApiList: ["updateAppMessageShareData", "updateTimelineShareData"] // 必填，需要使用的JS接口列表
+      });
+      wx.ready(function() {
+        wx.updateAppMessageShareData({
+          title: "少儿音基课程", // 分享标题
+          desc: "5分钟就让孩子爱上的趣味音乐课程，音乐基础一学就会，快来领取免费体验课程吧！", // 分享描述
+          imgUrl: "https://s.immusician.com/web/h5/share1.jpeg", // 分享图标
+          link: "http://s.immusician.com/web/h5/music.html?channel=cp_tiyan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          success: function() {
+            console.log("分享的success");
+            // 设置成功
+          }
+        });
+        wx.updateTimelineShareData({
+          title: "少儿音基课程", // 分享标题
+          imgUrl: "https://s.immusician.com/web/h5/share1.jpeg", // 分享图标
+          link: "http://s.immusician.com/web/h5/music.html?channel=cp_tiyan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          success: function () {
+          // 设置成功
+        }
+        });
+        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+      });
+    },
+    getSignInfo() {
+      return new Promise((resolve, reject) => {
+        this.axios
+          .post(
+            `http://api.yinji.immusician.com:55555/v1/wechat/config/`,{
+              url:location.href
+            }
+          )
+          .then(res => {
+            var res = res.data;
+            let param = {
+              appId: res.appId,
+              timestamp: res.timestamp,
+              nonceStr: res.nonceStr,
+              signature: res.signature
+            };
+            resolve(param);
+          });
+      });
+    },
     playVideo(index) {
       if (index == 1) {
         this.$refs.myVideo1.play();
@@ -117,7 +176,6 @@ export default {
     initShareInstall() {
       var data = ShareInstall.parseUrlParams(); //shareinstall.js中提供的工具函数，解析url中的所有查询参数
       data.channel = data.channel ? data.channel : "cp_tiyan";
-      console.log(data)
       new ShareInstall(
         {
           appKey: "2KBKKFAK2E26FF",
@@ -133,7 +191,6 @@ export default {
           //weChatdownload:true,
           onready: function() {
             //shareinstall已成功回调
-            console.log("shareinstall已成功回调");
             var m = this,
               button = document.getElementById("downloadButton");
             button.style.visibility = "visible";
@@ -154,10 +211,10 @@ export default {
 };
 </script>
 <style lang="less">
-body{
-    max-width: 600px;
-    background-color: #fff;
-    margin: auto;
+body {
+  max-width: 600px;
+  background-color: #fff;
+  margin: auto;
 }
 * {
   box-sizing: border-box;
@@ -165,10 +222,10 @@ body{
 img {
   width: 100%;
 }
-.music_wrapper{
+.music_wrapper {
   background-color: #fff;
   overflow: hidden;
-  margin-bottom: 50px
+  margin-bottom: 50px;
 }
 .wrapper {
   position: relative;
@@ -181,7 +238,7 @@ img {
     top: 20.7%;
     width: 48%;
     margin-left: -24%;
-    animation-duration:1s;
+    animation-duration: 1s;
     img {
       width: 100%;
     }
