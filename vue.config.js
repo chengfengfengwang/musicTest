@@ -38,6 +38,8 @@ module.exports = {
         addMusicTeacher: 'src/modules/addMusicTeacher/addMusicTeacher.js',
         //购买尤克里里
         buy: 'src/modules/buy/buy.js',
+        //音乐测试
+        musicTest:'src/modules/musicTest/musicTest.js',
         test: 'src/modules/test/test.js',
         test1: 'src/modules/test1/test1.js',   
     }

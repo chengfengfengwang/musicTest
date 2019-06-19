@@ -87,7 +87,7 @@ export default {
         .get(
           `${this.baseUrl}/v3/users/vip/update_vip/?tel=${
             this.registerKey
-          }&instrument=${document.querySelector("#canSelect").value}`
+          }&instrument=${document.querySelector("#regSelect").value}`
         )
         .then(res => {
           this.$loading.hide();
@@ -105,8 +105,8 @@ export default {
           var res = res.data.data;
           this.resultShow = true;
           this.resultMessage = "";
-          if (res instanceof Array) {
-            res.forEach(e => {
+          if (res.vip_list instanceof Array) {
+            res.vip_list.forEach(e => {
               console.log(e);
               let instrument;
               switch (e.instrument) {
