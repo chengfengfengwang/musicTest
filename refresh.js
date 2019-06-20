@@ -18,8 +18,15 @@ var urlsToRefresh = [
     'http://s.immusician.com/web/h5/music.html',
     'http://s.immusician.com/web/h5/addMusicTeacher.html',
     'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan',
+    'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&from=timeline&isappinstalled=0',
     'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&from=singlemessage&isappinstalled=0',
-    'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&from=timeline&isappinstalled=0'
+    'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&from=timeline&isappinstalled=0',
+    'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&v=0&from=singlemessage&isappinstalled=0',
+    'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&from=timeline&isappinstalled=1',
+    'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&from=singlemessage&isappinstalled=1',
+    'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&from=timeline&isappinstalled=1',
+    'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&v=0&from=singlemessage&isappinstalled=1',
+    'http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&v=0&from=singlemessage'
 ];
 //刷新链接，单次请求链接不可以超过100个，如果超过，请分批发送请求
 cdnManager.refreshUrls(urlsToRefresh, function (err, respBody, respInfo) {

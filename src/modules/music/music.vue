@@ -40,7 +40,7 @@
           src="https://s.immusician.com/web/h5/video/music_base_2_2.mp4?v=1"
         ></video>
       </div>
-      <img class="qr" src="../../assets/img/qr.jpeg" alt="">
+      <img class="qr" src="../../assets/img/qr.jpeg" alt>
     </div>
     <!-- <div class="add_area">
       <div class="video_box third">
@@ -90,24 +90,26 @@ export default {
       playShow1: true,
       playShow2: true,
       playShow3: true,
-      signPromise: ""
+      signPromise: "",
+      shareVersion: "1"
     };
   },
   created() {
     this.isIphonex = this.$util.testIsIphonex();
     this.getSignInfo().then(param => {
-          // console.log('---zzz--')
-          //   console.log(param)
-          //   console.log('---zzz--')
+      // console.log('---zzz--')
+      //   console.log(param)
+      //   console.log('---zzz--')
       this.shareReady(param);
     });
   },
   mounted() {
     this.initShareInstall();
-    console.log(location.href)
+    console.log(location.href);
   },
   methods: {
     shareReady(param) {
+      var that = this;
       wx.config({
         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         appId: param.appId, // 必填，公众号的唯一标识
@@ -118,22 +120,27 @@ export default {
       });
       wx.ready(function() {
         wx.updateAppMessageShareData({
-          title: "少儿音基课程", // 分享标题
-          desc: "5分钟就让孩子爱上的趣味音乐课程，音乐基础一学就会，快来领取免费体验课程吧！", // 分享描述
+          title: "高考作文被音乐霸屏了！你家孩子音乐知识学好了吗？", // 分享标题
+          desc:
+            "5分钟就让孩子爱上的趣味音乐课程，音乐基础一学就会，快来领取免费体验课程吧！", // 分享描述
           imgUrl: "https://s.immusician.com/web/h5/share1.jpeg", // 分享图标
-          link: "http://s.immusician.com/web/h5/music.html?channel=cp_tiyan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          link: `http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&v=${
+            that.shareVersion
+          }`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           success: function() {
             console.log("分享的success");
             // 设置成功
           }
         });
         wx.updateTimelineShareData({
-          title: "少儿音基课程", // 分享标题
+          title: "高考作文被音乐霸屏了！你家孩子音乐知识学好了吗？", // 分享标题
           imgUrl: "https://s.immusician.com/web/h5/share1.jpeg", // 分享图标
-          link: "http://s.immusician.com/web/h5/music.html?channel=cp_tiyan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          success: function () {
-          // 设置成功
-        }
+          link: `http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&v=${
+            that.shareVersion
+          }`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          success: function() {
+            // 设置成功
+          }
         });
         // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
       });
@@ -141,11 +148,9 @@ export default {
     getSignInfo() {
       return new Promise((resolve, reject) => {
         this.axios
-          .post(
-            `http://api.yinji.immusician.com:55555/v1/wechat/config/`,{
-              url:location.href
-            }
-          )
+          .post(`http://api.yinji.immusician.com:55555/v1/wechat/config/`, {
+            url: location.href
+          })
           .then(res => {
             var res = res.data;
             let param = {
@@ -295,10 +300,10 @@ img {
   left: 50%;
   transform: translateX(-50%);
 }
-.qr{
+.qr {
   position: absolute;
   width: 44%;
-    bottom: 4%;
+  bottom: 4%;
   left: 50%;
   transform: translateX(-50%);
 }

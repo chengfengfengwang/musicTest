@@ -4,6 +4,7 @@ import musicTest from './musicTest.vue'
 
 
 import '../../assets/common.less'
+import './common.less'
 import axios from 'axios'
 Vue.prototype.axios = axios;
 

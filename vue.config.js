@@ -8,7 +8,7 @@ module.exports = {
                     autoprefixer(),
                     pxtorem({
                         rootValue: 16,
-                        propList: ['*']
+                        propList: ['*', '!background']
                     })
                 ]
             }
@@ -20,7 +20,18 @@ module.exports = {
     chainWebpack: config => {
         const imgRule = config.module.rule('images');
         imgRule.use('image-webpack-loader')
-            .loader('image-webpack-loader')
+            .loader('image-webpack-loader');
+        config.module
+            .rule("vue")
+            .use("vue-loader")
+            .loader("vue-loader")
+            .tap(options =>
+                Object.assign(options, {
+                    transformAssetUrls: {
+                        audio: "src"
+                    }
+                })
+            );
     },
     pages: {
         // 只有entry属性时，直接用字符串表示模块入口  vipConfig
@@ -39,8 +50,8 @@ module.exports = {
         //购买尤克里里
         buy: 'src/modules/buy/buy.js',
         //音乐测试
-        musicTest:'src/modules/musicTest/musicTest.js',
+        musicTest: 'src/modules/musicTest/musicTest.js',
         test: 'src/modules/test/test.js',
-        test1: 'src/modules/test1/test1.js',   
+        test1: 'src/modules/test1/test1.js',
     }
 }
