@@ -7,23 +7,24 @@
           <div class="text">亭边两只小鸟的音高，选出音高的小鸟帮它回家</div>
         </div>
         <div class="bird_main">
-            
+          <div class="option_card option_card1">
+            <span class="option_text">A</span>
+            <div class="option_bird bird"></div>
+            <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
+          </div>
+          <div class="option_card option_card2">
+            <span class="option_text">B</span>
+            <div ref="bird2" class="option_bird bird"></div>
+          </div>
+          <img src="../../assets/img/music_test/tree.png" alt class="tree">
         </div>
-        <div class="option_card option_card1">
-          <span class="option_text">A</span>
-          <div class="option_bird bird"></div>
-          <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
-        </div>
-        <div class="option_card option_card2">
-          <span class="option_text">B</span>
-          <div ref="bird2" class="option_bird bird"></div>
-        </div>
+
         <div class="test_box"></div>
-        <img src="../../assets/img/music_test/cloud1.png" alt class="cloud cloud1">
+        <!-- <img src="../../assets/img/music_test/cloud1.png" alt class="cloud cloud1"> -->
         <img src="../../assets/img/music_test/cloud2.png" alt class="cloud cloud2">
         <img src="../../assets/img/music_test/cloud3.png" alt class="cloud cloud3">
         <img src="../../assets/img/music_test/grass1.png" alt class="grass">
-        <img src="../../assets/img/music_test/tree.png" alt class="tree">
+
         <div class="wave">
           <img src="../../assets/img/music_test/wave.png" alt>
         </div>
@@ -69,25 +70,34 @@ export default {
 };
 </script>
 <style lang="less">
-.test_box{
-    z-index: 9;
-    background: #000;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 20%;
-    bottom: 38%;
+.test_box {
+  z-index: 9;
+  background: #000;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 20%;
+  bottom: 38%;
 }
 
-.font-size(@sizeValue:16) {
-  @vw: 16 / 375 * 100;
-  @result: @sizeValue / 16 * @vw;
-  font-size: ~"@{result}vw";
+// .font-size(@sizeValue:16) {
+//   @vw: 16 / 375 * 100;
+//   @result: @sizeValue / 16 * @vw;
+//   font-size: ~"@{result}vw";
+// }
+// html {
+//   .font-size(16);
+// }
+@media screen and (max-width: 500px) {
+  html {
+    font-size: 100%;
+  }
 }
-html {
-  .font-size(16);
+@media screen and (min-width: 500px) {
+  html {
+    font-size: 140%;
+  }
 }
-
 html,
 body {
   width: 100%;
@@ -105,6 +115,8 @@ body {
   position: relative;
   //height: 100vh;
   height: 100%;
+  //background:  no-repeat 20.5% 0.2% / 2% url('../../assets/img/music_test/cloud1.png');
+  background:  no-repeat 20.5% 0.2%/68px 18px url('../../assets/img/music_test/cloud1.png');
   background-color: rgba(255, 194, 149, 1);
   .wave {
     position: absolute;
@@ -151,30 +163,50 @@ body {
       color: rgba(43, 43, 43, 1);
     }
   }
-  .option_card {
-    z-index: 10;
+  .bird_main {
+    //width: 100%;
+    width: 400px;
+    height: 400px;
     position: absolute;
-    left: 6.93%;
-    width: 130px;
-    height: 55px;
-    line-height: 55px;
-    background: url("../../assets/img/music_test/option_card.png") no-repeat
-      center/cover;
-    .option_text {
-      margin-left: 13%;
-      font-size: 27px;
-      font-family: PingFangSC-Medium;
-      font-weight: bold;
-      color: rgba(245, 150, 0, 1);
+    left: 50%;
+    transform: translateX(-50%);
+    top: 30%;
+    //height: 61vh;
+    .option_card {
+      z-index: 10;
+      position: absolute;
+      left: 6.93%;
+      width: 130px;
+      height: 55px;
+      line-height: 55px;
+      background: url("../../assets/img/music_test/option_card.png") no-repeat
+        center/cover;
+      .option_text {
+        margin-left: 13%;
+        font-size: 27px;
+        font-family: PingFangSC-Medium;
+        font-weight: bold;
+        color: rgba(245, 150, 0, 1);
+      }
+    }
+
+    .option_card1 {
+      top: 34.9%;
+    }
+    .option_card2 {
+      top: 60.3%;
+    }
+    .tree {
+      width: 134px;
+      //width: 35.7vw;
+      //height: 61vh;
+      position: absolute;
+      right: 0;
+      //top:401px;
+      top: 0;
     }
   }
 
-  .option_card1 {
-    top: 51.9%;
-  }
-  .option_card2 {
-    top: 67.3%;
-  }
   .cloud {
     position: absolute;
   }
@@ -199,20 +231,14 @@ body {
     left: 0;
     bottom: 0;
   }
-  .tree {
-    width: 134px;
-    position: absolute;
-    right: 0;
-    //top:401px;
-    bottom: 0;
-  }
+
   .option_bird {
     position: absolute;
     right: 23%;
     top: 50%;
     transform: translateY(-50%);
   }
-  .flyto{
+  .flyto {
     right: -91%;
     top: -85%;
   }
@@ -225,11 +251,11 @@ body {
     //background-position: 0% 0%;
     background-size: 212%;
     //animation: fly .7s steps(1) 0s infinite both;
-    animation: fly .5s steps(2) 0s infinite  both;
+    animation: fly 0.5s steps(2) 0s infinite both;
   }
   @keyframes fly {
-     to{
-        background-position: 185% 0
+    to {
+      background-position: 185% 0;
     }
   }
 }

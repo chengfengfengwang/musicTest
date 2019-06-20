@@ -40,6 +40,7 @@
           src="https://s.immusician.com/web/h5/video/music_base_2_2.mp4?v=1"
         ></video>
       </div>
+      <img class="qr" src="../../assets/img/qr.jpeg" alt="">
     </div>
     <!-- <div class="add_area">
       <div class="video_box third">
@@ -235,7 +236,7 @@ img {
   .receive {
     position: absolute;
     left: 50%;
-    top: 20.7%;
+    top: 19.4%;
     width: 48%;
     margin-left: -24%;
     animation-duration: 1s;
@@ -252,7 +253,7 @@ img {
 .video_box {
   position: relative;
   width: 90.6%;
-  height: 9.8%;
+  height: 7.9%;
   //border: 2px solid rgba(0, 0, 0, 1);
   border-radius: 14px;
   position: absolute;
@@ -284,13 +285,20 @@ img {
   }
 }
 .video_box.first {
-  top: 42.2%;
+  top: 37%;
   left: 50%;
   transform: translateX(-50%);
 }
 .video_box.second {
-  bottom: 2.4%;
+  bottom: 18%;
   //top: 87.1%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.qr{
+  position: absolute;
+  width: 44%;
+    bottom: 4%;
   left: 50%;
   transform: translateX(-50%);
 }
