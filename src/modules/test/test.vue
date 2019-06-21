@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>hello test</div>
-    <audio id="myAudio" ref="music" controls src="https://s.immusician.com/web/year-report/test2.mp3"></audio>
+    <audio id="myAudio" ref="paopaoBg" controls src="https://s.impaopaoBgian.com/web/year-report/test2.mp3"></audio>
     <div @click="start" class="btn">开始</div>
     <div class="beat" v-for="n in 17"></div>
     <audio ref="clickVoice" controls src="http://www.w3school.com.cn/i/horse.ogg"></audio>
@@ -11,18 +11,18 @@
 export default {
   data() {
     return {
-      time: "",
+      time: "", //歌曲时长
       beats: [],
-      speed: 65,
-      interval: "",
+      speed: 65, //歌曲速度
+      interval: "", //每拍的间隔，
       index: -1,
-      error: 300,
+      error: 300, //误差值
       spaceBeat: 4,
       audio:''
     };
   },
   mounted() {
-    this.audio = this.$refs.music;
+    this.audio = this.$refs.paopaoBg;
     this.clickVoice = this.$refs.clickVoice;
     this.getInterval();
     //console.log(this.interval)
@@ -35,7 +35,7 @@ export default {
       this.interval = 60000 / this.speed;
     },
     start() {
-      this.$refs.music.play();
+      this.$refs.paopaoBg.play();
       setTimeout(() => {
         this.bindClick();
       }, this.spaceBeat * this.interval);
