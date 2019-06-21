@@ -6,10 +6,9 @@
           id="myAudio"
           ref="paopaoBg"
           controls
-          src="https://s.immusician.com/web/year-report/test2.mp3"
+          src="../../assets/audio/music_test/q7/bg.mp3"
         ></audio>
         <div @click="start" class="btn">开始</div>
-        <!-- <div class="beat" v-for="n in 17"></div> -->
         <div class="beat" v-for="n in 17">
           <img class="o" src="../../assets/img/music_test/paopao.png" alt>
           <img src="../../assets/img/music_test/paopao_b.png" alt class="b">
@@ -312,15 +311,20 @@ export default {
       //打泡泡
       time: "", //歌曲时长
       beats: [],
-      speed: 65, //歌曲速度
+      speed: 46, //歌曲速度
       interval: "", //每拍的间隔，
       index: -1,
       error: 300, //误差值
-      spaceBeat: 4,
+      spaceBeat: 0,
       paopaoBg: ""
     };
   },
   methods: {
+    removeNotePlaying(){
+    document.querySelectorAll(".note").forEach(e => {
+      e.classList.remove("playing");
+    });
+    },
     //打泡泡
     getInterval() {
       this.interval = 60000 / this.speed;
@@ -329,8 +333,8 @@ export default {
       this.$refs.paopaoBg.play();
       setTimeout(() => {
         this.bindClick();
-      }, this.spaceBeat * this.interval);
-
+      }, 100);
+      //this.bindClick();
       setTimeout(() => {
         this.upBeats();
       }, (this.spaceBeat - 2) * this.interval);
@@ -622,6 +626,14 @@ export default {
     }
   },
   mounted() {
+    document.querySelectorAll(".note").forEach(e => {
+      e.addEventListener("click", ele => {
+        console.log('qqa')
+        console.log(e)
+        console.log(e.classList)
+        e.classList.add("playing");
+      });
+    });
     //打泡泡
     this.paopaoBg = this.$refs.paopaoBg;
     this.getInterval();
@@ -736,53 +748,6 @@ export default {
       on: {
         slideNextTransitionEnd() {
           that.swiperIndex = that.swiper.activeIndex;
-          // switch (that.swiperIndex) {
-          //   case 1: {
-          //     console.log("zzz1");
-          //     that.Q1Enter();
-          //     break;
-          //   }
-          //   case 2: {
-          //     that.Q2Enter();
-          //     console.log("zzz2");
-          //     break;
-          //   }
-          //   case 3: {
-          //     that.Q3Enter();
-          //     console.log("zzz3");
-          //     break;
-          //   }
-          //   case 4: {
-          //     that.Q4Enter();
-          //     console.log("zzz4");
-          //     break;
-          //   }
-          //   case 5: {
-          //     that.Q5Enter();
-          //     console.log("zzz5");
-          //     break;
-          //   }
-          //   case 6: {
-          //     that.Q6Enter();
-          //     console.log("zzz6");
-          //     break;
-          //   }
-          //   case 7: {
-          //     that.Q7Enter();
-          //     console.log("zzz7");
-          //     break;
-          //   }
-          //   case 8: {
-          //     that.Q8Enter();
-          //     console.log("zzz8");
-          //     break;
-          //   }
-          //   case 9: {
-          //     that.Q9Enter();
-          //     console.log("zzz9");
-          //     break;
-          //   }
-          // }
         }
       }
     });
@@ -1090,7 +1055,6 @@ body {
       background: url("../../assets/img/music_test/option_card.png") no-repeat
         center/cover;
       border-radius: 10px;
-      overflow: hidden;
       .option_text {
         margin-left: 13%;
         font-size: 27px;
@@ -1213,13 +1177,17 @@ body {
     border-radius: 10px;
     .note {
       position: absolute;
-
       left: 50%;
-      transform: translateX(-50%);
+      margin-left: -36px;
       bottom: 20px;
       img {
         width: 72px;
+        height: 72px;
       }
+      transition: transform 15s;
+    }
+    .note.playing {
+      transform: rotate(360deg);
     }
     .text {
       top: 28%;

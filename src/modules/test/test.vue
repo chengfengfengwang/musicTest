@@ -1,10 +1,11 @@
 <template>
   <div>
     <div>hello test</div>
-    <audio id="myAudio" ref="paopaoBg" controls src="https://s.impaopaoBgian.com/web/year-report/test2.mp3"></audio>
+    <!-- <audio id="myAudio" ref="paopaoBg" controls src="https://s.immusician.com/web/year-report/test2.mp3"></audio> -->
+    <audio id="myAudio" ref="paopaoBg" controls src="../../assets/audio/music_test/q7/bg.mp3"></audio>
     <div @click="start" class="btn">开始</div>
     <div class="beat" v-for="n in 17"></div>
-    <audio ref="clickVoice" controls src="http://www.w3school.com.cn/i/horse.ogg"></audio>
+    <!-- <audio ref="clickVoice" controls src="http://www.w3school.com.cn/i/horse.ogg"></audio> -->
   </div>
 </template>
 <script>
@@ -13,11 +14,13 @@ export default {
     return {
       time: "", //歌曲时长
       beats: [],
-      speed: 65, //歌曲速度
+      // speed: 65, //歌曲速度
+      speed: 46, //歌曲速度
       interval: "", //每拍的间隔，
       index: -1,
       error: 300, //误差值
-      spaceBeat: 4,
+       spaceBeat: 4,
+      spaceBeat: 0,
       audio:''
     };
   },
@@ -50,6 +53,7 @@ export default {
     bindClick() {
       document.body.addEventListener("touchstart", e => {
         //this.clickVoice.play();
+        //const clickTime = this.audio.currentTime * 1000;
         const clickTime = this.audio.currentTime * 1000;
         const remainder = clickTime % this.interval;
         const midPoint = this.interval / 2;
@@ -67,6 +71,7 @@ export default {
             this.handleClick('right')
           }
         }
+        //let
         console.log(this.audio.currentTime * 1000, this.index);
       });
     },
