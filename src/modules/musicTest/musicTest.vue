@@ -161,7 +161,7 @@
           src="../../assets/audio/music_test/q7/bg.mp3"
         ></audio> -->
         <!-- <div @click="q7PlayStart" class="btn">开始</div> -->
-        <div class="beat" v-for="n in 27">
+        <div class="beat" v-for="n in beatsNum">
           <img class="o" src="../../assets/img/music_test/paopao.png" alt>
           <img src="../../assets/img/music_test/paopao_b.png" alt class="b">
         </div>
@@ -212,12 +212,16 @@
         <img class="cover" src="../../assets/img/music_test/test_cover.png" alt>
         <div class="result_bg_wrapper">
           <div class="content">
-            <div class="core">98分</div>
-            <div class="byond">超越了98%的人</div>
+            <div class="core">{{score}}分</div>
+            <div class="byond">超越了{{beyondRate}}%的人</div>
             <div class="comment">
               <img src="../../assets/img/music_test/comment_left.png" alt class="comment_left">
-              <p>“哇，你非常的具有音乐天赋!</p>
-              <p>未来音乐大师也许就是你哦!”</p>
+              <p v-show="grade==1">“每一个小朋友都有音乐潜能，</p>
+              <p v-show="grade==1">加油，你也可以成为音乐小达人!”</p>
+              <p v-show="grade==2">“不要小瞧了你的音乐潜能哦!</p>
+              <p v-show="grade==2">学习音乐，会让你越来越优秀!”</p>
+              <p v-show="grade==3">“哇，你非常的具有音乐天赋!</p>
+              <p v-show="grade==3">未来音乐大师也许就是你哦!”</p>
               <img src="../../assets/img/music_test/comment_right.png" alt class="comment_right">
             </div>
             <div class="star_items_wrapper">
@@ -232,7 +236,11 @@
 
                 <span>：</span>
                 <div class="stars">
-                  <img src="../../assets/img/music_test/star.png" alt class="star">
+                  <div :key="index" v-for="(item,index) in resultItems[0].starArr" v-bind:class="{ half: item=='half' }" class="star_wrapper">
+                    <span class="left"></span>
+                    <span class="right"></span>
+                    <img class="star" src="../../assets/img/music_test/star.png" alt>
+                  </div>
                 </div>
               </div>
               <div class="star_items">
@@ -245,7 +253,11 @@
 
                 <span>：</span>
                 <div class="stars">
-                  <img src="../../assets/img/music_test/star.png" alt class="star">
+                  <div :key="index" v-for="(item,index) in resultItems[1].starArr" v-bind:class="{ half: item=='half' }" class="star_wrapper">
+                    <span class="left"></span>
+                    <span class="right"></span>
+                    <img class="star" src="../../assets/img/music_test/star.png" alt>
+                  </div>
                 </div>
               </div>
               <div class="star_items">
@@ -257,7 +269,11 @@
 
                 <span>：</span>
                 <div class="stars">
-                  <img src="../../assets/img/music_test/star.png" alt class="star">
+                  <div :key="index" v-for="(item,index) in resultItems[2].starArr" v-bind:class="{ half: item=='half' }" class="star_wrapper">
+                    <span class="left"></span>
+                    <span class="right"></span>
+                    <img class="star" src="../../assets/img/music_test/star.png" alt>
+                  </div>
                 </div>
               </div>
               <div class="star_items">
@@ -269,8 +285,12 @@
                 </div>
 
                 <span>：</span>
-                <div class="stars">
-                  <img v-for="n in 5" src="../../assets/img/music_test/star.png" alt class="star">
+               <div class="stars">
+                  <div :key="index" v-for="(item,index) in resultItems[3].starArr" v-bind:class="{ half: item=='half' }" class="star_wrapper">
+                    <span class="left"></span>
+                    <span class="right"></span>
+                    <img class="star" src="../../assets/img/music_test/star.png" alt>
+                  </div>
                 </div>
               </div>
             </div>
@@ -308,14 +328,28 @@ export default {
       swiperIndex: 0,
       mySelect: [],
       //打泡泡
+      beatsNum:27,//泡泡数量
       time: "", //歌曲时长
       beats: [],
       speed: 46, //歌曲速度
+      needBeats:'',//歌曲节拍数
       interval: "", //每拍的间隔，
       index: -1,
       error: 700, //误差值
       //spaceBeat: 0,
       spaceBeat: 4,
+      //结果
+      resultItems:[
+        {name:'音乐感受力',star:0,starArr:[]},
+        {name:'音乐听觉',star:0,starArr:[]},
+        {name:'音乐记忆',star:0,starArr:[]},
+        {name:'节奏感',star:0,starArr:[]},
+        {name:'音乐常识',star:0,starArr:[]}
+      ],
+      allStar:0,
+      score:0,
+      grade:1,
+      beyondRate:0
     };
   },
   methods: {
@@ -331,6 +365,7 @@ export default {
     q7PlayStart() {
       console.log('start play!')
       this.Q7BgAudio.play();
+      this.needBeats = Math.floor(this.Q7BgAudio.duration/60*this.speed);
       setTimeout(() => {
         this.bindClick();
       }, 100);
@@ -397,6 +432,11 @@ export default {
     },
     //打泡泡
     select(qIndex, value, isRight) {
+      this.mySelect.push({
+        index: qIndex,
+        detail: value,
+        isRight: isRight
+      });
       if (qIndex === 3) {
         if (value == "A") {
           this.$refs.q3Bird1.classList.add("f1");
@@ -420,12 +460,7 @@ export default {
         return;
       }
       this.swiper.slideNext();
-      this.mySelect.push({
-        index: qIndex,
-        detail: value,
-        isRight: isRight
-      });
-      console.log(this.mySelect);
+      //console.log(this.mySelect);
     },
     Q1Enter() {
       console.log("Q1Enter");
@@ -613,6 +648,72 @@ export default {
     },
     Q10Enter() {
       console.log("Q10Enter");
+      //将所有答题情况归类
+      this.mySelect.forEach((e,index)=>{
+        if(e.index==1||e.index==2){
+          if(e.isRight){
+            this.resultItems[0].star+=2.5
+          }
+        }else if(e.index==3||e.index==4){
+          if(e.isRight){
+            this.resultItems[1].star+=2.5
+          }
+        }
+        else if(e.index==5||e.index==6){
+          if(e.isRight){
+            this.resultItems[2].star+=2.5
+          }
+        }else if(e.index==7){
+          var rightNum = document.querySelectorAll('.beat.right').length;
+          var rightRate = rightNum / this.needBeats * 100;
+          if(rightRate>=90){
+            this.resultItems[3].star = 5;
+          }else if(rightRate>=70 && rightRate<90){
+            this.resultItems[3].star = 4;
+          }else if(rightRate>=60 && rightRate<70){
+            this.resultItems[3].star = 3;
+          }else if(rightRate>=40 && rightRate<60){
+            this.resultItems[3].star = 2;
+          }else if(rightRate<40){
+            this.resultItems[3].star = 1;
+          }
+        }
+        else if(e.index==8||e.index==9){
+          if(e.isRight){
+            this.resultItems[4].star+=2.5
+          }
+        }
+      });
+      //计算出总星数和展示星星
+      this.resultItems.forEach(e=>{
+        this.allStar += e.star;
+        if(e.star==0){
+          e.starArr=['all']
+        }else if(e.star==2.5){
+          e.starArr=['all','all','half']
+        }else if(e.star==5){
+          e.starArr=['all','all','all','all','all']
+        }
+      })
+      //总分
+      if(this.allStar>=20){
+        this.score = this.allStar*4;
+        this.grade = 3
+      }else if(this.allStar>=10 && this.allStar<20){ //10 - 20星 60 - 80分
+        this.score = 60 + this.allStar;
+        this.grade = 2
+      }else{ //10星以下60分
+        this.score = 6 * this.allStar;
+        this.grade = 1
+      }
+      if(this.score<98 && this.score>90){
+        this.beyondRate = this.score+1
+      }else if(this.score<=90 && this.score>60){
+        this.beyondRate = this.score + Math.floor(Math.random()*10) 
+      }else{
+        this.beyondRate = this.score + Math.floor(Math.random()*20) 
+      }
+      console.log(this.resultItems)
       this.Q9CAudio.pause();
     },
     page1IconPlay() {
@@ -794,7 +895,7 @@ export default {
           that.Q9Enter();
           break;
         }
-        case 9: {
+        case 10: {
           that.Q10Enter();
           break;
         }

@@ -5,6 +5,15 @@
     <audio id="myAudio" ref="paopaoBg" controls src="../../assets/audio/music_test/q7/bg.mp3"></audio>
     <div @click="start" class="btn">开始</div>
     <div class="beat" v-for="n in 27"></div>
+    <div class="star_container" v-for="n in starArr">
+      {{n}}
+      <div class="star_wrapper" v-bind:class="{ half: n=='half' }">
+        <span class="left"></span>
+        <span class="right"></span>
+        <img src="../../assets/img/music_test/star.png" alt>
+      </div>
+    </div>
+
     <!-- <audio ref="clickVoice" controls src="http://www.w3school.com.cn/i/horse.ogg"></audio> -->
   </div>
 </template>
@@ -21,7 +30,8 @@ export default {
       error: 530, //误差值
       spaceBeat: 4,
       //spaceBeat: 0,
-      audio:''
+      audio: "",
+      starArr: ["all", "all", "half"]
     };
   },
   mounted() {
@@ -32,7 +42,7 @@ export default {
     //console.log(this.interval)
   },
   methods: {
-    getInterval(){
+    getInterval() {
       // let base = Math.round(60000 / this.speed);
       // let baseRemainder = base % 10;
       // this.interval = Math.round(base / 10) * 10
@@ -61,15 +71,15 @@ export default {
         const errorPoint = this.error / 2;
         if (remainder > midPoint) {
           if (Math.abs(remainder - this.interval) > errorPoint) {
-            this.handleClick('wrong')
+            this.handleClick("wrong");
           } else {
-            this.handleClick('right')
+            this.handleClick("right");
           }
         } else {
           if (remainder > errorPoint) {
-            this.handleClick('wrong')
+            this.handleClick("wrong");
           } else {
-            this.handleClick('right')
+            this.handleClick("right");
           }
         }
         //let
@@ -77,10 +87,15 @@ export default {
       });
     },
     handleClick(status) {
-      this.index = Math.round(this.audio.currentTime * 1000 / this.interval) - this.spaceBeat;
-      const curBeats = this.beats[this.index+2];
-      if(curBeats.classList.contains("right") || curBeats.classList.contains("wrong")){
-        return
+      this.index =
+        Math.round((this.audio.currentTime * 1000) / this.interval) -
+        this.spaceBeat;
+      const curBeats = this.beats[this.index + 2];
+      if (
+        curBeats.classList.contains("right") ||
+        curBeats.classList.contains("wrong")
+      ) {
+        return;
       }
       if (status === "right") {
         console.log("right");
@@ -104,6 +119,33 @@ export default {
 };
 </script>
 <style lang="less">
+.star_wrapper {
+  display: inline-block;
+  position: relative;
+  width: 37px;
+  height: 37px;
+  .left,
+  .right {
+    position: absolute;
+  }
+  .left {
+    width: 60%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+  .right {
+    width: 40%;
+    height: 100%;
+    right: 0;
+    top: 0;
+  }
+}
+.star_wrapper.half {
+  .right {
+    background-color: #fff;
+  }
+}
 body {
   height: 100vh;
   position: relative;
