@@ -4,7 +4,7 @@
     <!-- <audio id="myAudio" ref="paopaoBg" controls src="https://s.immusician.com/web/year-report/test2.mp3"></audio> -->
     <audio id="myAudio" ref="paopaoBg" controls src="../../assets/audio/music_test/q7/bg.mp3"></audio>
     <div @click="start" class="btn">开始</div>
-    <div class="beat" v-for="n in 17"></div>
+    <div class="beat" v-for="n in 27"></div>
     <!-- <audio ref="clickVoice" controls src="http://www.w3school.com.cn/i/horse.ogg"></audio> -->
   </div>
 </template>
@@ -18,9 +18,9 @@ export default {
       speed: 46, //歌曲速度
       interval: "", //每拍的间隔，
       index: -1,
-      error: 300, //误差值
-       spaceBeat: 4,
-      spaceBeat: 0,
+      error: 530, //误差值
+      spaceBeat: 4,
+      //spaceBeat: 0,
       audio:''
     };
   },
@@ -28,6 +28,7 @@ export default {
     this.audio = this.$refs.paopaoBg;
     this.clickVoice = this.$refs.clickVoice;
     this.getInterval();
+    //this.upBeats();
     //console.log(this.interval)
   },
   methods: {
@@ -42,10 +43,10 @@ export default {
       setTimeout(() => {
         this.bindClick();
       }, this.spaceBeat * this.interval);
-
-      setTimeout(() => {
-        this.upBeats();
-      }, (this.spaceBeat - 2) * this.interval);
+      this.upBeats();
+      // setTimeout(() => {
+      //   this.upBeats();
+      // }, (this.spaceBeat - 2) * this.interval);
     },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -77,7 +78,7 @@ export default {
     },
     handleClick(status) {
       this.index = Math.round(this.audio.currentTime * 1000 / this.interval) - this.spaceBeat;
-      const curBeats = this.beats[this.index];
+      const curBeats = this.beats[this.index+2];
       if(curBeats.classList.contains("right") || curBeats.classList.contains("wrong")){
         return
       }

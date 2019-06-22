@@ -1,19 +1,6 @@
 <template>
   <div class="swiper-container" id="musicTest">
     <div class="swiper-wrapper">
-      <div ref="quest7" v-show="true" class="page qiaoji swiper-slide stop-swiping">
-        <audio
-          id="myAudio"
-          ref="paopaoBg"
-          controls
-          src="../../assets/audio/music_test/q7/bg.mp3"
-        ></audio>
-        <div @click="start" class="btn">开始</div>
-        <div class="beat" v-for="n in 17">
-          <img class="o" src="../../assets/img/music_test/paopao.png" alt>
-          <img src="../../assets/img/music_test/paopao_b.png" alt class="b">
-        </div>
-      </div>
       <div ref="page1" v-show="true" class="page first swiper-slide stop-swiping">
         <audio preload src="../../assets/audio/music_test/page1/page1.mp3"></audio>
         <img
@@ -166,7 +153,19 @@
           </div>
         </div>
       </div>
-      <div ref="quest7" v-show="true" class="page common swiper-slide stop-swiping"></div>
+      <div ref="quest7" v-show="true" class="page qiaoji swiper-slide stop-swiping">
+        <!-- <audio
+          id="myAudio"
+          ref="paopaoBg"
+          controls
+          src="../../assets/audio/music_test/q7/bg.mp3"
+        ></audio> -->
+        <!-- <div @click="q7PlayStart" class="btn">开始</div> -->
+        <div class="beat" v-for="n in 27">
+          <img class="o" src="../../assets/img/music_test/paopao.png" alt>
+          <img src="../../assets/img/music_test/paopao_b.png" alt class="b">
+        </div>
+      </div>
       <div ref="quest8" v-show="true" class="page q8 common swiper-slide stop-swiping">
         <div class="topic_card">
           <div class="title">第8题</div>
@@ -314,9 +313,9 @@ export default {
       speed: 46, //歌曲速度
       interval: "", //每拍的间隔，
       index: -1,
-      error: 300, //误差值
-      spaceBeat: 0,
-      paopaoBg: ""
+      error: 700, //误差值
+      //spaceBeat: 0,
+      spaceBeat: 4,
     };
   },
   methods: {
@@ -329,23 +328,25 @@ export default {
     getInterval() {
       this.interval = 60000 / this.speed;
     },
-    start() {
-      this.$refs.paopaoBg.play();
+    q7PlayStart() {
+      console.log('start play!')
+      this.Q7BgAudio.play();
       setTimeout(() => {
         this.bindClick();
       }, 100);
+      this.upBeats();
       //this.bindClick();
-      setTimeout(() => {
-        this.upBeats();
-      }, (this.spaceBeat - 2) * this.interval);
+      // setTimeout(() => {
+      //   this.upBeats();
+      // }, (this.spaceBeat - 2) * this.interval);
     },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
     bindClick() {
-      document.body.addEventListener("touchstart", e => {
+      document.querySelector('.qiaoji').addEventListener("touchstart", e => {
         //this.clickVoice.play();
-        const clickTime = this.paopaoBg.currentTime * 1000;
+        const clickTime = this.Q7BgAudio.currentTime * 1000;
         const remainder = clickTime % this.interval;
         const midPoint = this.interval / 2;
         const errorPoint = this.error / 2;
@@ -362,14 +363,14 @@ export default {
             this.handleClick("right");
           }
         }
-        console.log(this.paopaoBg.currentTime * 1000, this.index);
+        console.log(this.Q7BgAudio.currentTime * 1000, this.index);
       });
     },
     handleClick(status) {
       this.index =
-        Math.round((this.paopaoBg.currentTime * 1000) / this.interval) -
+        Math.round((this.Q7BgAudio.currentTime * 1000) / this.interval) -
         this.spaceBeat;
-      const curBeats = this.beats[this.index];
+      const curBeats = this.beats[this.index+2];
       if (
         curBeats.classList.contains("right") ||
         curBeats.classList.contains("wrong")
@@ -569,12 +570,18 @@ export default {
       this.Q6AAudio.pause();
       this.Q6BAudio.pause();
       this.Q7TAudio.play();
-      // this.Q6TAudio.addEventListener('ended',()=>{
-      //   if(this.swiperIndex!==6){
-      //     return
-      //   }
-      //   this.Q6AAudio.play();
-      // })
+      this.Q7BgAudio.play();
+      this.Q7BgAudio.pause();
+      this.Q7TAudio.addEventListener('ended',()=>{
+        if(this.swiperIndex!==7){
+          return
+        }
+        this.q7PlayStart();
+      })
+      this.Q7BgAudio.addEventListener('ended',()=>{
+        //this.swiper.slideNext();
+        //this.Q8Enter();
+      })
       // this.Q6AAudio.addEventListener('ended',()=>{
       //    if(this.swiperIndex!==6){
       //     return
@@ -587,6 +594,7 @@ export default {
     Q8Enter() {
       console.log("Q8Enter");
       this.Q7TAudio.pause();
+      this.Q7BgAudio.pause();
       this.Q8TAudio.play();
     },
     Q9Enter() {
@@ -626,18 +634,7 @@ export default {
     }
   },
   mounted() {
-    document.querySelectorAll(".note").forEach(e => {
-      e.addEventListener("click", ele => {
-        console.log('qqa')
-        console.log(e)
-        console.log(e.classList)
-        e.classList.add("playing");
-      });
-    });
-    //打泡泡
-    this.paopaoBg = this.$refs.paopaoBg;
-    this.getInterval();
-    //打泡泡
+
     var that = this;
     this.Q1TAudio = new Audio();
     this.Q1TAudio.src = require("../../assets/audio/music_test/q1/topic.mp3");
@@ -679,6 +676,8 @@ export default {
 
     this.Q7TAudio = new Audio();
     this.Q7TAudio.src = require("../../assets/audio/music_test/q7/topic.mp3");
+    this.Q7BgAudio = new Audio();
+    this.Q7BgAudio.src = require("../../assets/audio/music_test/q7/bg.mp3");
 
     this.Q8TAudio = new Audio();
     this.Q8TAudio.src = require("../../assets/audio/music_test/q8/topic.mp3");
@@ -689,57 +688,48 @@ export default {
     this.Q9CAudio.src = require("../../assets/audio/music_test/q9/content.mp3");
 
     this.page1Audio = this.$refs.page1.querySelector("audio");
+    //音符转动事件
+    document.querySelectorAll(".note").forEach(e => {
+      e.addEventListener("click", ele => {
+        console.log('qqa')
+        console.log(e)
+        console.log(e.classList)
+        e.classList.add("playing");
+      });
+    });
+    //打泡泡
+    this.getInterval();
+    //打泡泡
 
     this.audioArr = [
       this.Q1TAudio,
-      this.Q1TAudio,
-      this.Q1CAudio,
       this.Q1CAudio,
       this.Q2TAudio,
-      this.Q2TAudio,
-      this.Q2CAudio,
       this.Q2CAudio,
       this.Q3TAudio,
-      this.Q3TAudio,
-      this.Q3AAudio,
       this.Q3AAudio,
       this.Q3BAudio,
-      this.Q3BAudio,
-      this.Q4TAudio,
       this.Q4TAudio,
       this.Q4AAudio,
-      this.Q4AAudio,
       this.Q4BAudio,
-      this.Q4BAudio,
-
-      this.Q5TAudio,
       this.Q5TAudio,
       this.Q5AAudio,
-      this.Q5AAudio,
       this.Q5BAudio,
-      this.Q5BAudio,
-
-      this.Q6TAudio,
       this.Q6TAudio,
       this.Q6AAudio,
-      this.Q6AAudio,
       this.Q6BAudio,
-      this.Q6BAudio,
-
       this.Q7TAudio,
-      this.Q7TAudio,
-
       this.Q8TAudio,
-      this.Q8TAudio,
-
-      this.Q9TAudio,
       this.Q9TAudio,
       this.Q9CAudio,
-      this.Q9CAudio,
-
       this.page1Audio
     ];
-
+    // document.querySelector('.begin_btn').addEventListener('click',()=>{
+    //   this.audioArr.forEach(e=>{
+    //     e.play();
+    //     e.pause()
+    //   })
+    // })
     this.swiper = new Swiper(".swiper-container", {
       direction: "vertical",
       speed: 800,
@@ -1266,7 +1256,7 @@ body {
     height: 140px;
   }
   .text {
-    top: 40%;
+    top: 45% !important;
   }
 }
 .page.qiaoji {
@@ -1306,17 +1296,18 @@ body {
     bottom: 0;
   }
   99% {
-    opacity: 1;
+    //opacity: 1;
   }
   100% {
     bottom: 850px;
-    opacity: 0;
+    //opacity: 0;
     display: none;
   }
 }
 .beat {
   position: absolute;
-  bottom: -30px;
+  bottom: -60px;
+  transition: opacity 1.3s;
   img.o {
     width: 53px;
   }
@@ -1329,6 +1320,8 @@ body {
   animation: up 7s linear forwards;
 }
 .beat.right {
+  animation-play-state:paused;
+  opacity: 0;
   img.o {
     display: none;
   }
