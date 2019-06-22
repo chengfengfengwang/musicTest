@@ -115,7 +115,7 @@
         <div class="topic_card">
           <div class="title">第5题</div>
           <div class="text">仔细听这两段节奏相同吗？</div>
-          <div class="note">
+          <div class="note" @click="q5NoteClick">
             <img src="../../assets/img/music_test/note.png" alt>
           </div>
         </div>
@@ -136,7 +136,7 @@
         <div class="topic_card">
           <div class="title">第6题</div>
           <div class="text">仔细听这两段节奏相同吗？</div>
-          <div class="note">
+          <div class="note" @click="q6NoteClick">
             <img src="../../assets/img/music_test/note.png" alt>
           </div>
         </div>
@@ -153,14 +153,18 @@
           </div>
         </div>
       </div>
-      <div ref="quest7" v-show="true" class="page qiaoji swiper-slide stop-swiping">
+      <div ref="quest7" v-show="true" class="page common qiaoji swiper-slide stop-swiping">
         <!-- <audio
           id="myAudio"
           ref="paopaoBg"
           controls
           src="../../assets/audio/music_test/q7/bg.mp3"
-        ></audio> -->
+        ></audio>-->
         <!-- <div @click="q7PlayStart" class="btn">开始</div> -->
+        <div class="topic_card">
+          <div class="title">第7题</div>
+          <div class="text">请跟着音乐节拍点击屏幕中的泡泡吧</div>
+        </div>
         <div class="beat" v-for="n in beatsNum">
           <img class="o" src="../../assets/img/music_test/paopao.png" alt>
           <img src="../../assets/img/music_test/paopao_b.png" alt class="b">
@@ -191,7 +195,7 @@
         <div class="topic_card">
           <div class="title">第9题</div>
           <div class="text">仔细听这是哪个乐器发出的声音？</div>
-          <div class="note">
+          <div class="note" @click="Q9CAudio.play()">
             <img src="../../assets/img/music_test/note.png" alt>
           </div>
         </div>
@@ -236,7 +240,34 @@
 
                 <span>：</span>
                 <div class="stars">
-                  <div :key="index" v-for="(item,index) in resultItems[0].starArr" v-bind:class="{ half: item=='half' }" class="star_wrapper">
+                  <div
+                    :key="index"
+                    v-for="(item,index) in resultItems[0].starArr"
+                    v-bind:class="{ half: item=='half' }"
+                    class="star_wrapper"
+                  >
+                    <span class="left"></span>
+                    <span class="right"></span>
+                    <img class="star" src="../../assets/img/music_test/star.png" alt>
+                  </div>
+                </div>
+              </div>
+              <div class="star_items">
+                <div class="label">
+                  <span>音</span>
+                  <span>乐</span>
+                  <span>听</span>
+                  <span>觉</span>
+                </div>
+
+                <span>：</span>
+                <div class="stars">
+                  <div
+                    :key="index"
+                    v-for="(item,index) in resultItems[1].starArr"
+                    v-bind:class="{ half: item=='half' }"
+                    class="star_wrapper"
+                  >
                     <span class="left"></span>
                     <span class="right"></span>
                     <img class="star" src="../../assets/img/music_test/star.png" alt>
@@ -253,7 +284,12 @@
 
                 <span>：</span>
                 <div class="stars">
-                  <div :key="index" v-for="(item,index) in resultItems[1].starArr" v-bind:class="{ half: item=='half' }" class="star_wrapper">
+                  <div
+                    :key="index"
+                    v-for="(item,index) in resultItems[2].starArr"
+                    v-bind:class="{ half: item=='half' }"
+                    class="star_wrapper"
+                  >
                     <span class="left"></span>
                     <span class="right"></span>
                     <img class="star" src="../../assets/img/music_test/star.png" alt>
@@ -269,7 +305,12 @@
 
                 <span>：</span>
                 <div class="stars">
-                  <div :key="index" v-for="(item,index) in resultItems[2].starArr" v-bind:class="{ half: item=='half' }" class="star_wrapper">
+                  <div
+                    :key="index"
+                    v-for="(item,index) in resultItems[3].starArr"
+                    v-bind:class="{ half: item=='half' }"
+                    class="star_wrapper"
+                  >
                     <span class="left"></span>
                     <span class="right"></span>
                     <img class="star" src="../../assets/img/music_test/star.png" alt>
@@ -285,8 +326,13 @@
                 </div>
 
                 <span>：</span>
-               <div class="stars">
-                  <div :key="index" v-for="(item,index) in resultItems[3].starArr" v-bind:class="{ half: item=='half' }" class="star_wrapper">
+                <div class="stars">
+                  <div
+                    :key="index"
+                    v-for="(item,index) in resultItems[4].starArr"
+                    v-bind:class="{ half: item=='half' }"
+                    class="star_wrapper"
+                  >
                     <span class="left"></span>
                     <span class="right"></span>
                     <img class="star" src="../../assets/img/music_test/star.png" alt>
@@ -328,59 +374,90 @@ export default {
       swiperIndex: 0,
       mySelect: [],
       //打泡泡
-      beatsNum:27,//泡泡数量
+      beatsNum: 27, //泡泡数量
       time: "", //歌曲时长
       beats: [],
       speed: 46, //歌曲速度
-      needBeats:'',//歌曲节拍数
+      needBeats: "", //歌曲节拍数
       interval: "", //每拍的间隔，
       index: -1,
       error: 700, //误差值
       //spaceBeat: 0,
       spaceBeat: 4,
       //结果
-      resultItems:[
-        {name:'音乐感受力',star:0,starArr:[]},
-        {name:'音乐听觉',star:0,starArr:[]},
-        {name:'音乐记忆',star:0,starArr:[]},
-        {name:'节奏感',star:0,starArr:[]},
-        {name:'音乐常识',star:0,starArr:[]}
+      resultItems: [
+        { name: "音乐感受力", star: 0, starArr: [] },
+        { name: "音乐听觉", star: 0, starArr: [] },
+        { name: "音乐记忆", star: 0, starArr: [] },
+        { name: "节奏感", star: 0, starArr: [] },
+        { name: "音乐常识", star: 0, starArr: [] }
       ],
-      allStar:0,
-      score:0,
-      grade:1,
-      beyondRate:0
+      allStar: 0,
+      score: 0,
+      grade: 1,
+      beyondRate: 0,
+      q8OnOff:true
     };
   },
   methods: {
-    removeNotePlaying(){
-    document.querySelectorAll(".note").forEach(e => {
-      e.classList.remove("playing");
-    });
+    q5NoteClick() {
+      this.Q5AAudio.play();
+      //this.Q5AAudio.pause();
+      this.Q5BAudio.play();
+      this.Q5BAudio.pause();
+      this.Q5TAudio.addEventListener("ended", () => {
+        if (this.swiperIndex !== 5) {
+          return;
+        }
+        this.Q5AAudio.play();
+      });
+    },
+    q6NoteClick() {
+      this.Q6AAudio.play();
+      //this.Q5AAudio.pause();
+      this.Q6BAudio.play();
+      this.Q6BAudio.pause();
+      this.Q6TAudio.addEventListener("ended", () => {
+        if (this.swiperIndex !== 6) {
+          return;
+        }
+        this.Q6AAudio.play();
+      });
+    },
+    removeNotePlaying() {
+      document.querySelectorAll(".note").forEach(e => {
+        e.classList.remove("playing");
+      });
     },
     //打泡泡
     getInterval() {
       this.interval = 60000 / this.speed;
     },
     q7PlayStart() {
-      console.log('start play!')
+      console.log("start play!");
       this.Q7BgAudio.play();
-      this.needBeats = Math.floor(this.Q7BgAudio.duration/60*this.speed);
-      setTimeout(() => {
-        this.bindClick();
-      }, 100);
-      this.upBeats();
-      //this.bindClick();
+      this.needBeats = Math.floor((this.Q7BgAudio.duration / 60) * this.speed);
       // setTimeout(() => {
-      //   this.upBeats();
-      // }, (this.spaceBeat - 2) * this.interval);
+      //   this.bindClick();
+      // }, 100);
+      this.bindClick();
+      //this.upBeats();
+      //this.bindClick();
+      setTimeout(() => {
+        this.upBeats();
+      }, (this.spaceBeat - 2) * this.interval);//2拍只后升起泡泡
     },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
     bindClick() {
-      document.querySelector('.qiaoji').addEventListener("touchstart", e => {
+      document.querySelector(".qiaoji").addEventListener("touchstart", e => {
         //this.clickVoice.play();
+        if(this.q8OnOff){
+          this.Q8TAudio.play();
+          this.Q8TAudio.pause();
+          this.q8OnOff = false
+        }
         const clickTime = this.Q7BgAudio.currentTime * 1000;
         const remainder = clickTime % this.interval;
         const midPoint = this.interval / 2;
@@ -398,14 +475,15 @@ export default {
             this.handleClick("right");
           }
         }
-        console.log(this.Q7BgAudio.currentTime * 1000, this.index);
+        //console.log(this.Q7BgAudio.currentTime * 1000, this.index);
       });
     },
     handleClick(status) {
       this.index =
         Math.round((this.Q7BgAudio.currentTime * 1000) / this.interval) -
-        this.spaceBeat;
-      const curBeats = this.beats[this.index+2];
+        this.spaceBeat;//当前在第几排减去了空拍
+      console.log(this.index)
+      const curBeats = this.beats[this.index];
       if (
         curBeats.classList.contains("right") ||
         curBeats.classList.contains("wrong")
@@ -432,6 +510,8 @@ export default {
     },
     //打泡泡
     select(qIndex, value, isRight) {
+      console.log("---");
+      console.log(qIndex, value, isRight);
       this.mySelect.push({
         index: qIndex,
         detail: value,
@@ -470,6 +550,9 @@ export default {
       this.Q1TAudio.addEventListener("ended", () => {
         this.Q1CAudio.play();
       });
+      this.Q1CAudio.addEventListener("ended", () => {
+        this.removeNotePlaying();
+      });
     },
     Q2Enter() {
       console.log("Q2Enter");
@@ -480,6 +563,9 @@ export default {
       this.Q2CAudio.pause();
       this.Q2TAudio.addEventListener("ended", () => {
         this.Q2CAudio.play();
+      });
+      this.Q2CAudio.addEventListener("ended", () => {
+        this.removeNotePlaying();
       });
     },
     Q3Enter() {
@@ -572,6 +658,9 @@ export default {
           this.Q5BAudio.play();
         }, 500);
       });
+      this.Q5BAudio.addEventListener("ended", () => {
+        this.removeNotePlaying();
+      });
     },
     Q6Enter() {
       console.log("Q6Enter");
@@ -598,6 +687,9 @@ export default {
           this.Q6BAudio.play();
         }, 500);
       });
+      this.Q6BAudio.addEventListener("ended", () => {
+        this.removeNotePlaying();
+      });
     },
     Q7Enter() {
       console.log("Q7Enter");
@@ -607,16 +699,16 @@ export default {
       this.Q7TAudio.play();
       this.Q7BgAudio.play();
       this.Q7BgAudio.pause();
-      this.Q7TAudio.addEventListener('ended',()=>{
-        if(this.swiperIndex!==7){
-          return
+      this.Q7TAudio.addEventListener("ended", () => {
+        if (this.swiperIndex !== 7) {
+          return;
         }
         this.q7PlayStart();
-      })
-      this.Q7BgAudio.addEventListener('ended',()=>{
-        //this.swiper.slideNext();
-        //this.Q8Enter();
-      })
+      });
+      this.Q7BgAudio.addEventListener("ended", () => {
+        this.swiper.slideNext();
+        this.Q8Enter();
+      });
       // this.Q6AAudio.addEventListener('ended',()=>{
       //    if(this.swiperIndex!==6){
       //     return
@@ -645,76 +737,106 @@ export default {
         }
         this.Q9CAudio.play();
       });
+      this.Q9CAudio.addEventListener("ended", () => {
+        this.removeNotePlaying();
+      });
     },
     Q10Enter() {
       console.log("Q10Enter");
-      //将所有答题情况归类
-      this.mySelect.forEach((e,index)=>{
-        if(e.index==1||e.index==2){
-          if(e.isRight){
-            this.resultItems[0].star+=2.5
-          }
-        }else if(e.index==3||e.index==4){
-          if(e.isRight){
-            this.resultItems[1].star+=2.5
-          }
-        }
-        else if(e.index==5||e.index==6){
-          if(e.isRight){
-            this.resultItems[2].star+=2.5
-          }
-        }else if(e.index==7){
-          var rightNum = document.querySelectorAll('.beat.right').length;
-          var rightRate = rightNum / this.needBeats * 100;
-          if(rightRate>=90){
-            this.resultItems[3].star = 5;
-          }else if(rightRate>=70 && rightRate<90){
-            this.resultItems[3].star = 4;
-          }else if(rightRate>=60 && rightRate<70){
-            this.resultItems[3].star = 3;
-          }else if(rightRate>=40 && rightRate<60){
-            this.resultItems[3].star = 2;
-          }else if(rightRate<40){
-            this.resultItems[3].star = 1;
-          }
-        }
-        else if(e.index==8||e.index==9){
-          if(e.isRight){
-            this.resultItems[4].star+=2.5
-          }
-        }
-      });
-      //计算出总星数和展示星星
-      this.resultItems.forEach(e=>{
-        this.allStar += e.star;
-        if(e.star==0){
-          e.starArr=['all']
-        }else if(e.star==2.5){
-          e.starArr=['all','all','half']
-        }else if(e.star==5){
-          e.starArr=['all','all','all','all','all']
-        }
-      })
-      //总分
-      if(this.allStar>=20){
-        this.score = this.allStar*4;
-        this.grade = 3
-      }else if(this.allStar>=10 && this.allStar<20){ //10 - 20星 60 - 80分
-        this.score = 60 + this.allStar;
-        this.grade = 2
-      }else{ //10星以下60分
-        this.score = 6 * this.allStar;
-        this.grade = 1
-      }
-      if(this.score<98 && this.score>90){
-        this.beyondRate = this.score+1
-      }else if(this.score<=90 && this.score>60){
-        this.beyondRate = this.score + Math.floor(Math.random()*10) 
-      }else{
-        this.beyondRate = this.score + Math.floor(Math.random()*20) 
-      }
-      console.log(this.resultItems)
+      this.Q9TAudio.pause();
       this.Q9CAudio.pause();
+      this.Q10G1Audio.play();
+      this.Q10G1Audio.pause();
+      this.Q10G2Audio.play();
+      this.Q10G2Audio.pause();
+      this.Q10G3Audio.play();
+      this.Q10G3Audio.pause();
+      setTimeout(() => {
+        //将所有答题情况归类
+        this.mySelect.splice(5, 0, { detail: "B", index: 7, isRight: true });
+        this.mySelect.forEach((e, idx) => {
+          if (e.index == 1 || e.index == 2) {
+            if (e.isRight) {
+              this.resultItems[0].star += 2.5;
+            }
+          } else if (e.index == 3 || e.index == 4) {
+            if (e.isRight) {
+              this.resultItems[1].star += 2.5;
+            }
+          } else if (e.index == 5 || e.index == 6) {
+            if (e.isRight) {
+              this.resultItems[2].star += 2.5;
+            }
+          } else if (e.index == 7) {
+            var rightNum = document.querySelectorAll(".beat.right").length;
+            var rightRate = (rightNum / (this.needBeats-4)) * 100;
+            console.log("rightNum", rightNum, "this.needBeats", this.needBeats);
+            if (rightRate >= 90) {
+              this.resultItems[3].star = 5;
+            } else if (rightRate >= 70 && rightRate < 90) {
+              this.resultItems[3].star = 4;
+            } else if (rightRate >= 60 && rightRate < 70) {
+              this.resultItems[3].star = 3;
+            } else if (rightRate >= 40 && rightRate < 60) {
+              this.resultItems[3].star = 2;
+            } else if (rightRate < 40) {
+              this.resultItems[3].star = 1;
+            }
+          } else if (e.index == 8 || e.index == 9) {
+            if (e.isRight) {
+              this.resultItems[4].star += 2.5;
+            }
+          }
+        });
+        //计算出总星数和展示星星
+        this.resultItems.forEach(e => {
+          this.allStar += e.star;
+          if (e.star == 0) {
+            e.starArr = ["all"];
+          }
+          if (e.star == 1) {
+            e.starArr = ["all"];
+          }
+          if (e.star == 2) {
+            e.starArr = ["all", "all"];
+          }
+          if (e.star == 3) {
+            e.starArr = ["all", "all", "all"];
+          }
+          if (e.star == 4) {
+            e.starArr = ["all", "all", "all", "all"];
+          } else if (e.star == 2.5) {
+            e.starArr = ["all", "all", "half"];
+          } else if (e.star == 5) {
+            e.starArr = ["all", "all", "all", "all", "all"];
+          }
+        });
+        //总分
+        if (this.allStar >= 20) {
+          this.score = this.allStar * 4;
+          this.grade = 3;
+          this.Q10G3Audio.play();
+        } else if (this.allStar >= 10 && this.allStar < 20) {
+          //10 - 20星 60 - 80分
+          this.score = 60 + this.allStar;
+          this.grade = 2;
+          this.Q10G2Audio.play();
+        } else {
+          //10星以下60分
+          this.score = 6 * this.allStar;
+          this.grade = 1;
+          this.Q10G1Audio.play();
+        }
+        if(this.score >= 98){
+          this.beyondRate = this.score;
+        }else if (this.score < 98 && this.score > 90) {
+          this.beyondRate = this.score + 1;
+        } else if (this.score <= 90 && this.score > 60) {
+          this.beyondRate = this.score + Math.floor(Math.random() * 10);
+        } else {
+          this.beyondRate = this.score + Math.floor(Math.random() * 20);
+        }
+      }, 350);
     },
     page1IconPlay() {
       this.page1Icon = "playing";
@@ -735,7 +857,6 @@ export default {
     }
   },
   mounted() {
-
     var that = this;
     this.Q1TAudio = new Audio();
     this.Q1TAudio.src = require("../../assets/audio/music_test/q1/topic.mp3");
@@ -788,13 +909,20 @@ export default {
     this.Q9CAudio = new Audio();
     this.Q9CAudio.src = require("../../assets/audio/music_test/q9/content.mp3");
 
+    this.Q10G1Audio = new Audio();
+    this.Q10G1Audio.src = require("../../assets/audio/music_test/q10/grade1.mp3");
+    this.Q10G2Audio = new Audio();
+    this.Q10G2Audio.src = require("../../assets/audio/music_test/q10/grade2.mp3");
+    this.Q10G3Audio = new Audio();
+    this.Q10G3Audio.src = require("../../assets/audio/music_test/q10/grade3.mp3");
+
     this.page1Audio = this.$refs.page1.querySelector("audio");
     //音符转动事件
     document.querySelectorAll(".note").forEach(e => {
       e.addEventListener("click", ele => {
-        console.log('qqa')
-        console.log(e)
-        console.log(e.classList)
+        console.log("qqa");
+        console.log(e);
+        console.log(e.classList);
         e.classList.add("playing");
       });
     });
@@ -834,8 +962,8 @@ export default {
     this.swiper = new Swiper(".swiper-container", {
       direction: "vertical",
       speed: 800,
-      //   noSwiping : true,
-      //     noSwipingClass : 'stop-swiping',
+        noSwiping : true,
+          noSwipingClass : 'stop-swiping',
       on: {
         slideNextTransitionEnd() {
           that.swiperIndex = that.swiper.activeIndex;
@@ -1122,6 +1250,7 @@ body {
 }
 //鸟
 .page.bird {
+  overflow: hidden;
   .topic_card {
     background: url("../../assets/img/music_test/topic_card.png") no-repeat
       center/cover;
@@ -1270,15 +1399,24 @@ body {
       position: absolute;
       left: 50%;
       margin-left: -36px;
-      bottom: 20px;
+      bottom: 25px;
+      font-size: 0;
+      -webkit-tap-highlight-color: transparent;
       img {
         width: 72px;
         height: 72px;
+        -webkit-tap-highlight-color: transparent;
       }
-      transition: transform 15s;
+      //transition: transform 15s;
     }
     .note.playing {
-      transform: rotate(360deg);
+      animation: rotate 15s;
+      //transform: rotate(360deg);
+    }
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
     }
     .text {
       top: 28%;
@@ -1350,7 +1488,8 @@ body {
 .q9b {
   width: 86px !important;
 }
-.page.q8 {
+.page.q8,
+.page.qiaoji {
   .topic_card {
     background: url("../../assets/img/music_test/topic_card.png") no-repeat
       center/cover;
@@ -1421,7 +1560,7 @@ body {
   animation: up 7s linear forwards;
 }
 .beat.right {
-  animation-play-state:paused;
+  animation-play-state: paused;
   opacity: 0;
   img.o {
     display: none;

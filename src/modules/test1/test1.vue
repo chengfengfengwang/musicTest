@@ -12,13 +12,8 @@ export default {
     test() {
       var a1 = this.$refs.a1;
       var a2 = this.$refs.a2;
-      setTimeout(() => {
-        a1.play();
-      }, 1000);
-      
-
+      a1.play();
       a1.addEventListener("ended", () => {
-        //console.log("ended");
         a2.play();
       });
     }
