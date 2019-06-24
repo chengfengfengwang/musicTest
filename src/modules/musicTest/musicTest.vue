@@ -40,7 +40,7 @@
           <div class="topic_card">
             <div class="title">第1题</div>
             <div class="text">仔细听音乐，为它选择一个适合的表情吧！</div>
-            <div class="note" @click="Q1CAudio.play()">
+            <div class="note">
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
           </div>
@@ -62,7 +62,7 @@
           <div class="topic_card">
             <div class="title">第2题</div>
             <div class="text">仔细听音乐，为它选择一个小动物吧</div>
-            <div class="note" @click="Q2CAudio.play()">
+            <div class="note">
               <audio src></audio>
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
@@ -83,7 +83,7 @@
         <div ref="quest3" v-show="true" class="page bird swiper-slide stop-swiping">
           <div class="topic_card">
             <div class="title">第3题</div>
-            <div class="text" style="width:70%">仔细听两只小鸟的叫声，请把音高的小鸟送回家</div>
+            <div class="text" style="width:70%">仔细听两只小鸟的叫声，请点击音高的小鸟把它送回家</div>
           </div>
           <div class="bird_main">
             <div class="option_card option_card1 next_dot bird_click" @click="select(3,'A',false)">
@@ -108,7 +108,7 @@
         <div ref="quest4" v-show="true" class="page bird swiper-slide stop-swiping">
           <div class="topic_card">
             <div class="title">第4题</div>
-            <div class="text" style="width:70%">仔细听两只小鸟的叫声，请把音低的小鸟送回家</div>
+            <div class="text" style="width:70%">仔细听两只小鸟的叫声，请点击音低的小鸟把它送回家</div>
           </div>
           <div class="bird_main">
             <div class="option_card option_card1 next_dot" @click="select(4,'A',false)">
@@ -128,7 +128,7 @@
           <div class="topic_card">
             <div class="title">第5题</div>
             <div class="text">仔细听这两段节奏相同吗？</div>
-            <div class="note" @click="q5NoteClick">
+            <div class="note">
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
           </div>
@@ -149,7 +149,7 @@
           <div class="topic_card">
             <div class="title">第6题</div>
             <div class="text">仔细听这两段节奏相同吗？</div>
-            <div class="note" @click="q6NoteClick">
+            <div class="note">
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
           </div>
@@ -208,7 +208,7 @@
           <div class="topic_card">
             <div class="title">第9题</div>
             <div class="text">仔细听这是哪个乐器发出的声音？</div>
-            <div class="note" @click="Q9CAudio.play()">
+            <div class="note">
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
           </div>
@@ -464,14 +464,15 @@ export default {
 
       var that = this;
       var p = document.querySelector(".p_color");
-      var bgList = document.querySelectorAll(".page");
       var bgArr = [],
         sum = 0;
       var fakeTemp = 0;
       var promiseList = [];
       var bg1 = require("../../assets/img/music_test/test_cover.png");
       var bg2 = require("../../assets/img/music_test/bg.jpg");
-      var bgArr = [bg1,bg2];
+      var bg3 = require("../../assets/img/music_test/sfq.png");
+      var bg4 = require("../../assets/img/music_test/topic_card.png");
+      var bgArr = [bg1,bg2,bg3,bg4];
       bgArr.forEach((e, index) => {
         //console.log(require(e))
         let p = new Promise((resolve, reject) => {
@@ -533,9 +534,25 @@ export default {
         this.Q6AAudio.play();
       });
     },
+    addNotePlaying() {
+      document.querySelectorAll(".note").forEach(e => {
+        e.classList.add("playing");
+      });
+    },
     removeNotePlaying() {
+      //this.removeNoteReading();
       document.querySelectorAll(".note").forEach(e => {
         e.classList.remove("playing");
+      });
+    },
+    addNoteReading() {
+      document.querySelectorAll(".note").forEach(e => {
+        e.classList.add("reading");
+      });
+    },
+    removeNoteReading() {
+      document.querySelectorAll(".note").forEach(e => {
+        e.classList.remove("reading");
       });
     },
     //打泡泡
@@ -656,22 +673,29 @@ export default {
       this.Q1TAudio.play();
       this.Q1CAudio.play();
       this.Q1CAudio.pause();
+      this.addNoteReading(); //开始读题干
       this.Q1TAudio.addEventListener("ended", () => {
         this.Q1CAudio.play();
+        this.removeNoteReading(); //题干读完
+        this.addNotePlaying()  //转动音符
       });
       this.Q1CAudio.addEventListener("ended", () => {
-        this.removeNotePlaying();
+        this.removeNotePlaying(); //取消转动音符
       });
     },
     Q2Enter() {
       console.log("Q2Enter");
+      this.removeNotePlaying(); //取消转动音符
       this.Q1TAudio.pause();
       this.Q1CAudio.pause();
       this.Q2TAudio.play();
       this.Q2CAudio.play();
       this.Q2CAudio.pause();
+      this.addNoteReading(); //开始读题干
       this.Q2TAudio.addEventListener("ended", () => {
         this.Q2CAudio.play();
+        this.removeNoteReading(); //题干读完
+        this.addNotePlaying()  //转动音符
       });
       this.Q2CAudio.addEventListener("ended", () => {
         this.removeNotePlaying();
@@ -740,11 +764,13 @@ export default {
     },
     Q5Enter() {
       console.log("Q5Enter");
+      this.removeNotePlaying(); //取消转动音符
       this.Q4TAudio.pause();
       this.Q4AAudio.pause();
       this.Q4BAudio.pause();
       this.Q5TAudio.play();
       this.Q5TAudio.pause();
+      this.addNoteReading(); //开始读题干
       setTimeout(() => {
         this.Q5TAudio.play();
       }, 2001);
@@ -754,6 +780,8 @@ export default {
       this.Q5BAudio.play();
       this.Q5BAudio.pause();
       this.Q5TAudio.addEventListener("ended", () => {
+        this.removeNoteReading(); //题干读完
+        this.addNotePlaying()  //转动音符
         if (this.swiperIndex !== 5) {
           return;
         }
@@ -773,6 +801,7 @@ export default {
     },
     Q6Enter() {
       console.log("Q6Enter");
+      this.removeNotePlaying(); //取消转动音符
       this.Q5TAudio.pause();
       this.Q5AAudio.pause();
       this.Q5BAudio.pause();
@@ -782,7 +811,10 @@ export default {
       this.Q6AAudio.pause();
       this.Q6BAudio.play();
       this.Q6BAudio.pause();
+      this.addNoteReading(); //开始读题干
       this.Q6TAudio.addEventListener("ended", () => {
+        this.removeNoteReading(); //题干读完
+        this.addNotePlaying()  //转动音符
         if (this.swiperIndex !== 6) {
           return;
         }
@@ -835,12 +867,16 @@ export default {
     },
     Q9Enter() {
       console.log("Q9Enter");
+      this.removeNotePlaying(); //取消转动音符
       this.Q8TAudio.pause();
       this.Q9TAudio.play();
       //hack
       this.Q9CAudio.play();
       this.Q9CAudio.pause();
+       this.addNoteReading(); //开始读题干
       this.Q9TAudio.addEventListener("ended", () => {
+        this.removeNoteReading(); //题干读完
+        this.addNotePlaying()  //转动音符
         if (this.swiperIndex !== 9) {
           return;
         }
@@ -978,14 +1014,14 @@ export default {
     this.Q2CAudio.src = require("../../assets/audio/music_test/q2/content.mp3");
 
     this.Q3TAudio = new Audio();
-    this.Q3TAudio.src = require("../../assets/audio/music_test/q3/topic.mp3");
+    this.Q3TAudio.src = require("../../assets/audio/music_test/q3/topic.wav");
     this.Q3AAudio = new Audio();
     this.Q3AAudio.src = require("../../assets/audio/music_test/q3/A_3_do.mp3");
     this.Q3BAudio = new Audio();
     this.Q3BAudio.src = require("../../assets/audio/music_test/q3/B_3_sol.mp3");
 
     this.Q4TAudio = new Audio();
-    this.Q4TAudio.src = require("../../assets/audio/music_test/q4/topic.mp3");
+    this.Q4TAudio.src = require("../../assets/audio/music_test/q4/topic.wav");
     this.Q4AAudio = new Audio();
     this.Q4AAudio.src = require("../../assets/audio/music_test/q4/A_4_fa.mp3");
     this.Q4BAudio = new Audio();
@@ -1026,13 +1062,40 @@ export default {
     this.Q10G3Audio.src = require("../../assets/audio/music_test/q10/grade3.mp3");
 
     this.page1Audio = this.$refs.page1.querySelector("audio");
-    //音符转动事件
+    //音符点击事件
     document.querySelectorAll(".note").forEach(e => {
       e.addEventListener("click", ele => {
-        console.log("qqa");
-        console.log(e);
-        console.log(e.classList);
-        e.classList.add("playing");
+        console.log(this.swiperIndex)
+        if(e.classList.contains('reading')){
+        return
+      }
+        if(e.classList.contains('playing')){
+        return
+      }
+        switch (this.swiperIndex) {
+        case 1: {
+          this.Q1CAudio.play();
+          break;
+        }
+        case 2: {
+          this.Q2CAudio.play();
+          break;
+        }
+        case 5: {
+          this.q5NoteClick();
+          break;
+        }
+        case 6: {
+          this.q6NoteClick();
+          break;
+        }
+        case 9: {
+          this.Q9CAudio.play();
+          break;
+        }
+      }
+      
+      e.classList.add("playing");
       });
     });
     //打泡泡
@@ -1256,7 +1319,9 @@ body {
     top: 77%;
     img {
       width: 190px;
+      animation: breath 1s   infinite alternate;
     }
+    
   }
   background: #2e5dad;
   //background: no-repeat top 0 left 0 ~"/" cover url("../../assets/img/music_test/test_cover.png");
@@ -1776,6 +1841,14 @@ body {
   100% {
     opacity: 0;
     display: none !important;
+  }
+}
+@keyframes breath {
+  0%{
+    transform: scale(.9);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>
