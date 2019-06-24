@@ -1063,14 +1063,14 @@ export default {
     this.Q2CAudio.src = require("../../assets/audio/music_test/q2/content.mp3");
 
     this.Q3TAudio = new Audio();
-    this.Q3TAudio.src = require("../../assets/audio/music_test/q3/topic.wav");
+    this.Q3TAudio.src = require("../../assets/audio/music_test/q3/topic.mp3");
     this.Q3AAudio = new Audio();
     this.Q3AAudio.src = require("../../assets/audio/music_test/q3/A_3_do.mp3");
     this.Q3BAudio = new Audio();
     this.Q3BAudio.src = require("../../assets/audio/music_test/q3/B_3_sol.mp3");
 
     this.Q4TAudio = new Audio();
-    this.Q4TAudio.src = require("../../assets/audio/music_test/q4/topic.wav");
+    this.Q4TAudio.src = require("../../assets/audio/music_test/q4/topic.mp3");
     this.Q4AAudio = new Audio();
     this.Q4AAudio.src = require("../../assets/audio/music_test/q4/A_4_fa.mp3");
     this.Q4BAudio = new Audio();
@@ -1299,6 +1299,7 @@ body {
 }
 #musicTest * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 .page {
   position: relative;
