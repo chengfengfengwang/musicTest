@@ -18,9 +18,9 @@ module.exports = {
         ? 'http://s.immusician.com/web/h5'
         : '/',
     chainWebpack: config => {
-        // const imgRule = config.module.rule('images');
-        // imgRule.use('image-webpack-loader')
-        //     .loader('image-webpack-loader');
+        const imgRule = config.module.rule('images');
+        imgRule.use('image-webpack-loader')
+            .loader('image-webpack-loader');
         config.module
             .rule("vue")
             .use("vue-loader")

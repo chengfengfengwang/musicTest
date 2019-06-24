@@ -1,371 +1,370 @@
 <template>
-  <div class="swiper-container" id="musicTest">
-    <div class="swiper-wrapper">
-      <div ref="page1" v-show="true" class="page first swiper-slide stop-swiping">
-        <audio preload src="../../assets/audio/music_test/page1/page1.mp3"></audio>
-        <img
-          v-show="page1Icon=='playing'"
-          @click="page1IconPause"
-          src="../../assets/img/music_test/play_icon.png"
-          alt
-          class="play_icon"
-        >
-        <img
-          v-show="page1Icon=='pause'"
-          @click="page1IconPlay"
-          src="../../assets/img/music_test/play_icon_pause.png"
-          alt
-          class="play_icon pause"
-        >
-        <img class="cover" src="../../assets/img/music_test/test_cover.png" alt>
-        <div class="begin_btn next_dot" @click="beginClick">
-          <img src="../../assets/img/music_test/begin_btn.png" alt>
+  <div id="musicTest">
+    <div class="page loading swiper-slide stop-swiping">
+      <div class="middle_wrapper">
+        <img src="../../assets/img/music_test/uk.png" alt class="uk">
+        <div class="progress_wrapper">
+          <div class="p_grey">
+            <div class="p_color"></div>
+          </div>
+          <span id="progressStatus">加载中...</span>
         </div>
       </div>
-      <div ref="quest1" v-show="true" class="page common swiper-slide stop-swiping">
-        <audio src></audio>
-        <div class="topic_card">
-          <div class="title">第1题</div>
-          <div class="text">仔细听音乐，为它选择一个适合的表情吧！</div>
-          <div class="note" @click="Q1CAudio.play()">
-            <img src="../../assets/img/music_test/note.png" alt>
+      <!-- <img v-show="enterShow" src="../assets/img/mytrip/loading/btn.png" alt="" @click="enter" class="btn"> -->
+    </div>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div ref="page1" v-show="true" class="page first swiper-slide stop-swiping">
+          <audio preload src="../../assets/audio/music_test/page1/page1.mp3"></audio>
+          <img
+            v-show="page1Icon=='playing'"
+            @click="page1IconPause"
+            src="../../assets/img/music_test/play_icon.png"
+            alt
+            class="play_icon"
+          >
+          <img
+            v-show="page1Icon=='pause'"
+            @click="page1IconPlay"
+            src="../../assets/img/music_test/play_icon_pause.png"
+            alt
+            class="play_icon pause"
+          >
+          <img class="cover" src="../../assets/img/music_test/test_cover.png" alt>
+          <div class="begin_btn next_dot" @click="beginClick">
+            <img src="../../assets/img/music_test/begin_btn.png" alt>
           </div>
         </div>
-        <div class="page_main">
-          <div class="option_card option_card1 next_dot" @click="select(1,'A',true)">
-            <div class="option_img">
-              <img src="../../assets/img/music_test/yj_happy.png" alt>
+        <div ref="quest1" v-show="true" class="page common swiper-slide stop-swiping">
+          <audio src></audio>
+          <div class="topic_card">
+            <div class="title">第1题</div>
+            <div class="text">仔细听音乐，为它选择一个适合的表情吧！</div>
+            <div class="note" @click="Q1CAudio.play()">
+              <img src="../../assets/img/music_test/note.png" alt>
             </div>
           </div>
-          <div class="option_card option_card2 next_dot" @click="select(1,'B',false)">
-            <div class="option_img">
-              <img src="../../assets/img/music_test/sad.png" alt>
+          <div class="page_main">
+            <div class="option_card option_card1 next_dot" @click="select(1,'A',true)">
+              <div class="option_img">
+                <img src="../../assets/img/music_test/yj_happy.png" alt>
+              </div>
+            </div>
+            <div class="option_card option_card2 next_dot" @click="select(1,'B',false)">
+              <div class="option_img">
+                <img src="../../assets/img/music_test/sad.png" alt>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div ref="quest2" v-show="true" class="page common swiper-slide stop-swiping">
-        <audio src></audio>
-        <div class="topic_card">
-          <div class="title">第2题</div>
-          <div class="text">仔细听音乐，为它选择一个小动物吧</div>
-          <div class="note" @click="Q2CAudio.play()">
-            <audio src></audio>
-            <img src="../../assets/img/music_test/note.png" alt>
-          </div>
-        </div>
-        <div class="page_main">
-          <div class="option_card option_card1 next_dot" @click="select(2,'A',false)">
-            <div class="option_img">
-              <img class="q2a" src="../../assets/img/music_test/bao.png" alt>
+        <div ref="quest2" v-show="true" class="page common swiper-slide stop-swiping">
+          <audio src></audio>
+          <div class="topic_card">
+            <div class="title">第2题</div>
+            <div class="text">仔细听音乐，为它选择一个小动物吧</div>
+            <div class="note" @click="Q2CAudio.play()">
+              <audio src></audio>
+              <img src="../../assets/img/music_test/note.png" alt>
             </div>
           </div>
-          <div class="option_card option_card2 next_dot" @click="select(2,'B',true)">
-            <div class="option_img">
-              <img class="q2b" src="../../assets/img/music_test/wugui.png" alt>
+          <div class="page_main">
+            <div class="option_card option_card1 next_dot" @click="select(2,'A',false)">
+              <div class="option_img">
+                <img class="q2a" src="../../assets/img/music_test/bao.png" alt>
+              </div>
+            </div>
+            <div class="option_card option_card2 next_dot" @click="select(2,'B',true)">
+              <div class="option_img">
+                <img class="q2b" src="../../assets/img/music_test/wugui.png" alt>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div ref="quest3" v-show="true" class="page bird swiper-slide stop-swiping">
-        <div class="topic_card">
-          <div class="title">第3题</div>
-          <div class="text" style="width:70%">仔细听两只小鸟的叫声，请把音高的小鸟送回家</div>
-        </div>
-        <div class="bird_main">
-          <div class="option_card option_card1 next_dot bird_click" @click="select(3,'A',false)">
-            <div ref="q3Bird1" class="option_bird bird bird_click"></div>
-            <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
+        <div ref="quest3" v-show="true" class="page bird swiper-slide stop-swiping">
+          <div class="topic_card">
+            <div class="title">第3题</div>
+            <div class="text" style="width:70%">仔细听两只小鸟的叫声，请把音高的小鸟送回家</div>
           </div>
-          <div class="option_card option_card2 next_dot bird_click" @click="select(3,'B',true)">
-            <div ref="q3Bird2" class="option_bird bird bird_click"></div>
+          <div class="bird_main">
+            <div class="option_card option_card1 next_dot bird_click" @click="select(3,'A',false)">
+              <div ref="q3Bird1" class="option_bird bird bird_click"></div>
+              <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
+            </div>
+            <div class="option_card option_card2 next_dot bird_click" @click="select(3,'B',true)">
+              <div ref="q3Bird2" class="option_bird bird bird_click"></div>
+            </div>
+            <img src="../../assets/img/music_test/tree.png" alt class="tree">
           </div>
-          <img src="../../assets/img/music_test/tree.png" alt class="tree">
-        </div>
 
-        <!-- <img src="../../assets/img/music_test/cloud1.png" alt class="cloud cloud1"> -->
-        <!-- <img src="../../assets/img/music_test/cloud2.png" alt class="cloud cloud2"> -->
-        <!-- <img src="../../assets/img/music_test/cloud3.png" alt class="cloud cloud3"> -->
-        <!-- <img src="../../assets/img/music_test/grass1.png" alt class="grass"> -->
+          <!-- <img src="../../assets/img/music_test/cloud1.png" alt class="cloud cloud1"> -->
+          <!-- <img src="../../assets/img/music_test/cloud2.png" alt class="cloud cloud2"> -->
+          <!-- <img src="../../assets/img/music_test/cloud3.png" alt class="cloud cloud3"> -->
+          <!-- <img src="../../assets/img/music_test/grass1.png" alt class="grass"> -->
 
-        <div class="wave">
-          <img src="../../assets/img/music_test/wave.png" alt>
-        </div>
-      </div>
-      <div ref="quest4" v-show="true" class="page bird swiper-slide stop-swiping">
-        <div class="topic_card">
-          <div class="title">第4题</div>
-          <div class="text" style="width:70%">仔细听两只小鸟的叫声，请把音低的小鸟送回家</div>
-        </div>
-        <div class="bird_main">
-          <div class="option_card option_card1 next_dot" @click="select(4,'A',false)">
-            <div ref="q4Bird1" class="option_bird bird"></div>
-            <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
-          </div>
-          <div class="option_card option_card2 next_dot" @click="select(4,'B',true)">
-            <div ref="q4Bird2" class="option_bird bird"></div>
-          </div>
-          <img src="../../assets/img/music_test/tree.png" alt class="tree">
-        </div>
-        <div class="wave">
-          <img src="../../assets/img/music_test/wave.png" alt>
-        </div>
-      </div>
-      <div ref="quest5" v-show="true" class="page common swiper-slide stop-swiping">
-        <div class="topic_card">
-          <div class="title">第5题</div>
-          <div class="text">仔细听这两段节奏相同吗？</div>
-          <div class="note" @click="q5NoteClick">
-            <img src="../../assets/img/music_test/note.png" alt>
+          <div class="wave">
+            <img src="../../assets/img/music_test/wave.png" alt>
           </div>
         </div>
-        <div class="page_main">
-          <div class="option_card option_card1 next_dot" @click="select(5,'A',true)">
-            <div class="option_img">
-              <img src="../../assets/img/music_test/gou.png" alt>
+        <div ref="quest4" v-show="true" class="page bird swiper-slide stop-swiping">
+          <div class="topic_card">
+            <div class="title">第4题</div>
+            <div class="text" style="width:70%">仔细听两只小鸟的叫声，请把音低的小鸟送回家</div>
+          </div>
+          <div class="bird_main">
+            <div class="option_card option_card1 next_dot" @click="select(4,'A',false)">
+              <div ref="q4Bird1" class="option_bird bird"></div>
+              <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
+            </div>
+            <div class="option_card option_card2 next_dot" @click="select(4,'B',true)">
+              <div ref="q4Bird2" class="option_bird bird"></div>
+            </div>
+            <img src="../../assets/img/music_test/tree.png" alt class="tree">
+          </div>
+          <div class="wave">
+            <img src="../../assets/img/music_test/wave.png" alt>
+          </div>
+        </div>
+        <div ref="quest5" v-show="true" class="page common swiper-slide stop-swiping">
+          <div class="topic_card">
+            <div class="title">第5题</div>
+            <div class="text">仔细听这两段节奏相同吗？</div>
+            <div class="note" @click="q5NoteClick">
+              <img src="../../assets/img/music_test/note.png" alt>
             </div>
           </div>
-          <div class="option_card option_card2 next_dot" @click="select(5,'B',false)">
-            <div class="option_img">
-              <img src="../../assets/img/music_test/cha.png" alt>
+          <div class="page_main">
+            <div class="option_card option_card1 next_dot" @click="select(5,'A',true)">
+              <div class="option_img">
+                <img src="../../assets/img/music_test/gou.png" alt>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div ref="quest6" v-show="true" class="page common swiper-slide stop-swiping">
-        <div class="topic_card">
-          <div class="title">第6题</div>
-          <div class="text">仔细听这两段节奏相同吗？</div>
-          <div class="note" @click="q6NoteClick">
-            <img src="../../assets/img/music_test/note.png" alt>
-          </div>
-        </div>
-        <div class="page_main">
-          <div class="option_card option_card1 next_dot" @click="select(6,'A',false)">
-            <div class="option_img">
-              <img src="../../assets/img/music_test/gou.png" alt>
-            </div>
-          </div>
-          <div class="option_card option_card2 next_dot" @click="select(6,'B',true)">
-            <div class="option_img">
-              <img src="../../assets/img/music_test/cha.png" alt>
+            <div class="option_card option_card2 next_dot" @click="select(5,'B',false)">
+              <div class="option_img">
+                <img src="../../assets/img/music_test/cha.png" alt>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div ref="quest7" v-show="true" class="page common qiaoji swiper-slide stop-swiping">
-        <!-- <audio
+        <div ref="quest6" v-show="true" class="page common swiper-slide stop-swiping">
+          <div class="topic_card">
+            <div class="title">第6题</div>
+            <div class="text">仔细听这两段节奏相同吗？</div>
+            <div class="note" @click="q6NoteClick">
+              <img src="../../assets/img/music_test/note.png" alt>
+            </div>
+          </div>
+          <div class="page_main">
+            <div class="option_card option_card1 next_dot" @click="select(6,'A',false)">
+              <div class="option_img">
+                <img src="../../assets/img/music_test/gou.png" alt>
+              </div>
+            </div>
+            <div class="option_card option_card2 next_dot" @click="select(6,'B',true)">
+              <div class="option_img">
+                <img src="../../assets/img/music_test/cha.png" alt>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ref="quest7" v-show="true" class="page common qiaoji swiper-slide stop-swiping">
+          <!-- <audio
           id="myAudio"
           ref="paopaoBg"
           controls
           src="../../assets/audio/music_test/q7/bg.mp3"
-        ></audio>-->
-        <!-- <div @click="q7PlayStart" class="btn">开始</div> -->
-        <div class="topic_card">
-          <div class="title">第7题</div>
-          <div class="text">请跟着音乐节拍点击屏幕中的泡泡吧</div>
+          ></audio>-->
+          <!-- <div @click="q7PlayStart" class="btn">开始</div> -->
+          <div class="topic_card">
+            <div class="title">第7题</div>
+            <div class="text">请跟着音乐节拍点击屏幕中的泡泡吧</div>
+          </div>
+          <div class="beat" v-for="n in beatsNum">
+            <img class="o" src="../../assets/img/music_test/paopao.png" alt>
+            <img src="../../assets/img/music_test/paopao_b.png" alt class="b">
+          </div>
         </div>
-        <div class="beat" v-for="n in beatsNum">
-          <img class="o" src="../../assets/img/music_test/paopao.png" alt>
-          <img src="../../assets/img/music_test/paopao_b.png" alt class="b">
-        </div>
-      </div>
-      <div ref="quest8" v-show="true" class="page q8 common swiper-slide stop-swiping">
-        <div class="topic_card">
-          <div class="title">第8题</div>
-          <div class="text">请选出下面哪一个是钢琴？</div>
-          <!-- <div class="note">
+        <div ref="quest8" v-show="true" class="page q8 common swiper-slide stop-swiping">
+          <div class="topic_card">
+            <div class="title">第8题</div>
+            <div class="text">请选出下面哪一个是钢琴？</div>
+            <!-- <div class="note">
             <img src="../../assets/img/music_test/note.png" alt>
-          </div>-->
-        </div>
-        <div class="page_main">
-          <div class="option_card option_card1 next_dot" @click="select(8,'A',true)">
-            <div class="option_img">
-              <img class="q8a" src="../../assets/img/music_test/piano.png" alt>
+            </div>-->
+          </div>
+          <div class="page_main">
+            <div class="option_card option_card1 next_dot" @click="select(8,'A',true)">
+              <div class="option_img">
+                <img class="q8a" src="../../assets/img/music_test/piano.png" alt>
+              </div>
             </div>
-          </div>
-          <div class="option_card option_card2 next_dot" @click="select(8,'B',false)">
-            <div class="option_img">
-              <img class="q8b" src="../../assets/img/music_test/sfq.png" alt>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div ref="quest9" v-show="true" class="page common swiper-slide stop-swiping">
-        <div class="topic_card">
-          <div class="title">第9题</div>
-          <div class="text">仔细听这是哪个乐器发出的声音？</div>
-          <div class="note" @click="Q9CAudio.play()">
-            <img src="../../assets/img/music_test/note.png" alt>
-          </div>
-        </div>
-        <div class="page_main">
-          <div class="option_card option_card1 next_dot" @click="select(9,'A',false)">
-            <div class="option_img">
-              <img class="q9a" src="../../assets/img/music_test/xh.png" alt>
-            </div>
-          </div>
-          <div class="option_card option_card2 next_dot" @click="select(9,'B',true)">
-            <div class="option_img">
-              <img class="q9b" src="../../assets/img/music_test/xtq.png" alt>
+            <div class="option_card option_card2 next_dot" @click="select(8,'B',false)">
+              <div class="option_img">
+                <img class="q8b" src="../../assets/img/music_test/sfq.png" alt>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div v-show="true" class="page last swiper-slide stop-swiping">
-        <img class="cover" src="../../assets/img/music_test/test_cover.png" alt>
-        <div class="result_bg_wrapper">
-          <div class="content">
-            <div class="core">{{score}}分</div>
-            <div class="byond">超越了{{beyondRate}}%的人</div>
-            <div class="comment">
-              <img src="../../assets/img/music_test/comment_left.png" alt class="comment_left">
-              <p v-show="grade==1">“每一个小朋友都有音乐潜能，</p>
-              <p v-show="grade==1">加油，你也可以成为音乐小达人!”</p>
-              <p v-show="grade==2">“不要小瞧了你的音乐潜能哦!</p>
-              <p v-show="grade==2">学习音乐，会让你越来越优秀!”</p>
-              <p v-show="grade==3">“哇，你非常的具有音乐天赋!</p>
-              <p v-show="grade==3">未来音乐大师也许就是你哦!”</p>
-              <img src="../../assets/img/music_test/comment_right.png" alt class="comment_right">
+        <div ref="quest9" v-show="true" class="page common swiper-slide stop-swiping">
+          <div class="topic_card">
+            <div class="title">第9题</div>
+            <div class="text">仔细听这是哪个乐器发出的声音？</div>
+            <div class="note" @click="Q9CAudio.play()">
+              <img src="../../assets/img/music_test/note.png" alt>
             </div>
-            <div class="star_items_wrapper">
-              <div class="star_items">
-                <div class="label">
-                  <span>音</span>
-                  <span>乐</span>
-                  <span>感</span>
-                  <span>受</span>
-                  <span>力</span>
-                </div>
-
-                <span>：</span>
-                <div class="stars">
-                  <div
-                    :key="index"
-                    v-for="(item,index) in resultItems[0].starArr"
-                    v-bind:class="{ half: item=='half' }"
-                    class="star_wrapper"
-                  >
-                    <span class="left"></span>
-                    <span class="right"></span>
-                    <img class="star" src="../../assets/img/music_test/star.png" alt>
-                  </div>
-                </div>
+          </div>
+          <div class="page_main">
+            <div class="option_card option_card1 next_dot" @click="select(9,'A',false)">
+              <div class="option_img">
+                <img class="q9a" src="../../assets/img/music_test/xh.png" alt>
               </div>
-              <div class="star_items">
-                <div class="label">
-                  <span>音</span>
-                  <span>乐</span>
-                  <span>听</span>
-                  <span>觉</span>
-                </div>
-
-                <span>：</span>
-                <div class="stars">
-                  <div
-                    :key="index"
-                    v-for="(item,index) in resultItems[1].starArr"
-                    v-bind:class="{ half: item=='half' }"
-                    class="star_wrapper"
-                  >
-                    <span class="left"></span>
-                    <span class="right"></span>
-                    <img class="star" src="../../assets/img/music_test/star.png" alt>
-                  </div>
-                </div>
-              </div>
-              <div class="star_items">
-                <div class="label">
-                  <span>音</span>
-                  <span>乐</span>
-                  <span>记</span>
-                  <span>忆</span>
-                </div>
-
-                <span>：</span>
-                <div class="stars">
-                  <div
-                    :key="index"
-                    v-for="(item,index) in resultItems[2].starArr"
-                    v-bind:class="{ half: item=='half' }"
-                    class="star_wrapper"
-                  >
-                    <span class="left"></span>
-                    <span class="right"></span>
-                    <img class="star" src="../../assets/img/music_test/star.png" alt>
-                  </div>
-                </div>
-              </div>
-              <div class="star_items">
-                <div class="label">
-                  <span>节</span>
-                  <span>奏</span>
-                  <span>感</span>
-                </div>
-
-                <span>：</span>
-                <div class="stars">
-                  <div
-                    :key="index"
-                    v-for="(item,index) in resultItems[3].starArr"
-                    v-bind:class="{ half: item=='half' }"
-                    class="star_wrapper"
-                  >
-                    <span class="left"></span>
-                    <span class="right"></span>
-                    <img class="star" src="../../assets/img/music_test/star.png" alt>
-                  </div>
-                </div>
-              </div>
-              <div class="star_items">
-                <div class="label">
-                  <span>音</span>
-                  <span>乐</span>
-                  <span>常</span>
-                  <span>识</span>
-                </div>
-
-                <span>：</span>
-                <div class="stars">
-                  <div
-                    :key="index"
-                    v-for="(item,index) in resultItems[4].starArr"
-                    v-bind:class="{ half: item=='half' }"
-                    class="star_wrapper"
-                  >
-                    <span class="left"></span>
-                    <span class="right"></span>
-                    <img class="star" src="../../assets/img/music_test/star.png" alt>
-                  </div>
-                </div>
+            </div>
+            <div class="option_card option_card2 next_dot" @click="select(9,'B',true)">
+              <div class="option_img">
+                <img class="q9b" src="../../assets/img/music_test/xtq.png" alt>
               </div>
             </div>
           </div>
+        </div>
+        <div v-show="true" class="page last swiper-slide stop-swiping">
+          <img class="cover" src="../../assets/img/music_test/test_cover.png" alt>
+          <div class="result_bg_wrapper">
+            <div class="content">
+              <div class="core">{{score}}分</div>
+              <div class="byond">超越了{{beyondRate}}%的人</div>
+              <div class="comment">
+                <img src="../../assets/img/music_test/comment_left.png" alt class="comment_left">
+                <p v-show="grade==1">“每一个小朋友都有音乐潜能，</p>
+                <p v-show="grade==1">加油，你也可以成为音乐小达人!”</p>
+                <p v-show="grade==2">“不要小瞧了你的音乐潜能哦!</p>
+                <p v-show="grade==2">学习音乐，会让你越来越优秀!”</p>
+                <p v-show="grade==3">“哇，你非常的具有音乐天赋!</p>
+                <p v-show="grade==3">未来音乐大师也许就是你哦!”</p>
+                <img src="../../assets/img/music_test/comment_right.png" alt class="comment_right">
+              </div>
+              <div class="star_items_wrapper">
+                <div class="star_items">
+                  <div class="label">
+                    <span>音</span>
+                    <span>乐</span>
+                    <span>感</span>
+                    <span>受</span>
+                    <span>力</span>
+                  </div>
 
-          <img class="result_bg" src="../../assets/img/music_test/result_bg.png" alt>
+                  <span>：</span>
+                  <div class="stars">
+                    <div
+                      :key="index"
+                      v-for="(item,index) in resultItems[0].starArr"
+                      v-bind:class="{ half: item=='half' }"
+                      class="star_wrapper"
+                    >
+                      <span class="left"></span>
+                      <span class="right"></span>
+                      <img class="star" src="../../assets/img/music_test/star.png" alt>
+                    </div>
+                  </div>
+                </div>
+                <div class="star_items">
+                  <div class="label">
+                    <span>音</span>
+                    <span>乐</span>
+                    <span>听</span>
+                    <span>觉</span>
+                  </div>
+
+                  <span>：</span>
+                  <div class="stars">
+                    <div
+                      :key="index"
+                      v-for="(item,index) in resultItems[1].starArr"
+                      v-bind:class="{ half: item=='half' }"
+                      class="star_wrapper"
+                    >
+                      <span class="left"></span>
+                      <span class="right"></span>
+                      <img class="star" src="../../assets/img/music_test/star.png" alt>
+                    </div>
+                  </div>
+                </div>
+                <div class="star_items">
+                  <div class="label">
+                    <span>音</span>
+                    <span>乐</span>
+                    <span>记</span>
+                    <span>忆</span>
+                  </div>
+
+                  <span>：</span>
+                  <div class="stars">
+                    <div
+                      :key="index"
+                      v-for="(item,index) in resultItems[2].starArr"
+                      v-bind:class="{ half: item=='half' }"
+                      class="star_wrapper"
+                    >
+                      <span class="left"></span>
+                      <span class="right"></span>
+                      <img class="star" src="../../assets/img/music_test/star.png" alt>
+                    </div>
+                  </div>
+                </div>
+                <div class="star_items">
+                  <div class="label">
+                    <span>节</span>
+                    <span>奏</span>
+                    <span>感</span>
+                  </div>
+
+                  <span>：</span>
+                  <div class="stars">
+                    <div
+                      :key="index"
+                      v-for="(item,index) in resultItems[3].starArr"
+                      v-bind:class="{ half: item=='half' }"
+                      class="star_wrapper"
+                    >
+                      <span class="left"></span>
+                      <span class="right"></span>
+                      <img class="star" src="../../assets/img/music_test/star.png" alt>
+                    </div>
+                  </div>
+                </div>
+                <div class="star_items">
+                  <div class="label">
+                    <span>音</span>
+                    <span>乐</span>
+                    <span>常</span>
+                    <span>识</span>
+                  </div>
+
+                  <span>：</span>
+                  <div class="stars">
+                    <div
+                      :key="index"
+                      v-for="(item,index) in resultItems[4].starArr"
+                      v-bind:class="{ half: item=='half' }"
+                      class="star_wrapper"
+                    >
+                      <span class="left"></span>
+                      <span class="right"></span>
+                      <img class="star" src="../../assets/img/music_test/star.png" alt>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <img class="result_bg" src="../../assets/img/music_test/result_bg.png" alt>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">Slide 1</div>
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
-        <div class="swiper-slide">Slide 4</div>
-        <div class="swiper-slide">Slide 5</div>
-        <div class="swiper-slide">Slide 6</div>
-        <div class="swiper-slide">Slide 7</div>
-        <div class="swiper-slide">Slide 8</div>
-        <div class="swiper-slide">Slide 9</div>
-        <div class="swiper-slide">Slide 10</div>
-      </div>
-      <div class="swiper-pagination"></div>
-    </div>-->
   </div>
 </template>
 <script>
 import Swiper from "swiper";
+import { Promise } from "q";
 export default {
   data() {
     return {
@@ -396,10 +395,120 @@ export default {
       score: 0,
       grade: 1,
       beyondRate: 0,
-      q8OnOff:true
+      q8OnOff: true
     };
   },
   methods: {
+    initLoading() {
+      console.log("initLoading");
+      function audioPromise(src) {
+        //console.log(src);
+        var p = new Promise((resolve, reject) => {
+          function createXHR() {
+            try {
+              return new XMLHttpRequest();
+            } catch (e) {}
+            try {
+              return new ActiveXObject("Msxml2.XMLHTTP.6.0");
+            } catch (e) {}
+            try {
+              return new ActiveXObject("Msxml2.XMLHTTP.3.0");
+            } catch (e) {}
+            try {
+              return new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {}
+            try {
+              return new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {}
+            return null;
+          }
+          var xhr = createXHR();
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+              //console.log(xhr.status);
+              if (
+                (xhr.status >= 200 && xhr.status < 300) ||
+                xhr.status == 304
+              ) {
+                //console.log("ce移动端");
+                responseImgLoad()
+                resolve();
+                //callNext();
+              } else {
+                responseImgLoad()
+                resolve();
+                //console.log("ce移动端1");
+                //callNext();
+              }
+            }
+          };
+          //console.log('发送')
+
+          //true（异步）或 false（同步）
+          xhr.open("get", src, false);
+          xhr.setRequestHeader(
+            "Content-type",
+            "application/x-www-form-urlencoded"
+          );
+          xhr.send();
+        });
+        return p;
+      }
+      ////////
+      // this.audioPromise(
+      //   require("../../assets/audio/music_test/q1/content.mp3")
+      // );
+      //this.audioPromise('/audio/content.mp3')
+      /////////////////
+      
+
+      var that = this;
+      var p = document.querySelector(".p_color");
+      var bgList = document.querySelectorAll(".page");
+      var bgArr = [],
+        sum = 0;
+      var fakeTemp = 0;
+      var promiseList = [];
+      var bg1 = require("../../assets/img/music_test/test_cover.png");
+      var bg2 = require("../../assets/img/music_test/bg.jpg");
+      var bgArr = [bg1,bg2];
+      bgArr.forEach((e, index) => {
+        //console.log(require(e))
+        let p = new Promise((resolve, reject) => {
+          var img = new Image();
+          img.src = e;
+          if (img.complete) {
+            responseImgLoad();
+            resolve();
+          }
+          img.onload = function() {
+            responseImgLoad();
+            resolve();
+          };
+        });
+        promiseList.push(p);
+      });
+      this.audioArr.forEach(e => {
+        audioPromise(e.src);
+      });
+      function responseImgLoad() {
+        //clearInterval(timer);
+        console.log(sum)
+        sum++;
+        p.style.width = (sum / promiseList.length) * 100 + "%";
+      }
+      Promise.all(promiseList).then(res => {
+        document.querySelector("#progressStatus").innerHTML = "加载完成";
+        var loadingPage = document.querySelector(".page.loading");
+        setTimeout(() => {
+          loadingPage.classList.add("hide");
+        setTimeout(() => {
+          loadingPage.style.display = "none";
+        }, 700);
+        }, 900);
+        
+      });
+    },
     q5NoteClick() {
       this.Q5AAudio.play();
       //this.Q5AAudio.pause();
@@ -445,7 +554,7 @@ export default {
       //this.bindClick();
       setTimeout(() => {
         this.upBeats();
-      }, (this.spaceBeat - 2) * this.interval);//2拍只后升起泡泡
+      }, (this.spaceBeat - 2) * this.interval); //2拍只后升起泡泡
     },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -453,10 +562,10 @@ export default {
     bindClick() {
       document.querySelector(".qiaoji").addEventListener("touchstart", e => {
         //this.clickVoice.play();
-        if(this.q8OnOff){
+        if (this.q8OnOff) {
           this.Q8TAudio.play();
           this.Q8TAudio.pause();
-          this.q8OnOff = false
+          this.q8OnOff = false;
         }
         const clickTime = this.Q7BgAudio.currentTime * 1000;
         const remainder = clickTime % this.interval;
@@ -481,8 +590,8 @@ export default {
     handleClick(status) {
       this.index =
         Math.round((this.Q7BgAudio.currentTime * 1000) / this.interval) -
-        this.spaceBeat;//当前在第几排减去了空拍
-      console.log(this.index)
+        this.spaceBeat; //当前在第几排减去了空拍
+      console.log(this.index);
       const curBeats = this.beats[this.index];
       if (
         curBeats.classList.contains("right") ||
@@ -769,7 +878,7 @@ export default {
             }
           } else if (e.index == 7) {
             var rightNum = document.querySelectorAll(".beat.right").length;
-            var rightRate = (rightNum / (this.needBeats-4)) * 100;
+            var rightRate = (rightNum / (this.needBeats - 4)) * 100;
             console.log("rightNum", rightNum, "this.needBeats", this.needBeats);
             if (rightRate >= 90) {
               this.resultItems[3].star = 5;
@@ -827,9 +936,9 @@ export default {
           this.grade = 1;
           this.Q10G1Audio.play();
         }
-        if(this.score >= 98){
+        if (this.score >= 98) {
           this.beyondRate = this.score;
-        }else if (this.score < 98 && this.score > 90) {
+        } else if (this.score < 98 && this.score > 90) {
           this.beyondRate = this.score + 1;
         } else if (this.score <= 90 && this.score > 60) {
           this.beyondRate = this.score + Math.floor(Math.random() * 6);
@@ -953,17 +1062,12 @@ export default {
       this.Q9CAudio,
       this.page1Audio
     ];
-    // document.querySelector('.begin_btn').addEventListener('click',()=>{
-    //   this.audioArr.forEach(e=>{
-    //     e.play();
-    //     e.pause()
-    //   })
-    // })
+    this.initLoading();
     this.swiper = new Swiper(".swiper-container", {
       direction: "vertical",
       speed: 800,
-        noSwiping : true,
-          noSwipingClass : 'stop-swiping',
+      noSwiping: true,
+      noSwipingClass: "stop-swiping",
       on: {
         slideNextTransitionEnd() {
           that.swiperIndex = that.swiper.activeIndex;
@@ -1072,8 +1176,12 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  position: relative;
+  //background: #2e5dad
 }
-.swiper-container {
+#musicTest,
+.swiper-container,
+.swiper-wrapper {
   width: 100%;
   height: 100%;
 }
@@ -1567,6 +1675,107 @@ body {
   }
   img.b {
     display: block;
+  }
+}
+.page.loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  //position: relative;
+  opacity: 1;
+  visibility: visible;
+  background: url("../../assets/img/music_test/bg.jpg") no-repeat center;
+  background-size: cover;
+  //transition: opacity .5s;
+  .middle_wrapper {
+    text-align: center;
+    color: #fff;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .uk {
+    width: 100px;
+    position: absolute;
+    top: -280px;
+    //top:10%;
+    left: 50%;
+    margin-left: -50px;
+    animation: float 1700ms linear infinite alternate forwards;
+  }
+  @keyframes float {
+    0% {
+      //transform: translate3d(0,0px,0);
+      transform: none;
+    }
+
+    100% {
+      transform: translate3d(0, 50px, 0);
+    }
+  }
+  .btn {
+    width: 270px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -135px;
+  }
+
+  .progress_wrapper {
+    position: absolute;
+    top: 39%;
+    left: 50%;
+    transform: translateX(-50%);
+    //margin: 500px auto 0 auto;
+    width: 50%;
+    padding: 0 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+  }
+
+  .p_grey {
+    width: 154px;
+    height: 4px;
+    background: rgba(255, 255, 255, 1);
+    opacity: 0.3;
+    border-radius: 3px;
+    margin: auto;
+    margin-bottom: 10px;
+  }
+
+  .p_color {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 90, 25, 1) 0%,
+      rgba(188, 26, 255, 1) 100%
+    );
+    border-radius: 2px;
+    width: 0%;
+    height: 4px;
+    transition: width 1000ms;
+  }
+  #progressStatus {
+    font-size: 15px;
+  }
+}
+.page.loading.hide {
+  animation: hide 0.7s forwards;
+}
+@keyframes hide {
+  99% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+    display: none !important;
   }
 }
 </style>

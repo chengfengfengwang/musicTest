@@ -58,8 +58,8 @@ export default {
       errMsg: "",
       resultMessage: "",
       resultShow: false,
-      //baseUrl: "http://iguitar.immusician.com:2525",
-      baseUrl: "http://192.168.1.68:22222"
+      baseUrl: "http://iguitar.immusician.com:2525",
+      //baseUrl: "http://192.168.1.68:22222"
     };
   },
   mounted() {
