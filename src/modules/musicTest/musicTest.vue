@@ -832,7 +832,7 @@ export default {
         }else if (this.score < 98 && this.score > 90) {
           this.beyondRate = this.score + 1;
         } else if (this.score <= 90 && this.score > 60) {
-          this.beyondRate = this.score + Math.floor(Math.random() * 10);
+          this.beyondRate = this.score + Math.floor(Math.random() * 6);
         } else {
           this.beyondRate = this.score + Math.floor(Math.random() * 20);
         }
@@ -1031,7 +1031,7 @@ export default {
     }
     var nextDots = document.querySelectorAll(".next_dot");
     nextDots.forEach(ele => {
-      ele.addEventListener("touchstart", e => {
+      ele.addEventListener("click", e => {
         // if(ele.classList.contains('bird_click')){
         //   console.log('bird_click')
         //   //setTimeout(() => {
