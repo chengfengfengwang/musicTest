@@ -395,7 +395,8 @@ export default {
       score: 0,
       grade: 1,
       beyondRate: 0,
-      q8OnOff: true
+      q8OnOff: true,
+      isIos: ""
     };
   },
   methods: {
@@ -431,11 +432,11 @@ export default {
                 xhr.status == 304
               ) {
                 //console.log("ce移动端");
-                responseImgLoad()
+                responseImgLoad();
                 resolve();
                 //callNext();
               } else {
-                responseImgLoad()
+                responseImgLoad();
                 resolve();
                 //console.log("ce移动端1");
                 //callNext();
@@ -460,7 +461,6 @@ export default {
       // );
       //this.audioPromise('/audio/content.mp3')
       /////////////////
-      
 
       var that = this;
       var p = document.querySelector(".p_color");
@@ -472,7 +472,7 @@ export default {
       var bg2 = require("../../assets/img/music_test/bg.jpg");
       var bg3 = require("../../assets/img/music_test/sfq.png");
       var bg4 = require("../../assets/img/music_test/topic_card.png");
-      var bgArr = [bg1,bg2,bg3,bg4];
+      var bgArr = [bg1, bg2, bg3, bg4];
       bgArr.forEach((e, index) => {
         //console.log(require(e))
         let p = new Promise((resolve, reject) => {
@@ -494,7 +494,7 @@ export default {
       });
       function responseImgLoad() {
         //clearInterval(timer);
-        console.log(sum)
+        console.log(sum);
         sum++;
         p.style.width = (sum / promiseList.length) * 100 + "%";
       }
@@ -503,11 +503,10 @@ export default {
         var loadingPage = document.querySelector(".page.loading");
         setTimeout(() => {
           loadingPage.classList.add("hide");
-        setTimeout(() => {
-          loadingPage.style.display = "none";
-        }, 700);
+          setTimeout(() => {
+            loadingPage.style.display = "none";
+          }, 700);
         }, 900);
-        
       });
     },
     q5NoteClick() {
@@ -579,7 +578,7 @@ export default {
     bindClick() {
       document.querySelector(".qiaoji").addEventListener("touchstart", e => {
         //this.clickVoice.play();
-        if (this.q8OnOff) {
+        if (this.q8OnOff && this.isIos) {
           this.Q8TAudio.play();
           this.Q8TAudio.pause();
           this.q8OnOff = false;
@@ -670,14 +669,19 @@ export default {
     },
     Q1Enter() {
       console.log("Q1Enter");
-      this.Q1TAudio.play();
-      this.Q1CAudio.play();
-      this.Q1CAudio.pause();
+      if (this.isIos) {
+        this.Q1TAudio.play();
+        this.Q1CAudio.play();
+        this.Q1CAudio.pause();
+      } else {
+        this.Q1TAudio.play();
+      }
+
       this.addNoteReading(); //开始读题干
       this.Q1TAudio.addEventListener("ended", () => {
         this.Q1CAudio.play();
         this.removeNoteReading(); //题干读完
-        this.addNotePlaying()  //转动音符
+        this.addNotePlaying(); //转动音符
       });
       this.Q1CAudio.addEventListener("ended", () => {
         this.removeNotePlaying(); //取消转动音符
@@ -688,14 +692,19 @@ export default {
       this.removeNotePlaying(); //取消转动音符
       this.Q1TAudio.pause();
       this.Q1CAudio.pause();
-      this.Q2TAudio.play();
-      this.Q2CAudio.play();
-      this.Q2CAudio.pause();
+      if (this.isIos){
+        this.Q2TAudio.play();
+        this.Q2CAudio.play();
+        this.Q2CAudio.pause();
+      }else{
+        this.Q2TAudio.play();
+      }
+      
       this.addNoteReading(); //开始读题干
       this.Q2TAudio.addEventListener("ended", () => {
         this.Q2CAudio.play();
         this.removeNoteReading(); //题干读完
-        this.addNotePlaying()  //转动音符
+        this.addNotePlaying(); //转动音符
       });
       this.Q2CAudio.addEventListener("ended", () => {
         this.removeNotePlaying();
@@ -708,10 +717,15 @@ export default {
       this.Q3TAudio.play();
       //this.Q3TAudio.pause();
       //hack
-      this.Q3AAudio.play();
-      this.Q3AAudio.pause();
-      this.Q3BAudio.play();
-      this.Q3BAudio.pause();
+      if (this.isIos){
+        this.Q3AAudio.play();
+        this.Q3AAudio.pause();
+        this.Q3BAudio.play();
+        this.Q3BAudio.pause();
+      }else{
+        //this.Q2TAudio.play();
+      }
+      
 
       this.Q3TAudio.addEventListener("ended", () => {
         if (this.swiperIndex !== 3) {
@@ -741,10 +755,13 @@ export default {
         this.Q4TAudio.play();
       }, 2001);
       //hack
-      this.Q4AAudio.play();
-      this.Q4AAudio.pause();
-      this.Q4BAudio.play();
-      this.Q4BAudio.pause();
+      if (this.isIos){
+        this.Q4AAudio.play();
+        this.Q4AAudio.pause();
+        this.Q4BAudio.play();
+        this.Q4BAudio.pause();
+      }
+      
       this.Q4TAudio.addEventListener("ended", () => {
         if (this.swiperIndex !== 4) {
           return;
@@ -768,20 +785,26 @@ export default {
       this.Q4TAudio.pause();
       this.Q4AAudio.pause();
       this.Q4BAudio.pause();
-      this.Q5TAudio.play();
-      this.Q5TAudio.pause();
+      if(this.isIos){
+        this.Q5TAudio.play();
+        this.Q5TAudio.pause();
+      }
+      
       this.addNoteReading(); //开始读题干
       setTimeout(() => {
         this.Q5TAudio.play();
       }, 2001);
       //hack
-      this.Q5AAudio.play();
-      this.Q5AAudio.pause();
-      this.Q5BAudio.play();
-      this.Q5BAudio.pause();
+      if(this.isIos){
+        this.Q5AAudio.play();
+        this.Q5AAudio.pause();
+        this.Q5BAudio.play();
+        this.Q5BAudio.pause();
+      }
+      
       this.Q5TAudio.addEventListener("ended", () => {
         this.removeNoteReading(); //题干读完
-        this.addNotePlaying()  //转动音符
+        this.addNotePlaying(); //转动音符
         if (this.swiperIndex !== 5) {
           return;
         }
@@ -807,14 +830,17 @@ export default {
       this.Q5BAudio.pause();
       this.Q6TAudio.play();
       //hack
-      this.Q6AAudio.play();
-      this.Q6AAudio.pause();
-      this.Q6BAudio.play();
-      this.Q6BAudio.pause();
+      if(this.isIos){
+        this.Q6AAudio.play();
+        this.Q6AAudio.pause();
+        this.Q6BAudio.play();
+        this.Q6BAudio.pause();
+      }
+      
       this.addNoteReading(); //开始读题干
       this.Q6TAudio.addEventListener("ended", () => {
         this.removeNoteReading(); //题干读完
-        this.addNotePlaying()  //转动音符
+        this.addNotePlaying(); //转动音符
         if (this.swiperIndex !== 6) {
           return;
         }
@@ -838,8 +864,11 @@ export default {
       this.Q6AAudio.pause();
       this.Q6BAudio.pause();
       this.Q7TAudio.play();
-      this.Q7BgAudio.play();
-      this.Q7BgAudio.pause();
+      if(this.isIos){
+        this.Q7BgAudio.play();
+        this.Q7BgAudio.pause();
+      }
+      
       this.Q7TAudio.addEventListener("ended", () => {
         if (this.swiperIndex !== 7) {
           return;
@@ -871,12 +900,15 @@ export default {
       this.Q8TAudio.pause();
       this.Q9TAudio.play();
       //hack
-      this.Q9CAudio.play();
-      this.Q9CAudio.pause();
-       this.addNoteReading(); //开始读题干
+      if(this.isIos){
+        this.Q9CAudio.play();
+        this.Q9CAudio.pause();
+      }
+      
+      this.addNoteReading(); //开始读题干
       this.Q9TAudio.addEventListener("ended", () => {
         this.removeNoteReading(); //题干读完
-        this.addNotePlaying()  //转动音符
+        this.addNotePlaying(); //转动音符
         if (this.swiperIndex !== 9) {
           return;
         }
@@ -890,12 +922,15 @@ export default {
       console.log("Q10Enter");
       this.Q9TAudio.pause();
       this.Q9CAudio.pause();
-      this.Q10G1Audio.play();
-      this.Q10G1Audio.pause();
-      this.Q10G2Audio.play();
-      this.Q10G2Audio.pause();
-      this.Q10G3Audio.play();
-      this.Q10G3Audio.pause();
+      if(this.isIos){
+        this.Q10G1Audio.play();
+        this.Q10G1Audio.pause();
+        this.Q10G2Audio.play();
+        this.Q10G2Audio.pause();
+        this.Q10G3Audio.play();
+        this.Q10G3Audio.pause();
+      }
+      
       setTimeout(() => {
         //将所有答题情况归类
         this.mySelect.splice(5, 0, { detail: "B", index: 7, isRight: true });
@@ -999,7 +1034,21 @@ export default {
       this.page1Audio.addEventListener("canplay", () => {
         this.page1Audio.play();
       });
+    },
+    testPlat() {
+      if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+        return "IOS";
+        //return 0
+      } else if (/(Android)/i.test(navigator.userAgent)) {
+        return "Android";
+        //return 1
+      } else {
+        return -1;
+      }
     }
+  },
+  created() {
+    this.isIos = this.testPlat() === "IOS" ? true : false;
   },
   mounted() {
     var that = this;
@@ -1065,37 +1114,37 @@ export default {
     //音符点击事件
     document.querySelectorAll(".note").forEach(e => {
       e.addEventListener("click", ele => {
-        console.log(this.swiperIndex)
-        if(e.classList.contains('reading')){
-        return
-      }
-        if(e.classList.contains('playing')){
-        return
-      }
+        console.log(this.swiperIndex);
+        if (e.classList.contains("reading")) {
+          return;
+        }
+        if (e.classList.contains("playing")) {
+          return;
+        }
         switch (this.swiperIndex) {
-        case 1: {
-          this.Q1CAudio.play();
-          break;
+          case 1: {
+            this.Q1CAudio.play();
+            break;
+          }
+          case 2: {
+            this.Q2CAudio.play();
+            break;
+          }
+          case 5: {
+            this.q5NoteClick();
+            break;
+          }
+          case 6: {
+            this.q6NoteClick();
+            break;
+          }
+          case 9: {
+            this.Q9CAudio.play();
+            break;
+          }
         }
-        case 2: {
-          this.Q2CAudio.play();
-          break;
-        }
-        case 5: {
-          this.q5NoteClick();
-          break;
-        }
-        case 6: {
-          this.q6NoteClick();
-          break;
-        }
-        case 9: {
-          this.Q9CAudio.play();
-          break;
-        }
-      }
-      
-      e.classList.add("playing");
+
+        e.classList.add("playing");
       });
     });
     //打泡泡
@@ -1319,9 +1368,8 @@ body {
     top: 77%;
     img {
       width: 190px;
-      animation: breath 1s   infinite alternate;
+      animation: breath 1s infinite alternate;
     }
-    
   }
   background: #2e5dad;
   //background: no-repeat top 0 left 0 ~"/" cover url("../../assets/img/music_test/test_cover.png");
@@ -1844,8 +1892,8 @@ body {
   }
 }
 @keyframes breath {
-  0%{
-    transform: scale(.9);
+  0% {
+    transform: scale(0.9);
   }
   100% {
     transform: scale(1);
