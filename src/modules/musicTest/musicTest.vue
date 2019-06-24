@@ -1637,7 +1637,7 @@ body {
       //transition: transform 15s;
     }
     .note.playing {
-      animation: rotate 15s;
+      animation: rotate 18s;
       //transform: rotate(360deg);
     }
     @keyframes rotate {
