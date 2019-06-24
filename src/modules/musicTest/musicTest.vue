@@ -1491,8 +1491,10 @@ body {
       z-index: 22;
       position: absolute;
       left: 6.93%;
-      width: 130px;
-      height: 55px;
+      // width: 130px;
+      // height: 55px;
+      width: 150px;
+      height: 63px;
       line-height: 55px;
       background: url("../../assets/img/music_test/option_card.png") no-repeat
         center/cover;
@@ -1541,7 +1543,7 @@ body {
   }
   .option_bird {
     position: absolute;
-    left: 50%;
+    left: 46%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
   }
@@ -1561,8 +1563,10 @@ body {
   .bird {
     //transition: all 3s 1s;
     transition: transform 0.5s, left 3s, right 3s, top 3s, bottom 3s;
-    width: 40px;
-    height: 40px;
+    // width: 40px;
+    // height: 40px;
+    width: 50px;
+    height: 50px;
     background: url("../../assets/img/music_test/bird_all.png") no-repeat;
     //background-position: 0% 0%;
     background-size: 212%;
@@ -1578,20 +1582,21 @@ body {
   }
   .bird.f1 {
     animation: fly 0.5s steps(2) 0s infinite both;
-    left: 170%;
+    //left: 170%;
+    left: 145%;
     top: 18%;
   }
   .bird.f2 {
     animation: fly 0.5s steps(2) 0s infinite both;
-    left: 170%;
+    left: 145%;
     top: -171%;
   }
   @keyframes bounce {
     60% {
-      transform: translateX(-50%) translateY(-50px);
+      transform: translateX(-50%) translateY(-55px);
     }
     100% {
-      transform: translateX(-50%) translateY(-20px);
+      transform: translateX(-50%) translateY(-25px);
     }
   }
   @keyframes fly {
