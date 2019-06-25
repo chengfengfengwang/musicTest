@@ -43,14 +43,15 @@
             <div class="note">
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
+            <div class="re_play">点击重听</div>
           </div>
           <div class="page_main">
-            <div class="option_card option_card1 next_dot" @click="select(1,'A',true)">
+            <div  class="option_card option_card1 next_dot" @click="select(1,'A',true, $event)">
               <div class="option_img">
                 <img src="../../assets/img/music_test/yj_happy.png" alt>
               </div>
             </div>
-            <div class="option_card option_card2 next_dot" @click="select(1,'B',false)">
+            <div class="option_card option_card2 next_dot" @click="select(1,'B',false, $event)">
               <div class="option_img">
                 <img src="../../assets/img/music_test/sad.png" alt>
               </div>
@@ -61,19 +62,20 @@
           <audio src></audio>
           <div class="topic_card">
             <div class="title">第2题</div>
-            <div class="text">仔细听音乐，为它选择一个小动物吧</div>
+            <div class="text" style="width:80%;text-align:left">仔细感受音乐的速度，为它选择一个适合的小动物吧！</div>
             <div class="note">
               <audio src></audio>
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
+            <div class="re_play">点击重听</div>
           </div>
           <div class="page_main">
-            <div class="option_card option_card1 next_dot" @click="select(2,'A',false)">
+            <div class="option_card option_card1 next_dot" @click="select(2,'A',false, $event)">
               <div class="option_img">
                 <img class="q2a" src="../../assets/img/music_test/bao.png" alt>
               </div>
             </div>
-            <div class="option_card option_card2 next_dot" @click="select(2,'B',true)">
+            <div class="option_card option_card2 next_dot" @click="select(2,'B',true, $event)">
               <div class="option_img">
                 <img class="q2b" src="../../assets/img/music_test/wugui.png" alt>
               </div>
@@ -86,12 +88,12 @@
             <div class="text" style="width:70%">仔细听两只小鸟的叫声，请点击音高的小鸟把它送回家</div>
           </div>
           <div class="bird_main">
-            <div class="option_card option_card1 next_dot bird_click" @click="select(3,'A',false)">
-              <div ref="q3Bird1" class="option_bird bird bird_click"></div>
+            <div class="option_card option_card1 next_dot bird_click" @click="select(3,'A',false, $event)">
+              <div ref="q3Bird1" class="option_bird bird"></div>
               <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
             </div>
-            <div class="option_card option_card2 next_dot bird_click" @click="select(3,'B',true)">
-              <div ref="q3Bird2" class="option_bird bird bird_click"></div>
+            <div class="option_card option_card2 next_dot bird_click" @click="select(3,'B',true, $event)">
+              <div ref="q3Bird2" class="option_bird bird"></div>
             </div>
             <img src="../../assets/img/music_test/tree.png" alt class="tree">
           </div>
@@ -111,11 +113,11 @@
             <div class="text" style="width:70%">仔细听两只小鸟的叫声，请点击音低的小鸟把它送回家</div>
           </div>
           <div class="bird_main">
-            <div class="option_card option_card1 next_dot" @click="select(4,'A',false)">
+            <div class="option_card option_card1 next_dot bird_click" @click="select(4,'A',false, $event)">
               <div ref="q4Bird1" class="option_bird bird"></div>
               <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
             </div>
-            <div class="option_card option_card2 next_dot" @click="select(4,'B',true)">
+            <div class="option_card option_card2 next_dot bird_click" @click="select(4,'B',true, $event)">
               <div ref="q4Bird2" class="option_bird bird"></div>
             </div>
             <img src="../../assets/img/music_test/tree.png" alt class="tree">
@@ -131,14 +133,15 @@
             <div class="note">
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
+            <div class="re_play">点击重听</div>
           </div>
           <div class="page_main">
-            <div class="option_card option_card1 next_dot" @click="select(5,'A',true)">
+            <div class="option_card option_card1 next_dot" @click="select(5,'A',true, $event)">
               <div class="option_img">
                 <img src="../../assets/img/music_test/gou.png" alt>
               </div>
             </div>
-            <div class="option_card option_card2 next_dot" @click="select(5,'B',false)">
+            <div class="option_card option_card2 next_dot" @click="select(5,'B',false, $event)">
               <div class="option_img">
                 <img src="../../assets/img/music_test/cha.png" alt>
               </div>
@@ -152,14 +155,15 @@
             <div class="note">
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
+            <div class="re_play">点击重听</div>
           </div>
           <div class="page_main">
-            <div class="option_card option_card1 next_dot" @click="select(6,'A',false)">
+            <div class="option_card option_card1 next_dot" @click="select(6,'A',false, $event)">
               <div class="option_img">
                 <img src="../../assets/img/music_test/gou.png" alt>
               </div>
             </div>
-            <div class="option_card option_card2 next_dot" @click="select(6,'B',true)">
+            <div class="option_card option_card2 next_dot" @click="select(6,'B',true, $event)">
               <div class="option_img">
                 <img src="../../assets/img/music_test/cha.png" alt>
               </div>
@@ -192,12 +196,12 @@
             </div>-->
           </div>
           <div class="page_main">
-            <div class="option_card option_card1 next_dot" @click="select(8,'A',true)">
+            <div class="option_card option_card1 next_dot" @click="select(8,'A',true, $event)">
               <div class="option_img">
                 <img class="q8a" src="../../assets/img/music_test/piano.png" alt>
               </div>
             </div>
-            <div class="option_card option_card2 next_dot" @click="select(8,'B',false)">
+            <div class="option_card option_card2 next_dot" @click="select(8,'B',false, $event)">
               <div class="option_img">
                 <img class="q8b" src="../../assets/img/music_test/sfq.png" alt>
               </div>
@@ -211,14 +215,15 @@
             <div class="note">
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
+            <div class="re_play">点击重听</div>
           </div>
           <div class="page_main">
-            <div class="option_card option_card1 next_dot" @click="select(9,'A',false)">
+            <div class="option_card option_card1 next_dot" @click="select(9,'A',false, $event)">
               <div class="option_img">
                 <img class="q9a" src="../../assets/img/music_test/xh.png" alt>
               </div>
             </div>
-            <div class="option_card option_card2 next_dot" @click="select(9,'B',true)">
+            <div class="option_card option_card2 next_dot" @click="select(9,'B',true, $event)">
               <div class="option_img">
                 <img class="q9b" src="../../assets/img/music_test/xtq.png" alt>
               </div>
@@ -396,7 +401,8 @@ export default {
       grade: 1,
       beyondRate: 0,
       q8OnOff: true,
-      isIos: ""
+      isIos: "",
+      clickOff:false
     };
   },
   methods: {
@@ -455,12 +461,6 @@ export default {
         });
         return p;
       }
-      ////////
-      // this.audioPromise(
-      //   require("../../assets/audio/music_test/q1/content.mp3")
-      // );
-      //this.audioPromise('/audio/content.mp3')
-      /////////////////
 
       var that = this;
       var p = document.querySelector(".p_color");
@@ -494,7 +494,7 @@ export default {
       });
       function responseImgLoad() {
         //clearInterval(timer);
-        console.log(sum);
+        //console.log(sum);
         sum++;
         p.style.width = (sum / promiseList.length) * 100 + "%";
       }
@@ -634,14 +634,33 @@ export default {
       });
     },
     //打泡泡
-    select(qIndex, value, isRight) {
-      console.log("---");
-      console.log(qIndex, value, isRight);
+    select(qIndex, value, isRight,event) {
+      if(this.clickOff){
+        return
+      }
+      var target = event.target;
+      if(target.classList.contains('option_img')){
+        target.parentElement.classList.add('select')
+      }else if(target.classList.contains('bird_click')){
+        target.classList.add('select')
+      }else if(target.classList.contains('option_bird')){
+        target.parentElement.classList.add('select')
+      }else if(target.tagName.toLocaleLowerCase()=='img'){
+        target.parentElement.parentElement.classList.add('select')
+      }else{
+        target.classList.add('select')
+      }
+     // if(event.target)
+     // document.querySelector('.q2a').parentElement.parentElement.classList.add('select')
+      
+      this.clickOff = true;
+      //console.log(e.target.classList.add('select'))
       this.mySelect.push({
         index: qIndex,
         detail: value,
         isRight: isRight
       });
+      this.callBack()
       if (qIndex === 3) {
         if (value == "A") {
           this.$refs.q3Bird1.classList.add("f1");
@@ -1029,6 +1048,7 @@ export default {
     beginClick() {
       this.swiper.slideNext();
       this.page1Audio.pause();
+      this.callBack()
     },
     page1Play() {
       this.page1Audio.addEventListener("canplay", () => {
@@ -1044,6 +1064,55 @@ export default {
         //return 1
       } else {
         return -1;
+      }
+    },
+    callBack(){
+
+      var that = this;
+      var index = that.swiperIndex ? that.swiperIndex + 1 : 1;
+      //console.log('callback')
+      //return
+      switch (index) {
+        case 1: {
+          that.Q1Enter();
+          break;
+        }
+        case 2: {
+          that.Q2Enter();
+          break;
+        }
+        case 3: {
+          that.Q3Enter();
+          break;
+        }
+        case 4: {
+          that.Q4Enter();
+          break;
+        }
+        case 5: {
+          that.Q5Enter();
+          break;
+        }
+        case 6: {
+          that.Q6Enter();
+          break;
+        }
+        case 7: {
+          that.Q7Enter();
+          break;
+        }
+        case 8: {
+          that.Q8Enter();
+          break;
+        }
+        case 9: {
+          that.Q9Enter();
+          break;
+        }
+        case 10: {
+          that.Q10Enter();
+          break;
+        }
       }
     }
   },
@@ -1182,85 +1251,17 @@ export default {
       noSwipingClass: "stop-swiping",
       on: {
         slideNextTransitionEnd() {
+          //console.log('\\\\\\\\\\\\\\\\\\')
+          
           that.swiperIndex = that.swiper.activeIndex;
+          //console.log(that.swiperIndex)
+          that.clickOff = false;
         }
       }
     });
-    // setTimeout(() => {
-    //     swiper.slideNext();
-    // }, 2001);
-    // setTimeout(() => {
-    //     this.$refs.bird2.classList.add('flyto')
-    // }, 1000);
-    //this.page1Play()
 
-    //document.body.addEventListener("touchstart", (e) => {
-    function callBack(e) {
-      //if(that.swiperIndex == 1){return}
-      console.log("------");
-      var index = that.swiperIndex ? that.swiperIndex + 1 : 1;
-      console.log("that.swiperIndex----");
-      console.log(that.swiperIndex);
-      //return
-      switch (index) {
-        case 1: {
-          that.Q1Enter();
-          break;
-        }
-        case 2: {
-          that.Q2Enter();
-          break;
-        }
-        case 3: {
-          that.Q3Enter();
-          break;
-        }
-        case 4: {
-          that.Q4Enter();
-          break;
-        }
-        case 5: {
-          that.Q5Enter();
-          break;
-        }
-        case 6: {
-          that.Q6Enter();
-          break;
-        }
-        case 7: {
-          that.Q7Enter();
-          break;
-        }
-        case 8: {
-          that.Q8Enter();
-          break;
-        }
-        case 9: {
-          that.Q9Enter();
-          break;
-        }
-        case 10: {
-          that.Q10Enter();
-          break;
-        }
-      }
-    }
-    var nextDots = document.querySelectorAll(".next_dot");
-    nextDots.forEach(ele => {
-      ele.addEventListener("click", e => {
-        // if(ele.classList.contains('bird_click')){
-        //   console.log('bird_click')
-        //   //setTimeout(() => {
-        //      callBack(ele);
-        //   //}, 1000);
-        // }else{
-        //    callBack(ele);
-        // }
-        callBack(ele);
-      });
-    });
-
-    //document.body.addEventListener("touchstart", e => {});
+    
+    
   }
 };
 </script>
@@ -1507,7 +1508,10 @@ body {
         color: rgba(245, 150, 0, 1);
       }
     }
-
+    .option_card.select{
+      background: url("../../assets/img/music_test/bird_select.png") no-repeat
+        center/100% 100%;
+    }
     .option_card1 {
       top: 34.9%;
     }
@@ -1616,17 +1620,18 @@ body {
     no-repeat right 0% bottom 0% ~"/" 100% 150px url("../../assets/img/music_test/wave.png");
   background-color: rgba(255, 194, 149, 1);
   .topic_card {
-    background: url("../../assets/img/music_test/topic_card_b.png") no-repeat
-      center/cover;
-    // background: url("../../assets/img/music_test/topic_card.png") no-repeat
+    // background: url("../../assets/img/music_test/topic_card_b.png") no-repeat
     //   center/cover;
-    height: 180px;
+    background: url("../../assets/img/music_test/topic_card.png") no-repeat
+      center/100% 100%;
+    //height: 180px;
+    height: 210px;
     border-radius: 10px;
     .note {
       position: absolute;
       left: 50%;
       margin-left: -36px;
-      bottom: 25px;
+      bottom: 45px;
       font-size: 0;
       -webkit-tap-highlight-color: transparent;
       img {
@@ -1639,6 +1644,14 @@ body {
     .note.playing {
       animation: rotate 18s;
       //transform: rotate(360deg);
+    }
+    .re_play{
+      font-size: 11px;
+      color: #666;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 25px;
     }
     @keyframes rotate {
       100% {
@@ -1686,7 +1699,10 @@ body {
         }
       }
     }
-
+    .option_card.select{
+      background: url("../../assets/img/music_test/option_card_select.png") no-repeat
+        center/cover;
+    }
     .option_card1 {
       top: 34.9%;
       left: 0;
@@ -1698,7 +1714,7 @@ body {
   }
 }
 .q2a {
-  width: 47px !important;
+  width: 120px !important;
 }
 .q2b {
   width: 74px !important;
