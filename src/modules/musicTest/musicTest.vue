@@ -59,12 +59,10 @@
           </div>
         </div>
         <div ref="quest2" v-show="true" class="page common swiper-slide stop-swiping">
-          <audio src></audio>
           <div class="topic_card">
             <div class="title">第2题</div>
             <div class="text" style="width:80%;text-align:left">仔细感受音乐的速度，为它选择一个适合的小动物吧！</div>
             <div class="note">
-              <audio src></audio>
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
             <div class="re_play">点击重听</div>
@@ -85,7 +83,11 @@
         <div ref="quest3" v-show="true" class="page bird swiper-slide stop-swiping">
           <div class="topic_card">
             <div class="title">第3题</div>
-            <div class="text" style="width:70%">仔细听两只小鸟的叫声，请点击音高的小鸟把它送回家</div>
+            <div class="text" style="width:80%">仔细听两只小鸟的叫声，请点击音高的小鸟把它送回家</div>
+            <div class="note">
+              <img src="../../assets/img/music_test/note.png" alt>
+            </div>
+            <div class="re_play">点击重听</div>
           </div>
           <div class="bird_main">
             <div class="option_card option_card1 next_dot bird_click" @click="select(3,'A',false, $event)">
@@ -110,7 +112,11 @@
         <div ref="quest4" v-show="true" class="page bird swiper-slide stop-swiping">
           <div class="topic_card">
             <div class="title">第4题</div>
-            <div class="text" style="width:70%">仔细听两只小鸟的叫声，请点击音低的小鸟把它送回家</div>
+            <div class="text" style="width:80%">仔细听两只小鸟的叫声，请点击音低的小鸟把它送回家</div>
+            <div class="note">
+              <img src="../../assets/img/music_test/note.png" alt>
+            </div>
+            <div class="re_play">点击重听</div>
           </div>
           <div class="bird_main">
             <div class="option_card option_card1 next_dot bird_click" @click="select(4,'A',false, $event)">
@@ -151,7 +157,7 @@
         <div ref="quest6" v-show="true" class="page common swiper-slide stop-swiping">
           <div class="topic_card">
             <div class="title">第6题</div>
-            <div class="text">仔细听这两段节奏相同吗？</div>
+            <div class="text">仔细听这两段旋律相同吗？</div>
             <div class="note">
               <img src="../../assets/img/music_test/note.png" alt>
             </div>
@@ -509,29 +515,19 @@ export default {
         }, 900);
       });
     },
+    q3NoteClick() {
+      this.$refs.q3Bird1.classList.add("bounce");
+      this.Q3AAudio.play();
+    },
+    q4NoteClick() {
+      this.$refs.q4Bird1.classList.add("bounce");
+      this.Q4AAudio.play();
+    },
     q5NoteClick() {
       this.Q5AAudio.play();
-      //this.Q5AAudio.pause();
-      this.Q5BAudio.play();
-      this.Q5BAudio.pause();
-      this.Q5TAudio.addEventListener("ended", () => {
-        if (this.swiperIndex !== 5) {
-          return;
-        }
-        this.Q5AAudio.play();
-      });
     },
     q6NoteClick() {
       this.Q6AAudio.play();
-      //this.Q5AAudio.pause();
-      this.Q6BAudio.play();
-      this.Q6BAudio.pause();
-      this.Q6TAudio.addEventListener("ended", () => {
-        if (this.swiperIndex !== 6) {
-          return;
-        }
-        this.Q6AAudio.play();
-      });
     },
     addNotePlaying() {
       document.querySelectorAll(".note").forEach(e => {
@@ -731,6 +727,7 @@ export default {
     },
     Q3Enter() {
       console.log("Q3Enter");
+      this.removeNotePlaying(); //取消转动音符
       this.Q2TAudio.pause();
       this.Q2CAudio.pause();
       this.Q3TAudio.play();
@@ -745,12 +742,14 @@ export default {
         //this.Q2TAudio.play();
       }
       
-
+      this.addNoteReading(); //开始读题干
       this.Q3TAudio.addEventListener("ended", () => {
         if (this.swiperIndex !== 3) {
           return;
         }
         this.Q3AAudio.play();
+        this.removeNoteReading(); //题干读完
+        this.addNotePlaying(); //转动音符
         this.$refs.q3Bird1.classList.add("bounce");
       });
       this.Q3AAudio.addEventListener("ended", () => {
@@ -762,9 +761,15 @@ export default {
           this.$refs.q3Bird2.classList.add("bounce");
         }, 500);
       });
+      this.Q3BAudio.addEventListener("ended", () => {
+        this.removeNotePlaying(); //取消转动音符
+        this.$refs.q3Bird1.classList.remove("bounce");
+        this.$refs.q3Bird2.classList.remove("bounce");
+      });
     },
     Q4Enter() {
       console.log("Q4Enter");
+      this.removeNotePlaying(); //取消转动音符
       this.Q3TAudio.pause();
       this.Q3AAudio.pause();
       this.Q3BAudio.pause();
@@ -772,6 +777,7 @@ export default {
       this.Q4TAudio.pause();
       setTimeout(() => {
         this.Q4TAudio.play();
+        this.addNoteReading(); //开始读题干
       }, 2001);
       //hack
       if (this.isIos){
@@ -782,6 +788,8 @@ export default {
       }
       
       this.Q4TAudio.addEventListener("ended", () => {
+        this.removeNoteReading(); //题干读完
+        this.addNotePlaying(); //转动音符
         if (this.swiperIndex !== 4) {
           return;
         }
@@ -796,6 +804,11 @@ export default {
           this.Q4BAudio.play();
           this.$refs.q4Bird2.classList.add("bounce");
         }, 500);
+      });
+      this.Q4BAudio.addEventListener("ended", () => {
+        this.removeNotePlaying(); //取消转动音符
+        this.$refs.q4Bird1.classList.remove("bounce");
+        this.$refs.q4Bird2.classList.remove("bounce");
       });
     },
     Q5Enter() {
@@ -1199,6 +1212,14 @@ export default {
             this.Q2CAudio.play();
             break;
           }
+          case 3: {
+            this.q3NoteClick();
+            break;
+          }
+          case 4: {
+            this.q4NoteClick();
+            break;
+          }
           case 5: {
             this.q5NoteClick();
             break;
@@ -1475,9 +1496,41 @@ body {
 .page.bird {
   overflow: hidden;
   .topic_card {
+    position: relative;
     background: url("../../assets/img/music_test/topic_card.png") no-repeat
-      center/cover;
+      center/100% 100%;
+      height: 210px;
   }
+  .text{
+    top:23%;
+    text-align: left
+  }
+  .note {
+      position: absolute;
+      left: 50%;
+      margin-left: -36px;
+      bottom: 45px;
+      font-size: 0;
+      -webkit-tap-highlight-color: transparent;
+      img {
+        width: 72px;
+        height: 72px;
+        -webkit-tap-highlight-color: transparent;
+      }
+      //transition: transform 15s;
+    }
+    .note.playing {
+      animation: rotate 18s;
+      //transform: rotate(360deg);
+    }
+    .re_play{
+      font-size: 11px;
+      color: #666;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 25px;
+    }
   .bird_main {
     //width: 100%;
     width: 400px;
