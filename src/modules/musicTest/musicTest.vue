@@ -529,8 +529,8 @@ export default {
                 xhr.status == 304
               ) {
                 //console.log("ce移动端");
-                responseImgLoad();
-                resolve();
+                  responseImgLoad();
+                  resolve();
                 //callNext();
               } else {
                 responseImgLoad();
@@ -581,7 +581,7 @@ export default {
         promiseList.push(p);
       });
       this.audioArr.forEach(e => {
-        audioPromise(e.src);
+        promiseList.push(audioPromise(e.src)) ;
       });
       function responseImgLoad() {
         //clearInterval(timer);
@@ -1287,7 +1287,6 @@ export default {
     this.Q10G2Audio.src = require("../../assets/audio/music_test/q10/grade2.mp3");
     this.Q10G3Audio = new Audio();
     this.Q10G3Audio.src = require("../../assets/audio/music_test/q10/grade3.mp3");
-
     this.page1Audio = this.$refs.page1.querySelector("audio");
     //音符点击事件
     document.querySelectorAll(".note").forEach(e => {
