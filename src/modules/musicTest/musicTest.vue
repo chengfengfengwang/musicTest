@@ -443,7 +443,7 @@ export default {
             console.log("自动播放");
             that.page1Icon = "playing";
             that.page1Audio.play();
-          } 
+          }
           wx.updateAppMessageShareData({
             title: "高考作文被音乐霸屏了！你家孩子音乐知识学好了吗？", // 分享标题
             desc:
@@ -472,9 +472,9 @@ export default {
         wx.error(function(res) {
           console.log(res);
         });
-      }else{
-that.page1Icon = "playing";
-            that.page1Audio.play();
+      } else {
+        that.page1Icon = "playing";
+        that.page1Audio.play();
       }
     },
     getSignInfo() {
