@@ -46,7 +46,7 @@
             <div class="re_play">点击重听</div>
           </div>
           <div class="page_main">
-            <div  class="option_card option_card1 next_dot" @click="select(1,'A',true, $event)">
+            <div class="option_card option_card1 next_dot" @click="select(1,'A',true, $event)">
               <div class="option_img">
                 <img src="../../assets/img/music_test/yj_happy.png" alt>
               </div>
@@ -90,11 +90,17 @@
             <div class="re_play">点击重听</div>
           </div>
           <div class="bird_main">
-            <div class="option_card option_card1 next_dot bird_click" @click="select(3,'A',false, $event)">
+            <div
+              class="option_card option_card1 next_dot bird_click"
+              @click="select(3,'A',false, $event)"
+            >
               <div ref="q3Bird1" class="option_bird bird"></div>
               <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
             </div>
-            <div class="option_card option_card2 next_dot bird_click" @click="select(3,'B',true, $event)">
+            <div
+              class="option_card option_card2 next_dot bird_click"
+              @click="select(3,'B',true, $event)"
+            >
               <div ref="q3Bird2" class="option_bird bird"></div>
             </div>
             <img src="../../assets/img/music_test/tree.png" alt class="tree">
@@ -119,11 +125,17 @@
             <div class="re_play">点击重听</div>
           </div>
           <div class="bird_main">
-            <div class="option_card option_card1 next_dot bird_click" @click="select(4,'A',false, $event)">
+            <div
+              class="option_card option_card1 next_dot bird_click"
+              @click="select(4,'A',false, $event)"
+            >
               <div ref="q4Bird1" class="option_bird bird"></div>
               <!-- <img src="../../assets/img/music_test/bird1.png" alt class="option_bird bird"> -->
             </div>
-            <div class="option_card option_card2 next_dot bird_click" @click="select(4,'B',true, $event)">
+            <div
+              class="option_card option_card2 next_dot bird_click"
+              @click="select(4,'B',true, $event)"
+            >
               <div ref="q4Bird2" class="option_bird bird"></div>
             </div>
             <img src="../../assets/img/music_test/tree.png" alt class="tree">
@@ -376,6 +388,7 @@
 <script>
 import Swiper from "swiper";
 import { Promise } from "q";
+const wx = require("weixin-js-sdk");
 export default {
   data() {
     return {
@@ -408,11 +421,82 @@ export default {
       beyondRate: 0,
       q8OnOff: true,
       isIos: "",
-      clickOff:false,
-      canClick:true
+      clickOff: false,
+      canClick: true,
+      isWeixin: false
     };
   },
   methods: {
+    shareReady(param) {
+      var that = this;
+      if (this.isIos) {
+        wx.config({
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: param.appId, // 必填，公众号的唯一标识
+          timestamp: param.timestamp, // 必填，生成签名的时间戳
+          nonceStr: param.nonceStr, // 必填，生成签名的随机串
+          signature: param.signature, // 必填，签名
+          jsApiList: ["updateAppMessageShareData", "updateTimelineShareData"] // 必填，需要使用的JS接口列表
+        });
+        wx.ready(function() {
+          if ((that.isIos && that.isWeixin) || !that.isIos) {
+            console.log("自动播放");
+            that.page1Icon = "playing";
+            that.page1Audio.play();
+          } 
+          wx.updateAppMessageShareData({
+            title: "高考作文被音乐霸屏了！你家孩子音乐知识学好了吗？", // 分享标题
+            desc:
+              "5分钟就让孩子爱上的趣味音乐课程，音乐基础一学就会，快来领取免费体验课程吧！", // 分享描述
+            imgUrl: "https://s.immusician.com/web/h5/share1.jpeg", // 分享图标
+            link: `http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&v=${
+              that.shareVersion
+            }`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            success: function() {
+              console.log("分享的success");
+              // 设置成功
+            }
+          });
+          wx.updateTimelineShareData({
+            title: "高考作文被音乐霸屏了！你家孩子音乐知识学好了吗？", // 分享标题
+            imgUrl: "https://s.immusician.com/web/h5/share1.jpeg", // 分享图标
+            link: `http://s.immusician.com/web/h5/music.html?channel=cp_tiyan&v=${
+              that.shareVersion
+            }`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            success: function() {
+              // 设置成功
+            }
+          });
+          // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+        });
+        wx.error(function(res) {
+          console.log(res);
+        });
+      }else{
+that.page1Icon = "playing";
+            that.page1Audio.play();
+      }
+    },
+    getSignInfo() {
+      var that = this;
+      return new Promise((resolve, reject) => {
+        this.axios
+          .post(`http://api.yinji.immusician.com:55555/v1/wechat/config/`, {
+            url: location.href
+          })
+          .then(res => {
+            var res = res.data;
+            let param = {
+              appId: res.appId,
+              timestamp: res.timestamp,
+              nonceStr: res.nonceStr,
+              signature: res.signature
+            };
+            that.wxParam = param;
+            resolve(param);
+          });
+      });
+    },
     initLoading() {
       console.log("initLoading");
       function audioPromise(src) {
@@ -505,11 +589,13 @@ export default {
         sum++;
         p.style.width = (sum / promiseList.length) * 100 + "%";
       }
+      promiseList.push(this.getSignInfo());
       Promise.all(promiseList).then(res => {
         document.querySelector("#progressStatus").innerHTML = "加载完成";
         var loadingPage = document.querySelector(".page.loading");
         setTimeout(() => {
           loadingPage.classList.add("hide");
+          this.shareReady(this.wxParam);
           setTimeout(() => {
             loadingPage.style.display = "none";
           }, 700);
@@ -631,31 +717,31 @@ export default {
       });
     },
     //打泡泡
-    select(qIndex, value, isRight,event) {
-      if(this.clickOff){
-        return
+    select(qIndex, value, isRight, event) {
+      if (this.clickOff) {
+        return;
       }
-      if(qIndex === 3 || qIndex === 4 || qIndex === 5 || qIndex === 6){
-        if(!this.canClick){
-          return
+      if (qIndex === 3 || qIndex === 4 || qIndex === 5 || qIndex === 6) {
+        if (!this.canClick) {
+          return;
         }
       }
-      
+
       var target = event.target;
-      if(target.classList.contains('option_img')){
-        target.parentElement.classList.add('select')
-      }else if(target.classList.contains('bird_click')){
-        target.classList.add('select')
-      }else if(target.classList.contains('option_bird')){
-        target.parentElement.classList.add('select')
-      }else if(target.tagName.toLocaleLowerCase()=='img'){
-        target.parentElement.parentElement.classList.add('select')
-      }else{
-        target.classList.add('select')
+      if (target.classList.contains("option_img")) {
+        target.parentElement.classList.add("select");
+      } else if (target.classList.contains("bird_click")) {
+        target.classList.add("select");
+      } else if (target.classList.contains("option_bird")) {
+        target.parentElement.classList.add("select");
+      } else if (target.tagName.toLocaleLowerCase() == "img") {
+        target.parentElement.parentElement.classList.add("select");
+      } else {
+        target.classList.add("select");
       }
-     // if(event.target)
-     // document.querySelector('.q2a').parentElement.parentElement.classList.add('select')
-      
+      // if(event.target)
+      // document.querySelector('.q2a').parentElement.parentElement.classList.add('select')
+
       this.clickOff = true;
       //console.log(e.target.classList.add('select'))
       this.mySelect.push({
@@ -663,7 +749,7 @@ export default {
         detail: value,
         isRight: isRight
       });
-      this.callBack()
+      this.callBack();
       if (qIndex === 3) {
         if (value == "A") {
           this.$refs.q3Bird1.classList.add("f1");
@@ -714,14 +800,14 @@ export default {
       this.removeNotePlaying(); //取消转动音符
       this.Q1TAudio.pause();
       this.Q1CAudio.pause();
-      if (this.isIos){
+      if (this.isIos) {
         this.Q2TAudio.play();
         this.Q2CAudio.play();
         this.Q2CAudio.pause();
-      }else{
+      } else {
         this.Q2TAudio.play();
       }
-      
+
       this.addNoteReading(); //开始读题干
       this.Q2TAudio.addEventListener("ended", () => {
         this.Q2CAudio.play();
@@ -740,15 +826,15 @@ export default {
       this.Q3TAudio.play();
       //this.Q3TAudio.pause();
       //hack
-      if (this.isIos){
+      if (this.isIos) {
         this.Q3AAudio.play();
         this.Q3AAudio.pause();
         this.Q3BAudio.play();
         this.Q3BAudio.pause();
-      }else{
+      } else {
         //this.Q2TAudio.play();
       }
-      
+
       this.addNoteReading(); //开始读题干
       this.Q3TAudio.addEventListener("ended", () => {
         if (this.swiperIndex !== 3) {
@@ -788,13 +874,13 @@ export default {
         this.addNoteReading(); //开始读题干
       }, 2001);
       //hack
-      if (this.isIos){
+      if (this.isIos) {
         this.Q4AAudio.play();
         this.Q4AAudio.pause();
         this.Q4BAudio.play();
         this.Q4BAudio.pause();
       }
-      
+
       this.Q4TAudio.addEventListener("ended", () => {
         this.removeNoteReading(); //题干读完
         this.addNotePlaying(); //转动音符
@@ -826,23 +912,23 @@ export default {
       this.Q4TAudio.pause();
       this.Q4AAudio.pause();
       this.Q4BAudio.pause();
-      if(this.isIos){
+      if (this.isIos) {
         this.Q5TAudio.play();
         this.Q5TAudio.pause();
       }
-      
+
       this.addNoteReading(); //开始读题干
       setTimeout(() => {
         this.Q5TAudio.play();
       }, 2001);
       //hack
-      if(this.isIos){
+      if (this.isIos) {
         this.Q5AAudio.play();
         this.Q5AAudio.pause();
         this.Q5BAudio.play();
         this.Q5BAudio.pause();
       }
-      
+
       this.Q5TAudio.addEventListener("ended", () => {
         this.removeNoteReading(); //题干读完
         this.addNotePlaying(); //转动音符
@@ -872,13 +958,13 @@ export default {
       this.Q5BAudio.pause();
       this.Q6TAudio.play();
       //hack
-      if(this.isIos){
+      if (this.isIos) {
         this.Q6AAudio.play();
         this.Q6AAudio.pause();
         this.Q6BAudio.play();
         this.Q6BAudio.pause();
       }
-      
+
       this.addNoteReading(); //开始读题干
       this.Q6TAudio.addEventListener("ended", () => {
         this.removeNoteReading(); //题干读完
@@ -907,11 +993,11 @@ export default {
       this.Q6AAudio.pause();
       this.Q6BAudio.pause();
       this.Q7TAudio.play();
-      if(this.isIos){
+      if (this.isIos) {
         this.Q7BgAudio.play();
         this.Q7BgAudio.pause();
       }
-      
+
       this.Q7TAudio.addEventListener("ended", () => {
         if (this.swiperIndex !== 7) {
           return;
@@ -943,11 +1029,11 @@ export default {
       this.Q8TAudio.pause();
       this.Q9TAudio.play();
       //hack
-      if(this.isIos){
+      if (this.isIos) {
         this.Q9CAudio.play();
         this.Q9CAudio.pause();
       }
-      
+
       this.addNoteReading(); //开始读题干
       this.Q9TAudio.addEventListener("ended", () => {
         this.removeNoteReading(); //题干读完
@@ -965,7 +1051,7 @@ export default {
       console.log("Q10Enter");
       this.Q9TAudio.pause();
       this.Q9CAudio.pause();
-      if(this.isIos){
+      if (this.isIos) {
         this.Q10G1Audio.play();
         this.Q10G1Audio.pause();
         this.Q10G2Audio.play();
@@ -973,7 +1059,7 @@ export default {
         this.Q10G3Audio.play();
         this.Q10G3Audio.pause();
       }
-      
+
       setTimeout(() => {
         //将所有答题情况归类
         this.mySelect.splice(5, 0, { detail: "B", index: 7, isRight: true });
@@ -1072,12 +1158,12 @@ export default {
     beginClick() {
       this.swiper.slideNext();
       this.page1Audio.pause();
-      this.callBack()
+      this.callBack();
     },
-    page1Play() {
-      this.page1Audio.addEventListener("canplay", () => {
-        this.page1Audio.play();
-      });
+    testWeixin() {
+      //判断是否是微信
+      var ua = navigator.userAgent.toLowerCase();
+      return ua.match(/MicroMessenger/i) == "micromessenger";
     },
     testPlat() {
       if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
@@ -1090,8 +1176,7 @@ export default {
         return -1;
       }
     },
-    callBack(){
-
+    callBack() {
       var that = this;
       var index = that.swiperIndex ? that.swiperIndex + 1 : 1;
       //return
@@ -1141,6 +1226,7 @@ export default {
   },
   created() {
     this.isIos = this.testPlat() === "IOS" ? true : false;
+    this.isWeixin = this.testWeixin();
   },
   mounted() {
     var that = this;
@@ -1283,7 +1369,7 @@ export default {
       on: {
         slideNextTransitionEnd() {
           //console.log('\\\\\\\\\\\\\\\\\\')
-          
+
           that.swiperIndex = that.swiper.activeIndex;
           //console.log(that.swiperIndex)
           that.clickOff = false;
@@ -1291,9 +1377,6 @@ export default {
         }
       }
     });
-
-    
-    
   }
 };
 </script>
@@ -1510,38 +1593,38 @@ body {
     position: relative;
     background: url("../../assets/img/music_test/topic_card.png") no-repeat
       center/100% 100%;
-      height: 210px;
+    height: 210px;
   }
-  .text{
-    top:23%;
-    text-align: left
+  .text {
+    top: 23%;
+    text-align: left;
   }
   .note {
-      position: absolute;
-      left: 50%;
-      margin-left: -36px;
-      bottom: 45px;
-      font-size: 0;
+    position: absolute;
+    left: 50%;
+    margin-left: -36px;
+    bottom: 45px;
+    font-size: 0;
+    -webkit-tap-highlight-color: transparent;
+    img {
+      width: 72px;
+      height: 72px;
       -webkit-tap-highlight-color: transparent;
-      img {
-        width: 72px;
-        height: 72px;
-        -webkit-tap-highlight-color: transparent;
-      }
-      //transition: transform 15s;
     }
-    .note.playing {
-      animation: rotate 18s;
-      //transform: rotate(360deg);
-    }
-    .re_play{
-      font-size: 11px;
-      color: #666;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 25px;
-    }
+    //transition: transform 15s;
+  }
+  .note.playing {
+    animation: rotate 18s;
+    //transform: rotate(360deg);
+  }
+  .re_play {
+    font-size: 11px;
+    color: #666;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 25px;
+  }
   .bird_main {
     //width: 100%;
     width: 400px;
@@ -1572,7 +1655,7 @@ body {
         color: rgba(245, 150, 0, 1);
       }
     }
-    .option_card.select{
+    .option_card.select {
       background: url("../../assets/img/music_test/bird_select.png") no-repeat
         center/100% 100%;
     }
@@ -1709,7 +1792,7 @@ body {
       animation: rotate 18s;
       //transform: rotate(360deg);
     }
-    .re_play{
+    .re_play {
       font-size: 11px;
       color: #666;
       position: absolute;
@@ -1763,9 +1846,9 @@ body {
         }
       }
     }
-    .option_card.select{
-      background: url("../../assets/img/music_test/option_card_select.png") no-repeat
-        center/cover;
+    .option_card.select {
+      background: url("../../assets/img/music_test/option_card_select.png")
+        no-repeat center/cover;
     }
     .option_card1 {
       top: 34.9%;
