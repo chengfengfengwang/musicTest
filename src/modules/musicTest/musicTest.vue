@@ -408,7 +408,8 @@ export default {
       beyondRate: 0,
       q8OnOff: true,
       isIos: "",
-      clickOff:false
+      clickOff:false,
+      canClick:true
     };
   },
   methods: {
@@ -634,6 +635,12 @@ export default {
       if(this.clickOff){
         return
       }
+      if(qIndex === 3 || qIndex === 4 || qIndex === 5 || qIndex === 6){
+        if(!this.canClick){
+          return
+        }
+      }
+      
       var target = event.target;
       if(target.classList.contains('option_img')){
         target.parentElement.classList.add('select')
@@ -763,6 +770,7 @@ export default {
       });
       this.Q3BAudio.addEventListener("ended", () => {
         this.removeNotePlaying(); //取消转动音符
+        this.canClick = true;
         this.$refs.q3Bird1.classList.remove("bounce");
         this.$refs.q3Bird2.classList.remove("bounce");
       });
@@ -806,6 +814,7 @@ export default {
         }, 500);
       });
       this.Q4BAudio.addEventListener("ended", () => {
+        this.canClick = true;
         this.removeNotePlaying(); //取消转动音符
         this.$refs.q4Bird1.classList.remove("bounce");
         this.$refs.q4Bird2.classList.remove("bounce");
@@ -851,6 +860,7 @@ export default {
         }, 500);
       });
       this.Q5BAudio.addEventListener("ended", () => {
+        this.canClick = true;
         this.removeNotePlaying();
       });
     },
@@ -887,6 +897,7 @@ export default {
         }, 500);
       });
       this.Q6BAudio.addEventListener("ended", () => {
+        this.canClick = true;
         this.removeNotePlaying();
       });
     },
@@ -1083,7 +1094,6 @@ export default {
 
       var that = this;
       var index = that.swiperIndex ? that.swiperIndex + 1 : 1;
-      //console.log('callback')
       //return
       switch (index) {
         case 1: {
@@ -1277,6 +1287,7 @@ export default {
           that.swiperIndex = that.swiper.activeIndex;
           //console.log(that.swiperIndex)
           that.clickOff = false;
+          that.canClick = false;
         }
       }
     });
