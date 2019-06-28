@@ -423,12 +423,34 @@ export default {
       isIos: "",
       clickOff: false,
       canClick: true,
-      isWeixin: false
+      isWeixin: false,
+      loadingAllPromise:[]
     };
   },
   methods: {
-    getAudio(){
-
+     responseImgLoad() {
+        this.curLoadingIndex++;
+        this.loadingBar.style.width = (this.curLoadingIndex / this.loadingAllPromise.length) * 100 + "%";
+      },
+    getAudio(audio) {
+      var that = this;
+      return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              audio.src = window.URL.createObjectURL(xhr.response);
+               that.responseImgLoad();
+              resolve();
+            } else {
+              console.error(xhr.statusText);
+            }
+          }
+        };
+        xhr.open("GET", audio.src, true);
+        xhr.send();
+      });
     },
     shareReady(param) {
       var that = this;
@@ -502,48 +524,11 @@ export default {
     },
     initLoading() {
       console.log("initLoading");
-      function audioPromise(src) {
-        //console.log(src);
-        var p = new Promise((resolve, reject) => {
-          var xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4) {
-              //console.log(xhr.status);
-              if (
-                (xhr.status >= 200 && xhr.status < 300) ||
-                xhr.status == 304
-              ) {
-                //console.log("ce移动端");
-                  responseImgLoad();
-                  resolve();
-                //callNext();
-              } else {
-                responseImgLoad();
-                resolve();
-                //console.log("ce移动端1");
-                //callNext();
-              }
-            }
-          };
-          //console.log('发送')
-
-          //true（异步）或 false（同步）
-          xhr.open("get", src, false);
-          xhr.setRequestHeader(
-            "Content-type",
-            "application/x-www-form-urlencoded"
-          );
-          xhr.send();
-        });
-        return p;
-      }
-
       var that = this;
-      var p = document.querySelector(".p_color");
-      var bgArr = [],
-        sum = 0;
+      this.loadingBar = document.querySelector(".p_color");
+      var bgArr = [];
+      this.curLoadingIndex = 0;
       var fakeTemp = 0;
-      var promiseList = [];
       var bg1 = require("../../assets/img/music_test/test_cover.png");
       var bg2 = require("../../assets/img/music_test/bg.jpg");
       var bg3 = require("../../assets/img/music_test/sfq.png");
@@ -555,27 +540,22 @@ export default {
           var img = new Image();
           img.src = e;
           if (img.complete) {
-            responseImgLoad();
+            that.responseImgLoad();
             resolve();
           }
           img.onload = function() {
-            responseImgLoad();
+            that.responseImgLoad();
             resolve();
           };
         });
-        promiseList.push(p);
+        this.loadingAllPromise.push(p);
       });
       this.audioArr.forEach(e => {
-        promiseList.push(audioPromise(e.src)) ;
+        this.loadingAllPromise.push(this.getAudio(e));
       });
-      function responseImgLoad() {
-        //clearInterval(timer);
-        //console.log(sum);
-        sum++;
-        p.style.width = (sum / promiseList.length) * 100 + "%";
-      }
-      promiseList.push(this.getSignInfo());
-      Promise.all(promiseList).then(res => {
+      
+      this.loadingAllPromise.push(this.getSignInfo());
+      Promise.all(this.loadingAllPromise).then(res => {
         document.querySelector("#progressStatus").innerHTML = "加载完成";
         var loadingPage = document.querySelector(".page.loading");
         setTimeout(() => {
