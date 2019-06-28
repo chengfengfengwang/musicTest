@@ -427,6 +427,9 @@ export default {
     };
   },
   methods: {
+    getAudio(){
+
+    },
     shareReady(param) {
       var that = this;
       if (this.isIos) {
