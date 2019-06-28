@@ -502,25 +502,7 @@ export default {
       function audioPromise(src) {
         //console.log(src);
         var p = new Promise((resolve, reject) => {
-          function createXHR() {
-            try {
-              return new XMLHttpRequest();
-            } catch (e) {}
-            try {
-              return new ActiveXObject("Msxml2.XMLHTTP.6.0");
-            } catch (e) {}
-            try {
-              return new ActiveXObject("Msxml2.XMLHTTP.3.0");
-            } catch (e) {}
-            try {
-              return new ActiveXObject("Msxml2.XMLHTTP");
-            } catch (e) {}
-            try {
-              return new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (e) {}
-            return null;
-          }
-          var xhr = createXHR();
+          var xhr = new XMLHttpRequest();
           xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
               //console.log(xhr.status);
