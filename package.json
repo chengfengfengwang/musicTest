@@ -9,7 +9,7 @@
     "fontmin": "node fontScripts/SH-Medium.js && node fontScripts/SH-Regular.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "fakervue": "^0.5.3",
     "iview": "^3.4.2",
     "qiniu-js": "^2.5.4",
